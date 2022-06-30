@@ -392,24 +392,22 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <span class="d-block c-white font-s-16">Ekstrakulikuler Kreatif</span>
                   <div class="title_sections">
                     <img class="mb-3" src="assetshome/img/gif/waving_hand.gif" width="60" />
-                    <h2 class="c-white">Ekskul Jepang Berkonsep Digital</h2>
+                    <h2 class="c-white">Ekskul Jepang Kreatif</h2>
                     <p class="c-white">
-                      What does that mean? It means that all our solutions
-                      begin with brand research and all of our work is catered
-                      to enhance and work with the brand at hand.
+                      Kegiatan unik, lingkungan yang menyenangkan, pelatihan skill yang membuat dirimu lebih produktif,
+                      semua bisa kamu dapatkan di Smunel Japanese Community.
                     </p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-4 emo mb-4 mb-lg-0">
                 <div class="gq_item ill_item">
-                  <span class="d-block c-dark font-s-16">AMC Networks</span>
+                  <span class="d-block c-dark font-s-16">Prestasi</span>
                   <img class="img-fluid ill_sec" src="assetshome/img/agency/Security.png" />
                   <div class="title_sections">
-                    <h2 class="c-dark">Elevating An Iconic Network</h2>
+                    <h2 class="c-dark">Ekstrakulikuler Berprestasi</h2>
                     <p class="c-gray">
-                      Blandit libero volutpat sed cras ornare arcu dui vivamus
-                      arcu.
+                      Total 16 gelar juara telah kami dapatkan dalam kurun waktu 4 tahun terakhir.
                     </p>
                   </div>
                 </div>
@@ -689,6 +687,95 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </section>
         <!-- End. works -->
 
+        <section class="gb_team_te margin-t-12 padding-t-15">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-3 order-2 order-lg-1 mb-3 mb-lg-0">
+                  <div class="hg_person">
+                    <img src="assetshome/img/persons/08.png" />
+                    <div class="txt">
+                      <h4>Christopher C. Elliott</h4>
+                      <p>Architect</p>
+                    </div>
+                    <div class="so_media horizontal_item">
+                      <a href="https://twitter.com/" target="_blank">tw</a>
+                      <a href="https://www.facebook.com/" target="_blank">fb</a>
+                      <a href="https://www.instagram.com/" target="_blank" class="active bg-yollow">in</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 mx-auto order-3 order-lg-2 mb-3 mb-lg-0">
+                  <div class="hg_person">
+                    <img src="assetshome/img/persons/09.jpg" />
+                    <div class="txt">
+                      <h4>Lynda F. Williams</h4>
+                      <p>Lead Designer</p>
+                    </div>
+                    <div class="so_media">
+                      <a href="https://twitter.com/" target="_blank" class="active bg-sea">tw</a>
+                      <a href="https://www.facebook.com/" target="_blank">fb</a>
+                      <a href="https://www.instagram.com/" target="_blank">in</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 order-4 order-lg-3 mb-3 mb-lg-0">
+                  <div class="hg_person">
+                    <img src="assetshome/img/persons/10.jpg" />
+                    <div class="txt">
+                      <h4>David A. Malchow</h4>
+                      <p>Marketing Manager</p>
+                    </div>
+                    <div class="so_media horizontal_item">
+                      <a href="https://www.facebook.com/" target="_blank" class="active bg-dark">fb</a>
+                      <a href="https://twitter.com/" target="_blank">tw</a>
+                      <a href="https://www.instagram.com/" target="_blank">in</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-100 order-sm-4"></div>
+                <div class="col-lg-3 mt-5 order-1 order-lg-5 mb-3 mb-lg-0">
+                  <div class="title_sections">
+                    <div class="before_title">
+                      <span>Our Team</span>
+                      <span class="c-yollow">Member</span>
+                    </div>
+                    <h2>Meet Our Perfectionist</h2>
+                  </div>
+                </div>
+                <div class="col-lg-3 mr-auto order-5 order-lg-6 mb-3 mb-lg-0">
+                  <div class="hg_person">
+                    <img src="assetshome/img/persons/12.jpg" />
+                    <div class="txt">
+                      <h4>Richard L. Berg</h4>
+                      <p>Project Manager</p>
+                    </div>
+                    <div class="so_media horizontal_item">
+                      <a href="https://www.facebook.com/" target="_blank">fb</a>
+                      <a href="https://twitter.com/" target="_blank">tw</a>
+                      <a href="https://www.instagram.com/" target="_blank" class="active bg-yollow">in</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 mr-auto order-6 order-lg-7">
+                  <div class="hg_person">
+                    <img src="assetshome/img/persons/11.jpg" />
+                    <div class="txt">
+                      <h4>Anthony N. Southall</h4>
+                      <p>Architect</p>
+                    </div>
+                    <div class="so_media">
+                      <a href="https://twitter.com/" target="_blank" class="active bg-sea">tw</a>
+                      <a href="https://www.facebook.com/" target="_blank">fb</a>
+                      <a href="https://www.instagram.com/" target="_blank">in</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- End. Team -->
+
+
         <!-- Start Testimonial -->
         <section class="testimonial_demo2 padding-t-12">
           <div class="container">
@@ -738,78 +825,10 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </section>
         <!-- End. Testimonial -->
 
-        <!-- hide Header -->
-        <!-- <div id="triggerForm"></div> -->
-        <!-- End. -->
 
-        <!-- Start Services -->
-        <!-- <section class="service_demo4 content_item" id="pinContainer">
-          <div class="Slide_horizontal_scroll">
-            <div class="container">
-              <div id="slideContainer">
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="item_slide panel">
-                      <div class="block_img">
-                        <div class="block_item" data-fx="22">
-                          <a class="block__title c-dark" data-img="assetshome/img/agency/xore___solar_system.gif">Branding &
-                            Identity</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="item_slide panel">
-                      <div class="block_img">
-                        <div class="block_item" data-fx="22">
-                          <a class="block__title c-dark" data-img="assetshome/img/agency/notsohotdogdribbble.gif">Websites &
-                            Digital
-                            Platforms</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="item_slide panel">
-                      <div class="block_img">
-                        <div class="block_item" data-fx="22">
-                          <a class="block__title c-dark" data-img="assetshome/img/agency/098401.gif">eCommerce
-                            Experiences</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="item_slide panel">
-                      <div class="block_img">
-                        <div class="block_item" data-fx="22">
-                          <a class="block__title c-dark" data-img="assetshome/img/agency/turtle-power.gif">Performance
-                            Marketing</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="item_slide panel">
-                      <div class="block_img">
-                        <div class="block_item" data-fx="22">
-                          <a class="block__title c-dark" data-img="assetshome/img/agency/5_b.gif">eCommerce
-                            Experiences</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> -->
-        <!-- End Services -->
 
-        <!-- Show Header -->
-        <!-- <div id="triggerTo"></div> -->
-        <!-- End. -->
-      </main>
+        <!-- Start Team -->
+          </main>
       <!-- end main -->
     </div>
     <!-- [id] content -->

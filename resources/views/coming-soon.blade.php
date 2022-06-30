@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="assetsdash/vendor/fonts/flag-icons.css" />
 
     <!-- Core CSS -->
+    <link rel="stylesheet" href="assetsdash/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="assetsdash/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="assetsdash/css/demo.css" />
 
     <!-- Vendors CSS -->
@@ -51,22 +53,12 @@
 <link rel="stylesheet" href="assetsdash/vendor/css/pages/page-misc.css">
     <!-- Helpers -->
     <script src="assetsdash/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    {{-- <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="assetsdash/vendor/js/template-customizer.js"></script> --}}
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="assetsdash/js/config.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    <!-- Custom notification for demo -->
-    <!-- beautify ignore:end -->
 
 </head>
 

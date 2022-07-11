@@ -799,7 +799,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                         <input type="text" class="form-control rounded-8" id="pesankesan"
                                             placeholder="Masukkan Pesanmu" aria-describedby="emailHelp" />
                                         <button type="button"  class="btn ripple_circle scale rounded-8 btn_subscribe">
-                                            <a href="https://api.whatsapp.com/send?phone={{$settings->where('NamaSetting', 'NoTelp')->first()->Value}}&text={pesan}" id="kirimpesan"><i class="tio send"></i></a>
+                                            <a href="https://api.whatsapp.com/send?phone=62{{$settings->where('NamaSetting', 'NoTelp')->first()->Value}}&text={pesan}" id="kirimpesan"><i class="tio send"></i></a>
                                         </button>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@
             <div class="col-md mb-4 mb-md-0">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Formulir Pendaftaran</h5> <a href="https://api.whatsapp.com/send?phone={{$settings->where('NamaSetting', 'NoTelp')->first()->Value}}&text=Kak, Butuh Bantuan"><small class="float-end">Perlu Bantuan?</small></a>
+                        <h5 class="mb-0">Formulir Pendaftaran</h5> <a href="https://api.whatsapp.com/send?phone=62{{$settings->where('NamaSetting', 'NoTelp')->first()->Value}}&text=Kak, Butuh Bantuan"><small class="float-end">Perlu Bantuan?</small></a>
                     </div>
                     <div class="card-body">
                         @if ($errors->any())

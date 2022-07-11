@@ -24,6 +24,11 @@ class PendaftarController extends Controller
             'pesandefault' => $pesandefault]);
     }
 
+    public function coming_soon()
+    {
+        return view('coming-soon');
+    }
+
     public function indexForm()
     {
         $pagetitle = 'Formulir Pendaftaran';

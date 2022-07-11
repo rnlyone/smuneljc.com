@@ -71,11 +71,11 @@
   <div class="misc-wrapper">
     <h1 class="mb-2 mx-2">Gomennasai!</h1>
     <p class="mb-4 mx-2">
-      Maaf yah gaes, kami harus perbaiki web dlu persiapan MPLS😚
+      Pendaftaran belum dibuka ya minna!😚,<br> selalu update di instagram SmunelJC.
     </p>
     <a href="https://www.instagram.com/smuneljc/" class="btn btn-primary">Instagram</a>
     <div class="mt-4">
-      <img src="assetsdash/img/illustrations/itsukyodaibanner.png" alt="girl-doing-yoga-light" width="500" class="img-fluid" data-app-light-img="illustrations/itsukyodaibanner.png" data-app-dark-img="illustrations/boy-working-dark.png">
+      <img src="assetshome/img/agency/itsukyodaibanner.png" alt="girl-doing-yoga-light" width="500" class="img-fluid" data-app-light-img="illustrations/itsukyodaibanner.png" data-app-dark-img="illustrations/boy-working-dark.png">
     </div>
   </div>
 </div>

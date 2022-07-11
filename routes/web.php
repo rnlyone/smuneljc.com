@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\PendaftarController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +18,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('coming-soon');
+Route::group(['middleware'=>['guest']], function(){
+    Route::get('login', [UserController::class, 'indexLogin'])->name('login');
+    Route::post('login', [UserController::class, 'login']);
+
 });
+
+Route::get('/daftar', [PendaftarController::class, 'indexForm']);
+Route::resource('/daftar', PendaftarController::class)->except('index');
+
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('dash', [UserController::class, 'indexDash']);
+    Route::get('logout', [UserController::class, 'logout']);
+    Route::get('/pendaftar', [PendaftarController::class, 'index']);
+    Route::resource('setting', SettingController::class);
+});
+
+Route::get('/', [FrontController::class, 'welcome']);
+
+
+

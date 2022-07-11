@@ -73,7 +73,14 @@
     <p class="mb-4 mx-2">
       Pendaftaran belum dibuka ya minna!😚,<br> selalu update di instagram SmunelJC.
     </p>
-    <a href="https://www.instagram.com/smuneljc/" class="btn btn-primary">Instagram</a>
+    <div class="row">
+        <div class="col-6">
+            <a href="https://www.instagram.com/smuneljc/" class="btn btn-outline-primary">Home</a>
+        </div>
+        <div class="col-6">
+            <a href="https://www.instagram.com/smuneljc/" class="btn btn-primary">Instagram</a>
+        </div>
+    </div>
     <div class="mt-4">
       <img src="assetshome/img/agency/itsukyodaibanner.png" alt="girl-doing-yoga-light" width="500" class="img-fluid" data-app-light-img="illustrations/itsukyodaibanner.png" data-app-dark-img="illustrations/boy-working-dark.png">
     </div>

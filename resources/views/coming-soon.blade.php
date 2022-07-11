@@ -75,7 +75,7 @@
     </p>
     <div class="row">
         <div class="col-6">
-            <a href="https://www.instagram.com/smuneljc/" class="btn btn-outline-primary">Home</a>
+            <a href="/" class="btn btn-outline-primary">Home</a>
         </div>
         <div class="col-6">
             <a href="https://www.instagram.com/smuneljc/" class="btn btn-primary">Instagram</a>

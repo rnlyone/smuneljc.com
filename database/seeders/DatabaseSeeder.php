@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
             ['Author' => 'Ryshanee_', 'Title' => 'Itsuha & Itsuki', 'Category' => 'FanArt', 'ImagePath' => 'gallery/itsuhaitsuki.jpg'],
             ['Author' => 'Triple AL', 'Title' => 'Lone Wolf', 'Category' => 'FanArt', 'ImagePath' => 'gallery/legosi.jpg'],
             ['Author' => 'Kiyaa', 'Title' => 'Man with Cat', 'Category' => 'FanArt','ImagePath' => 'gallery/manwithcat.jpg'],
-            ['Author' => 'Codename:Mgel', 'Title' => 'Justice', 'Category' => 'Illustration','ImagePath' => 'gallery/Justice.jpg'],
+            ['Author' => 'Codename:Mgel', 'Title' => 'Justice', 'Category' => 'Illustration','ImagePath' => 'gallery/justice.jpg'],
         )->create();
 
 

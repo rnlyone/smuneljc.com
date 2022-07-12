@@ -793,13 +793,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                 Ada pertanyaan?<br />
                                 tulis pesanmu dan kirimkan sekarang!
                             </p>
-                            <form class="form-row">
+                            <form action="/kirimpesan" method="POST" class="form-row">
+                                @csrf
                                 <div class="col-md-11 form-group subscribebtn">
                                     <div class="item_input">
-                                        <input type="text" class="form-control rounded-8" id="pesankesan"
+                                        <input type="text" name="pesan" class="form-control rounded-8" id="pesankesan"
                                             placeholder="Masukkan Pesanmu" aria-describedby="emailHelp" />
-                                        <button type="button"  class="btn ripple_circle scale rounded-8 btn_subscribe">
-                                            <a href="https://api.whatsapp.com/send?phone=62{{$settings->where('NamaSetting', 'NoTelp')->first()->Value}}&text={pesan}" id="kirimpesan"><i class="tio send"></i></a>
+                                        <button type="submit"  class="btn ripple_circle scale rounded-8 btn_subscribe">
+                                            <i class="tio send"></i>
                                         </button>
                                     </div>
                                 </div>

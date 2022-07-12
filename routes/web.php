@@ -26,6 +26,7 @@ Route::group(['middleware'=>['guest']], function(){
 
 Route::get('/daftar', [PendaftarController::class, 'coming_soon']);
 Route::resource('/daftar', PendaftarController::class)->except('index');
+Route::post('kirimpesan', [FrontController::class, 'kirimpesan']);
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('dash', [UserController::class, 'indexDash']);

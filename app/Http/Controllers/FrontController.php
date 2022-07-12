@@ -8,6 +8,7 @@ use App\Models\Pengurus;
 use App\Models\Setting;
 use App\Models\Socials;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class FrontController extends Controller
 {
@@ -25,5 +26,14 @@ class FrontController extends Controller
             'pages' => $pages,
             'socials' => $socials
         ]);
+    }
+
+    public function kirimpesan(Request $request)
+    {
+        $notelp = Setting::find(2)->Value;
+        $pesan = $request->pesan;
+        $link = "https://api.whatsapp.com/send?phone=62".$notelp."&text=".$pesan;
+
+        return redirect($link);
     }
 }

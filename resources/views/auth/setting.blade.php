@@ -66,47 +66,47 @@
                             <h5 class="mb-0">Pengaturan Website</h5> <small class="text-muted float-end"></small>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('setting.store')}}" method="POST">
+                            <form action="{{route('setting.update')}}" method="POST">
                                 @csrf
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-default-company">Tahun</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" id="basic-default-company"
+                                        <input type="number" name="P1" class="form-control" id="basic-default-company"
                                             placeholder="Value" value="{{$settings->find(1)->Value}}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-default-company">NoTelp</label>
                                     <div class="col-sm-10">
-                                        <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" id="basic-default-company"
+                                        <input type="text" name="P2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="form-control" id="basic-default-company"
                                             placeholder="Value" value="{{$settings->find(2)->Value}}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-default-company">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="basic-default-company"
+                                        <input type="email" name="P3" class="form-control" id="basic-default-company"
                                             placeholder="Value" value="{{$settings->find(3)->Value}}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-default-company">Alamat</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="basic-default-company"
+                                        <input type="text" name="P4" class="form-control" id="basic-default-company"
                                             placeholder="Value" value="{{$settings->find(4)->Value}}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-default-company">Link Video</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="basic-default-company"
+                                        <input type="text" name="P5" class="form-control" id="basic-default-company"
                                             placeholder="Value" value="{{$settings->find(5)->Value}}" />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-default-company">Head Text</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="basic-default-company"
+                                        <input type="text" name="P6" class="form-control" id="basic-default-company"
                                             placeholder="Value" value="{{$settings->find(6)->Value}}" />
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                     <div class="col-sm-10">
                                         <textarea id="basic-default-message" class="form-control"
                                             placeholder="Text"
-                                            aria-label="Text"
+                                            aria-label="Text" name="P7"
                                             aria-describedby="basic-icon-default-message2">{{$settings->find(7)->Value}}</textarea>
                                     </div>
                                 </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pendaftar;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PendaftarController extends Controller
 {
@@ -64,7 +66,6 @@ class PendaftarController extends Controller
             ],
             'NISN' => [
                 'unique:App\Models\Pendaftar,NISN',
-
             ],
             'KodeDaftar' => [
                 'in:'.$KodeDaftar,
@@ -112,31 +113,80 @@ class PendaftarController extends Controller
      * @param  \App\Models\Pendaftar  $pendaftar
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pendaftar $pendaftar)
+    public function edit($nisn)
     {
-        //
+        $form = Pendaftar::where('NISN', $nisn)->first();
+        $pagetitle = 'Edit Formulir';
+        $settings = Setting::all();
+        return view('auth.editform', ['pagetitle' => $pagetitle,'form' => $form, 'settings' => $settings]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pendaftar  $pendaftar
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pendaftar $pendaftar)
+    public function update(Request $request, $nisn)
     {
-        //
+        $form = Pendaftar::where('NISN', $nisn)->first();
+        $rules = [
+            'NISN' => [
+                'unique:App\Models\Pendaftar,NISN,'.$form->id,
+            ],
+        ];
+
+        $messages = [
+            'unique' => 'Gomen, Kamu Sudah Terdaftar Sebelumnya',
+        ];
+
+        $this->validate($request, $rules, $messages);
+        try {
+            $form->NamaLengkap = $request->NamaLengkap;
+            $form->NISN = $request->NISN;
+            $form->Kelas = $request->Kelas;
+            $form->JK = $request->JK;
+            $form->NoWA = $request->NoWA;
+            $form->Instagram = $request->Instagram;
+
+            $form->save();
+            if (Auth::user()) {
+                return redirect()->route('daftar.index')->with('success', 'Yay, Formulir Berhasil diedit.');
+            } else {
+                return redirect()->route('daftar.form')->with('success', 'Yay, Formulir Kamu Berhasil diedit.');
+            }
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Maaf, Terdapat Kesalahan', $th);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pendaftar  $pendaftar
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pendaftar $pendaftar)
+    public function destroy($nisn)
     {
-        //
+        Pendaftar::where('NISN', $nisn)->first()->delete();
+        if (Auth::user()) {
+            return redirect()->route('daftar.index')->with('success', 'Yay, Formulir Berhasil dihapus.');
+        } else {
+            return redirect()->route('daftar.form')->with('success', 'Yay, Formulir Kamu Berhasil dihapus.');
+        }
+    }
+
+    public function pinauth(Request $request, $nisn)
+    {
+        $form = Pendaftar::where('NISN', $nisn)->first();
+
+        $validator = Validator::make($request->all(), [
+            'PIN' => [
+                'in:'.$form->PIN
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('daftar.form')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        if ($form->PIN == $request->PIN) {
+            $pagetitle = 'Edit Formulir';
+            $settings = Setting::all();
+            return view('auth.editform', ['pagetitle' => $pagetitle,'form' => $form, 'settings' => $settings]);
+        } else {
+            return back();
+        }
     }
 }

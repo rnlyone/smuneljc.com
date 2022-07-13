@@ -111,7 +111,7 @@
                               <div class="mb-3">
                                 <label class="form-label" for="bs-validation-name">Kode Pendaftaran</label>
                                 <input type="text" name="KodeDaftar" class="form-control" id="bs-validation-name"
-                                    placeholder="Kode Pendaftaran" required value="{{old('KodeDaftar')}}"/>
+                                    placeholder="Kode Pendaftaran" oninput="this.value = this.value.toUpperCase()" required value="{{old('KodeDaftar')}}"/>
                                 <div class="valid-feedback"> Terlihat Baik! </div>
                                 <div class="invalid-feedback"> Masukkan Kode Pendaftaran mu. </div>
                                 <div class="form-text"> <span  data-bs-toggle="tooltip"
@@ -153,8 +153,14 @@
                             <tr>
                                 <td>{{$i+1}}</td>
                                 <td>{{$p->NamaLengkap}}</td>
-                                <td>{{$p->NISN}}</td>
-                                <td><button type="button" class="btn btn-icon btn-outline-primary">
+                                <td>
+                                    @php
+                                        $count = strlen($p->NISN) - 6;
+                                        $output = substr_replace($p->NISN, str_repeat('*', $count), 3, $count);
+                                    @endphp
+                                    {{$output}}</td>
+                                <td><button type="button" class="btn btn-icon btn-outline-primary"
+                                    data-bs-toggle="modal" data-bs-target="#modalpin{{$p->NISN}}">
                                     <span class="tf-icons bx bx-edit-alt"></span>
                                   </button></td>
                             </tr>
@@ -167,6 +173,27 @@
         </div>
     </div>
 </div>
+
+@foreach ($pendaftars as $p)
+<div class="modal modal-transparent fade" id="modalpin{{$p->NISN}}" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <a href="javascript:void(0);" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></a>
+          <p class="text-white text-large fw-light mb-3">Masukkan PIN untuk mengedit "{{$p->NamaLengkap}}"</p>
+          <form action="/daftar/{{$p->NISN}}/pinauth" method="post">
+            @csrf
+          <div class="input-group input-group-lg mb-3">
+            <input type="text" name="PIN" class="form-control bg-white border-0" placeholder="PIN Kamu (6 Digit)" aria-describedby="subscribe">
+            <button class="btn btn-primary" type="submit" id="subscribe">Edit Form</button>
+          </div>
+          </form>
+          <div class="text-start text-white opacity-50">PIN dibutuhkan untuk mengedit / menghapus form kamu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+@endforeach
 
 @include('app.tamu.footer')
 

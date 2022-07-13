@@ -36,33 +36,33 @@
 
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
-    <script src="assetsdash/vendor/libs/jquery/jquery.js"></script>
-    <script src="assetsdash/vendor/libs/popper/popper.js"></script>
-    <script src="assetsdash/vendor/js/bootstrap.js"></script>
-    <script src="assetsdash/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="assetsdash/vendor/libs/hammer/hammer.js"></script>
-    <script src="assetsdash/vendor/libs/i18n/i18n.js"></script>
-    <script src="assetsdash/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="assetsdash/vendor/js/menu.js"></script>
-    <script src="assetsdash/vendor/libs/jszip/jszip.js"></script>
-    <script src="assetsdash/vendor/libs/pdfmake/pdfmake.js"></script>
-    <script src="assetsdash/vendor/libs/datatables-buttons/buttons.html5.js"></script>
-    <script src="assetsdash/vendor/libs/datatables-buttons/buttons.print.js"></script>
+    <script src="/assetsdash/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assetsdash/vendor/libs/popper/popper.js"></script>
+    <script src="/assetsdash/vendor/js/bootstrap.js"></script>
+    <script src="/assetsdash/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assetsdash/vendor/libs/hammer/hammer.js"></script>
+    <script src="/assetsdash/vendor/libs/i18n/i18n.js"></script>
+    <script src="/assetsdash/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="/assetsdash/vendor/js/menu.js"></script>
+    <script src="/assetsdash/vendor/libs/jszip/jszip.js"></script>
+    <script src="/assetsdash/vendor/libs/pdfmake/pdfmake.js"></script>
+    <script src="/assetsdash/vendor/libs/datatables-buttons/buttons.html5.js"></script>
+    <script src="/assetsdash/vendor/libs/datatables-buttons/buttons.print.js"></script>
   <!-- endbuild -->
 
   <!-- Vendors JS -->
-    <script src="assetsdash/vendor/libs/select2/select2.js"></script>
-    <script src="assetsdash/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="assetsdash/vendor/libs/moment/moment.js"></script>
-    <script src="assetsdash/vendor/libs/flatpickr/flatpickr.js"></script>
-    <script src="assetsdash/vendor/libs/tagify/tagify.js"></script>
-    <script src="assetsdash/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="assetsdash/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
-    <script src="assetsdash/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
-    <script src="assetsdash/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <script src="/assetsdash/vendor/libs/select2/select2.js"></script>
+    <script src="/assetsdash/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assetsdash/vendor/libs/moment/moment.js"></script>
+    <script src="/assetsdash/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="/assetsdash/vendor/libs/tagify/tagify.js"></script>
+    <script src="/assetsdash/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="/assetsdash/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <script src="/assetsdash/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="/assetsdash/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 
   <!-- Main JS -->
-  <script src="assetsdash/js/main.js"></script>
+  <script src="/assetsdash/js/main.js"></script>
 
   <!-- Page JS -->
 

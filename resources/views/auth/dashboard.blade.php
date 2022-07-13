@@ -118,7 +118,7 @@
 </div>
 @include('app.auth.footer')
 
-<script src="assetsdash/vendor/libs/chartjs/chartjs.js"></script>
+<script src="/assetsdash/vendor/libs/chartjs/chartjs.js"></script>
 
 <script>! function () {
     var o = "#836AF9",

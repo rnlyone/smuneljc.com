@@ -18,7 +18,7 @@
                 <div class="navbar-nav align-items-center">
                     <a class="nav-link" href="/">
                         <div class="avatar">
-                            <img class="rounded-circle"  src="assetshome/img/logosjc.png" alt="logo"/>
+                            <img class="rounded-circle"  src="/assetshome/img/logosjc.png" alt="logo"/>
                         </div>
                       </a>
                 </div>
@@ -143,7 +143,7 @@
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
-                                <img src="assetsdash/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                                <img src="/assetsdash/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -183,7 +183,7 @@
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
-                                <img src="assetsdash/img/avatars/2.png" alt class="w-px-40 h-auto rounded-circle">
+                                <img src="/assetsdash/img/avatars/2.png" alt class="w-px-40 h-auto rounded-circle">
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -224,7 +224,7 @@
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
-                                <img src="assetsdash/img/avatars/9.png" alt class="w-px-40 h-auto rounded-circle">
+                                <img src="/assetsdash/img/avatars/9.png" alt class="w-px-40 h-auto rounded-circle">
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -265,7 +265,7 @@
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
-                                <img src="assetsdash/img/avatars/5.png" alt class="w-px-40 h-auto rounded-circle">
+                                <img src="/assetsdash/img/avatars/5.png" alt class="w-px-40 h-auto rounded-circle">
                               </div>
                             </div>
                             <div class="flex-grow-1">
@@ -285,7 +285,7 @@
                           <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                               <div class="avatar">
-                                <img src="assetsdash/img/avatars/6.png" alt class="w-px-40 h-auto rounded-circle">
+                                <img src="/assetsdash/img/avatars/6.png" alt class="w-px-40 h-auto rounded-circle">
                               </div>
                             </div>
                             <div class="flex-grow-1">

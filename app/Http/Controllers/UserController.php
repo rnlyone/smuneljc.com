@@ -49,8 +49,18 @@ class UserController extends Controller
         $totaldaftar = json_encode([32, 19, 27, 20, 41, $total2022]);
 
         #doughnutchart
-        $pria = Pendaftar::where('JK', 'pria')->count() / Pendaftar::all()->count() * 100;
-        $wanita = Pendaftar::where('JK', 'wanita')->count() / Pendaftar::all()->count() * 100;
+        try {
+            $pria = Pendaftar::where('JK', 'pria')->count() / $total2022 * 100;
+
+        } catch (\Throwable $th) {
+            $pria = 0;
+        }
+
+        try {
+            $wanita = Pendaftar::where('JK', 'wanita')->count() / $total2022 * 100;
+        } catch (\Throwable $th) {
+            $wanita = 0;
+        }
         $p = Pendaftar::where('JK', 'pria')->count();
         $w = Pendaftar::where('JK', 'wanita')->count();
         $datajk = json_encode([$pria, $wanita]);

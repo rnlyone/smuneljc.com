@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
              'Instagram' => 'https://www.instagram.com/rainam_nabil/'],
 
              ['id' => '6', 'Posisi' => 'Koordinator Divisi Mizu (水)', 'NamaLengkap' => 'Reinheart Silalong Alinan',
-             'ImagePath' => 'gallery/renhar.jpeg',
+             'ImagePath' => 'assetshome/img/persons/renhar.jpeg',
              'LinkedIn' => 'https://www.linkedin.com/in/reinheart-silalong-alinan-b86717259',
              'Discord' => 'https://discord.com/users/740163615184912404',
              'Instagram' => 'https://instagram.com/reinalinan55?igshid=YmMyMTA2M2Y='],

@@ -66,13 +66,13 @@
           <div data-i18n="Halaman Awal">Halaman Awal</div>
         </a>
         <ul class="menu-sub">
-          <li class="disabled menu-item">
-            <a href="#" class="menu-link">
+          <li class="menu-item {{$galeri ?? ''}}">
+            <a href="/galeri" class="menu-link">
               <div data-i18n="Galeri">Galeri</div>
             </a>
           </li>
-          <li class="disabled menu-item">
-            <a href="#" class="menu-link">
+          <li class="menu-item {{$pengurus ?? ''}}">
+            <a href="/pengurus" class="menu-link">
               <div data-i18n="Pengurus">Pengurus</div>
             </a>
           </li>

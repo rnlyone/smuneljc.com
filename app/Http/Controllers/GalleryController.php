@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
+use App\Models\Pendaftar;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -14,7 +16,11 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        $pagetitle = 'Gallery';
+        $galeri = Gallery::all();
+        return view('auth.galeri', [
+            'pagetitle' => $pagetitle,
+            'galeri' => $galeri]);
     }
 
     /**

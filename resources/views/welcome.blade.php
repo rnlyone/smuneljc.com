@@ -611,6 +611,10 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
                 <div class="col-lg-4 item text-center mx-auto my-auto">
                   <div class="title_sections_inner">
+                    <div class="before_title">
+                        <span>Kepengurusan</span>
+                        <span class="c-blue">2022/2023</span>
+                    </div>
                     <h2>Bertemu dengan tim hebat kami.</h2>
                   </div>
                 </div>

@@ -51,7 +51,6 @@ class UserController extends Controller
         #doughnutchart
         try {
             $pria = Pendaftar::where('JK', 'pria')->count() / $total2022 * 100;
-
         } catch (\Throwable $th) {
             $pria = 0;
         }
@@ -64,7 +63,6 @@ class UserController extends Controller
         $p = Pendaftar::where('JK', 'pria')->count();
         $w = Pendaftar::where('JK', 'wanita')->count();
         $datajk = json_encode([$pria, $wanita]);
-        $totaljk = json_encode([$p, $w]);
 
         $latest5 = Pendaftar::orderBy('id', 'desc')->take(5)->get();
 
@@ -80,7 +78,8 @@ class UserController extends Controller
             'totaldaftar' => $totaldaftar,
             'total2022' => $total2022,
             'datajk' => $datajk,
-            'totaljk' => $totaljk,
+            'totalp' => $p,
+            'totalw' => $w,
             'latest5' => $latest5,
             'pesandefault' => $pesandefault]);
     }

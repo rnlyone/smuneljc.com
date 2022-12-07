@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pendaftar;
 use App\Models\Pengurus;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class PengurusController extends Controller
@@ -14,7 +16,11 @@ class PengurusController extends Controller
      */
     public function index()
     {
-        //
+        $pagetitle = 'Detail Pengurus';
+        $pengurus = Pengurus::all();
+        return view('auth.pengurus', [
+            'pagetitle' => $pagetitle,
+            'pengurus' => $pengurus,]);
     }
 
     /**

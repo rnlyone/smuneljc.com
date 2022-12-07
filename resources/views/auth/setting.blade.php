@@ -8,7 +8,7 @@
         <div class="row match-height mb-4">
             <!-- Basic Layout & Basic with Icons -->
                 <!-- Basic Layout -->
-                <div class="col-6 mb-4">
+                <div class="col-lg-6 mb-4">
                     <div class="card mb-4">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">Pengaturan Pendaftaran</h5> <small class="text-muted float-end"></small>
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <!-- Basic with Icons -->
-                <div class="col-6">
+                <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">Pengaturan Website</h5> <small class="text-muted float-end"></small>

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PendaftarController;
+use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +37,8 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('dash', [UserController::class, 'indexDash']);
     Route::get('logout', [UserController::class, 'logout']);
     Route::get('/pendaftar', [PendaftarController::class, 'index'])->name('daftar.index');
+    Route::get('/galeri', [GalleryController::class, 'index'])->name('galeri.index');
+    Route::get('/pengurus', [PengurusController::class, 'index'])->name('pengurus.index');
     Route::get('/daftar/{nisn}/edit', [PendaftarController::class, 'edit'])->name('daftar.edit');
     Route::resource('setting', SettingController::class)->except('update');
     Route::post('setting/update', [SettingController::class, 'update'])->name('setting.update');

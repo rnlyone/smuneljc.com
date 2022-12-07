@@ -87,12 +87,12 @@
                     <li class="ct-series-1 d-flex flex-column">
                         <h5 class="mb-0 fw-bold">Laki-laki</h5>
                         <span class="badge badge-dot my-2 cursor-pointer rounded-pill" style="background-color: rgb(40, 208, 148);width:35px; height:6px;"></span>
-                        <div class="text-muted">{{$totaljk[1]}}</div>
+                        <div class="text-muted">{{$totalp}}</div>
                     </li>
                     <li class="ct-series-2 d-flex flex-column">
                         <h5 class="mb-0 fw-bold">Perempuan</h5>
                         <span class="badge badge-dot my-2 cursor-pointer rounded-pill" style="background-color: rgb(253, 172, 52);width:35px; height:6px;"></span>
-                        <div class="text-muted">{{$totaljk[3]}}</div>
+                        <div class="text-muted">{{$totalw}}</div>
                     </li>
                     </ul>
                 </div>

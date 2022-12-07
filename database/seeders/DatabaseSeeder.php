@@ -106,7 +106,7 @@ class DatabaseSeeder extends Seeder
              'Instagram' => 'https://instagram.com/jscanatsha_'],
 
              ['id' => '3', 'Posisi' => 'Bendahara Umum', 'NamaLengkap' => 'Aziziah Megga H.',
-             'ImagePath' => 'assetshome/img/persons/egha-min.jpg',
+             'ImagePath' => 'assetshome/img/persons/egalainlain.jpeg',
              'LinkedIn' => 'https://www.linkedin.com/in/aziziah-megga-a3784b244',
              'Discord' => 'http://discordapp.com/users/875779712574713886',
              'Instagram' => 'https://www.instagram.com/egha.png/'],
@@ -124,7 +124,7 @@ class DatabaseSeeder extends Seeder
              'Instagram' => 'https://www.instagram.com/rainam_nabil/'],
 
              ['id' => '6', 'Posisi' => 'Koordinator Divisi Mizu (水)', 'NamaLengkap' => 'Reinheart Silalong Alinan',
-             'ImagePath' => 'gallery/thetrain.jpg',
+             'ImagePath' => 'gallery/renhar.jpeg',
              'LinkedIn' => 'https://www.linkedin.com/in/reinheart-silalong-alinan-b86717259',
              'Discord' => 'https://discord.com/users/740163615184912404',
              'Instagram' => 'https://instagram.com/reinalinan55?igshid=YmMyMTA2M2Y='],

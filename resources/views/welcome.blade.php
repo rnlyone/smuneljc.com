@@ -467,9 +467,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   </section>
                 <!-- End. works -->
 
-                {{-- <section id="Tim" class="gb_team_te margin-t-12 padding-t-15">
+                <section id="Tim" class="gb_team_te margin-t-12 padding-t-15">
                     <div class="container">
-                        <div class="row">
+                        <div class="row justify-content-center">
                             <div class="col-lg-3 order-3 order-lg-1 mb-3 mb-lg-0">
                                 <div class="hg_person">
                                     <img src="{{$penguruses->where('id', 2)->first()->ImagePath}}" />
@@ -507,79 +507,99 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             </div>
                             <div class="col-lg-3 order-4 order-lg-3 mb-3 mb-lg-0">
                                 <div class="hg_person">
-                                    <img src="{{$penguruses->where('id', 7)->first()->ImagePath}}" />
+                                    <img src="{{$penguruses->where('id', 3)->first()->ImagePath}}" />
                                     <div class="txt">
-                                        <h4>{{$penguruses->where('id', 7)->first()->NamaLengkap}}</h4>
-                                        <p>{{$penguruses->where('id', 7)->first()->Posisi}}</p>
+                                        <h4>{{$penguruses->where('id', 3)->first()->NamaLengkap}}</h4>
+                                        <p>{{$penguruses->where('id', 3)->first()->Posisi}}</p>
                                     </div>
                                     <div class="so_media horizontal_item">
-                                        <a href="{{$penguruses->where('id', 7)->first()->LinkedIn}}" target="_blank"
+                                        <a href="{{$penguruses->where('id', 3)->first()->LinkedIn}}" target="_blank"
                                             class="active bg-blue"><i class="bx bxl-linkedin"></i></a>
-                                        <a href="{{$penguruses->where('id', 7)->first()->Discord}}" target="_blank"><i
+                                        <a href="{{$penguruses->where('id', 3)->first()->Discord}}" target="_blank"><i
                                             class="bx bxl-discord-alt"></i></a>
-                                        <a href="{{$penguruses->where('id', 7)->first()->Instagram}}" target="_blank"><i
+                                        <a href="{{$penguruses->where('id', 3)->first()->Instagram}}" target="_blank"><i
                                             class="bx bxl-instagram-alt"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 order-sm-4"></div>
-                            <div class="col-lg-3 mt-5 order-1 order-lg-5 mb-3 mb-lg-0">
-                                <div class="title_sections">
-                                    <div class="before_title">
-                                        <span>Kepengurusan</span>
-                                        <span class="c-blue">2021-2022</span>
-                                    </div>
-                                    <h2>Bertemu dengan tim hebat kami.</h2>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 mr-auto order-5 order-lg-6 mb-3 mb-lg-0">
+
+                            <div class="col-lg-3 mr-auto order-5 order-lg-7 mb-3 mb-lg-0">
                                 <div class="hg_person">
-                                    <img src="{{$penguruses->where('id', 8)->first()->ImagePath}}" />
+                                    <img src="{{$penguruses->where('id', 4)->first()->ImagePath}}" />
                                     <div class="txt">
-                                        <h4>{{$penguruses->where('id', 8)->first()->NamaLengkap}}</h4>
-                                        <p>{{$penguruses->where('id', 8)->first()->Posisi}}</p>
+                                        <h4>{{$penguruses->where('id', 4)->first()->NamaLengkap}}</h4>
+                                        <p>{{$penguruses->where('id', 4)->first()->Posisi}}</p>
                                     </div>
                                     <div class="so_media horizontal_item">
-                                        <a href="{{$penguruses->where('id', 8)->first()->LinkedIn}}" target="_blank"><i
+                                        <a href="{{$penguruses->where('id', 4)->first()->LinkedIn}}" target="_blank"><i
                                             class="bx bxl-linkedin"></i></a>
-                                        <a href="{{$penguruses->where('id', 8)->first()->Discord}}" target="_blank"><i
+                                        <a href="{{$penguruses->where('id', 4)->first()->Discord}}" target="_blank"><i
                                             class="bx bxl-discord-alt"></i></a>
-                                        <a href="{{$penguruses->where('id', 8)->first()->Instagram}}" target="_blank"
+                                        <a href="{{$penguruses->where('id', 4)->first()->Instagram}}" target="_blank"
                                             class="active bg-blue"><i
                                             class="bx bxl-instagram-alt"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 mr-auto order-6 order-lg-7">
+                            <div class="w-100 order-sm-4"></div>
+                            <div class="col-lg-3 order-1 order-lg-3 mb-3 mb-lg-0 text-center" align="center">
+                                <div class="title_sections">
+                                    <div class="before_title">
+                                        <span>Kepengurusan</span>
+                                        <span class="c-blue">2022-2023</span>
+                                    </div>
+                                    <h2>Bertemu dengan tim hebat kami.</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 mr-auto order-6 order-lg-8 mb-3 mb-lg-0">
                                 <div class="hg_person">
-                                    <img src="{{$penguruses->where('id', 9)->first()->ImagePath}}" />
+                                    <img src="{{$penguruses->where('id', 5)->first()->ImagePath}}" />
                                     <div class="txt">
-                                        <h4>{{$penguruses->where('id', 9)->first()->NamaLengkap}}</h4>
-                                        <p>{{$penguruses->where('id', 9)->first()->Posisi}}</p>
+                                        <h4>{{$penguruses->where('id', 5)->first()->NamaLengkap}}</h4>
+                                        <p>{{$penguruses->where('id', 5)->first()->Posisi}}</p>
                                     </div>
                                     <div class="so_media">
-                                        <a href="{{$penguruses->where('id', 9)->first()->LinkedIn}}" target="_blank" class="active bg-blue"><i
+                                        <a href="{{$penguruses->where('id', 5)->first()->LinkedIn}}" target="_blank" class="active bg-blue"><i
                                             class="bx bxl-linkedin"></i></a>
-                                        <a href="{{$penguruses->where('id', 9)->first()->Discord}}" target="_blank"><i
+                                        <a href="{{$penguruses->where('id', 5)->first()->Discord}}" target="_blank"><i
                                             class="bx bxl-discord-alt"></i></a>
-                                        <a href="{{$penguruses->where('id', 9)->first()->Instagram}}" target="_blank"><i
+                                        <a href="{{$penguruses->where('id', 5)->first()->Instagram}}" target="_blank"><i
+                                            class="bx bxl-instagram-alt"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 order-7 order-lg-9 mb-lg-0">
+                                <div class="hg_person">
+                                    <img src="{{$penguruses->where('id', 6)->first()->ImagePath}}" />
+                                    <div class="txt">
+                                        <h4>{{$penguruses->where('id', 6)->first()->NamaLengkap}}</h4>
+                                        <p>{{$penguruses->where('id', 6)->first()->Posisi}}</p>
+                                    </div>
+                                    <div class="so_media horizontal_item">
+                                        <a href="{{$penguruses->where('id', 6)->first()->LinkedIn}}" target="_blank"><i
+                                            class="bx bxl-linkedin"></i></a>
+                                        <a href="{{$penguruses->where('id', 6)->first()->Discord}}" target="_blank"><i
+                                            class="bx bxl-discord-alt"></i></a>
+                                        <a href="{{$penguruses->where('id', 6)->first()->Instagram}}" target="_blank"
+                                            class="active bg-blue"><i
                                             class="bx bxl-instagram-alt"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section> --}}
+                </section>
                 <!-- End. Team -->
                 {{-- <hr> --}}
+
                         <!-- Start team_static_style -->
-        <section id="Tim" class="team_static_style team_default_style">
+        {{-- <section id="Tim" class="team_static_style team_default_style">
             <div class="container">
 
               <div class="row justify-content-center text-center">
                 <div class="col-lg-5">
                   <div class="title_sections_inner margin-b-5">
-                    {{-- <h2>Pengurus 2022/2023</h2> --}} <hr>
+                    <h2>Pengurus 2022/2023</h2> <hr>
                   </div>
                 </div>
               </div>
@@ -587,7 +607,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <div class="row justify-content-lg-center">
 
                 <div class="col-md-6 col-lg-3 item">
-                  <div class="item_group hg-person">
+                  <div class="item_group">
                     <div class="img_group">
                         <img src="{{$penguruses->where('id', 2)->first()->ImagePath}}" />
                     </div>
@@ -665,7 +685,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                       </div>
                 </div>
 
-                <div class="col-md-6 col-lg-3 item mx-auto">
+                <div class="col-md-6 col-lg-3 order-2 order-lg-2 mb-3 mb-lg-0 item mx-auto">
                     <div class="item_group">
                         <div class="img_group">
                             <img src="{{$penguruses->where('id', 1)->first()->ImagePath}}" />
@@ -737,7 +757,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
               </div>
             </div>
-          </section>
+        </section> --}}
           <!-- End. team_static_style -->
 
 

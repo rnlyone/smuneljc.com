@@ -542,7 +542,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                 </div>
                             </div>
                             <div class="w-100 order-sm-4"></div>
-                            <div class="col-lg-4 order-1 order-lg-3 text-center" align="center">
+                            <div class="col-lg-4 order-1 order-lg-3 text-center mb-n5" align="center">
                                 <div class="title_sections">
                                     <div class="before_title">
                                         <span>Kepengurusan</span>

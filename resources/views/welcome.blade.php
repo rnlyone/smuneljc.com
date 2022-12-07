@@ -573,7 +573,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <!-- End. Team -->
                 {{-- <hr> --}}
                         <!-- Start team_static_style -->
-        <section id="Tim" class="team_static_style">
+        <section id="Tim" class="team_static_style team_default_style">
             <div class="container">
 
               <div class="row justify-content-center text-center">
@@ -587,7 +587,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <div class="row justify-content-lg-center">
 
                 <div class="col-md-6 col-lg-3 item">
-                  <div class="item_group">
+                  <div class="item_group hg-person">
                     <div class="img_group">
                         <img src="{{$penguruses->where('id', 2)->first()->ImagePath}}" />
                     </div>
@@ -595,6 +595,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                       <h3>{{$penguruses->where('id', 2)->first()->NamaLengkap}}</h3>
                       <p>{{$penguruses->where('id', 2)->first()->Posisi}}</p>
                     </div>
+                    <div class="social_text">
+                        <a href="{{$penguruses->where('id', 2)->first()->LinkedIn}}">
+                          Linkedin
+                        </a>
+                        <a href="{{$penguruses->where('id', 2)->first()->Instagram}}">
+                          Instagram
+                        </a>
+                        <a href="{{$penguruses->where('id', 2)->first()->Discord}}">
+                          Discord
+                        </a>
+                      </div>
                   </div>
                 </div>
 
@@ -613,6 +624,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                           <h3>{{$penguruses->where('id', 3)->first()->NamaLengkap}}</h3>
                           <p>{{$penguruses->where('id', 3)->first()->Posisi}}</p>
                         </div>
+                        <div class="social_text">
+                            <a href="{{$penguruses->where('id', 3)->first()->LinkedIn}}">
+                                Linkedin
+                              </a>
+                              <a href="{{$penguruses->where('id', 3)->first()->Instagram}}">
+                                Instagram
+                              </a>
+                              <a href="{{$penguruses->where('id', 3)->first()->Discord}}">
+                                Discord
+                              </a>
+                          </div>
                       </div>
                 </div>
 
@@ -625,6 +647,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                           <h3>{{$penguruses->where('id', 4)->first()->NamaLengkap}}</h3>
                           <p>{{$penguruses->where('id', 4)->first()->Posisi}}</p>
                         </div>
+                        <div class="social_text">
+                            <a href="{{$penguruses->where('id', 4)->first()->LinkedIn}}">
+                                Linkedin
+                              </a>
+                              <a href="{{$penguruses->where('id', 4)->first()->Instagram}}">
+                                Instagram
+                              </a>
+                              <a href="{{$penguruses->where('id', 4)->first()->Discord}}">
+                                Discord
+                              </a>
+                          </div>
                       </div>
                 </div>
 
@@ -637,6 +670,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                           <h3>{{$penguruses->where('id', 1)->first()->NamaLengkap}}</h3>
                           <p>{{$penguruses->where('id', 1)->first()->Posisi}}</p>
                         </div>
+                        <div class="social_text">
+                            <a href="{{$penguruses->where('id', 1)->first()->LinkedIn}}">
+                                Linkedin
+                              </a>
+                              <a href="{{$penguruses->where('id', 1)->first()->Instagram}}">
+                                Instagram
+                              </a>
+                              <a href="{{$penguruses->where('id', 1)->first()->Discord}}">
+                                Discord
+                              </a>
+                          </div>
                       </div>
                 </div>
 
@@ -649,6 +693,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                           <h3>{{$penguruses->where('id', 5)->first()->NamaLengkap}}</h3>
                           <p>{{$penguruses->where('id', 5)->first()->Posisi}}</p>
                         </div>
+                        <div class="social_text">
+                            <a href="{{$penguruses->where('id', 5)->first()->LinkedIn}}">
+                                Linkedin
+                              </a>
+                              <a href="{{$penguruses->where('id', 5)->first()->Instagram}}">
+                                Instagram
+                              </a>
+                              <a href="{{$penguruses->where('id', 5)->first()->Discord}}">
+                                Discord
+                              </a>
+                          </div>
                       </div>
                 </div>
 
@@ -662,6 +717,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                           <h3>{{$penguruses->where('id', 6)->first()->NamaLengkap}}</h3>
                           <p>{{$penguruses->where('id', 6)->first()->Posisi}}</p>
                         </div>
+                        <div class="social_text">
+                            <a href="{{$penguruses->where('id', 6)->first()->LinkedIn}}">
+                                Linkedin
+                              </a>
+                              <a href="{{$penguruses->where('id', 6)->first()->Instagram}}">
+                                Instagram
+                              </a>
+                              <a href="{{$penguruses->where('id', 6)->first()->Discord}}">
+                                Discord
+                              </a>
+                          </div>
                       </div>
                 </div>
 

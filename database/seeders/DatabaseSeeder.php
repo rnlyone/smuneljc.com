@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
 
 
         #pengurus 22/23
-        Pengurus::factory()->count(9)->sequence(
+        Pengurus::factory()->count(6)->sequence(
             ['id' => '1', 'Posisi' => 'Ketua Umum (部長)', 'NamaLengkap' => 'Raiqah Zulal Salimah',
              'ImagePath' => 'assetshome/img/persons/raikalainlain.jpeg',
              'LinkedIn' => 'https://www.linkedin.com/in/raiqah-zulal-salimah-186a59244',
@@ -113,21 +113,21 @@ class DatabaseSeeder extends Seeder
 
              ['id' => '4', 'Posisi' => 'Koordinator Divisi Hi (火)', 'NamaLengkap' => 'Ahmad Naufal Patobboi',
              'ImagePath' => 'gallery/manwithcat.jpg',
-             'LinkedIn' => 'https://www.linkedin.com/in/raiqah-zulal-salimah-186a59244',
-             'Discord' => 'http://discordapp.com/users/871008443153125428',
-             'Instagram' => 'https://instagram.com/ree929109'],
+             'LinkedIn' => 'https://www.instagram.com/nooopaall',
+             'Discord' => 'https://www.linkedin.com/in/ahmad-naufal-179a45259',
+             'Instagram' => 'https://www.instagram.com/nooopaall'],
 
              ['id' => '5', 'Posisi' => 'Koordinator Divisi Kaze (風)', 'NamaLengkap' => 'Rainam Nabil Chalid',
              'ImagePath' => 'gallery/legosi.jpg',
-             'LinkedIn' => 'https://www.linkedin.com/in/sri-rezqy-buana-tungga-b00a61244/',
-             'Discord' => 'https://discord.com/users/994991700923666534',
-             'Instagram' => 'https://instagram.com/srirezqyy'],
+             'LinkedIn' => 'https://www.linkedin.com/in/rainam-chalid-981719259',
+             'Discord' => 'http://Discordapp.com/HoHo/8882',
+             'Instagram' => 'https://www.instagram.com/rainam_nabil/'],
 
              ['id' => '6', 'Posisi' => 'Koordinator Divisi Mizu (水)', 'NamaLengkap' => 'Reinheart Silalong Alinan',
              'ImagePath' => 'gallery/thetrain.jpg',
-             'LinkedIn' => 'https://www.linkedin.com/in/aziziah-megga-a3784b244',
-             'Discord' => 'http://discordapp.com/users/875779712574713886',
-             'Instagram' => 'https://www.instagram.com/egha.png/'],
+             'LinkedIn' => 'https://www.linkedin.com/in/reinheart-silalong-alinan-b86717259',
+             'Discord' => 'https://discord.com/users/740163615184912404',
+             'Instagram' => 'https://instagram.com/reinalinan55?igshid=YmMyMTA2M2Y='],
         )->create();
 
 

@@ -26,7 +26,7 @@
     <link rel="canonical" href="https://1.envato.market/frest_admin">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assetsdash/img/favicon/favicon.ico" />
+    <link rel="shortcut icon" href="assetshome/img/favicon.ico" type="image/x-icon" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

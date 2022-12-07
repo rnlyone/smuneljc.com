@@ -467,7 +467,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   </section>
                 <!-- End. works -->
 
-                <section id="Tim" class="gb_team_te margin-t-12 padding-t-15">
+                {{-- <section id="Tim" class="gb_team_te margin-t-12 padding-t-15">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-3 order-3 order-lg-1 mb-3 mb-lg-0">
@@ -569,124 +569,107 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> --}}
                 <!-- End. Team -->
+                {{-- <hr> --}}
+                        <!-- Start team_static_style -->
+        <section id="Tim" class="team_static_style">
+            <div class="container">
 
-                <!-- Start team_overlay_style -->
-                <section class="team_overlay_style team_default_style mt-5 margin-b-6">
-                    <div class="container">
-                        <div class="row justify-content-center text-center">
-                            <div class="col-lg-5">
-                                <div class="title_sections_inner margin-b-5">
-                                    <h2>Tim Administrasi</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3">
-                                <div class="item_group">
-                                    <div class="image_ps">
-                                        <img src="{{$penguruses->where('id', 3)->first()->ImagePath}}" alt="">
+              <div class="row justify-content-center text-center">
+                <div class="col-lg-5">
+                  <div class="title_sections_inner margin-b-5">
+                    {{-- <h2>Pengurus 2022/2023</h2> --}} <hr>
+                  </div>
+                </div>
+              </div>
 
-                                        <div class="content_txt left-side">
-                                            <h3>{{$penguruses->where('id', 3)->first()->NamaLengkap}}</h3>
-                                            <p>{{$penguruses->where('id', 3)->first()->Posisi}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="social_text">
-                                        <a href="{{$penguruses->where('id', 3)->first()->LinkedIn}}">
-                                            Linkedin
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 3)->first()->Discord}}">
-                                            Discord
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 3)->first()->Instagram}}">
-                                            Instagram
-                                        </a>
-                                    </div>
+              <div class="row justify-content-lg-center">
 
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-lg-3">
-                                <div class="item_group">
-                                    <div class="image_ps">
-                                        <img src="{{$penguruses->where('id', 4)->first()->ImagePath}}" alt="">
-
-                                        <div class="content_txt right-side">
-                                            <h3>{{$penguruses->where('id', 4)->first()->NamaLengkap}}</h3>
-                                            <p>{{$penguruses->where('id', 4)->first()->Posisi}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="social_text">
-                                        <a href="{{$penguruses->where('id', 4)->first()->LinkedIn}}" target="_blank">
-                                            Linkedin
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 4)->first()->Discord}}" target="_blank">
-                                            Discord
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 4)->first()->Instagram}}" target="_blank">
-                                            Instagram
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-lg-3">
-                                <div class="item_group">
-                                    <div class="image_ps">
-                                        <img src="{{$penguruses->where('id', 5)->first()->ImagePath}}" alt="">
-
-                                        <div class="content_txt left-side">
-                                            <h3>{{$penguruses->where('id', 5)->first()->NamaLengkap}}</h3>
-                                            <p>{{$penguruses->where('id', 5)->first()->Posisi}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="social_text">
-                                        <a href="{{$penguruses->where('id', 5)->first()->LinkedIn}}" target="_blank">
-                                            Linkedin
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 5)->first()->Discord}}" target="_blank">
-                                            Discord
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 5)->first()->Instagram}}" target="_blank">
-                                            Instagram
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-lg-3">
-                                <div class="item_group">
-                                    <div class="image_ps">
-                                        <img src="{{$penguruses->where('id', 6)->first()->ImagePath}}" alt="">
-
-                                        <div class="content_txt right-side">
-                                            <h3>{{$penguruses->where('id', 6)->first()->NamaLengkap}}</h3>
-                                            <p>{{$penguruses->where('id', 6)->first()->Posisi}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="social_text">
-                                        <a href="{{$penguruses->where('id', 6)->first()->LinkedIn}}" target="_blank">
-                                            Linkedin
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 6)->first()->Discord}}" target="_blank">
-                                            Discord
-                                        </a>
-                                        <a href="{{$penguruses->where('id', 6)->first()->Instagram}}" target="_blank">
-                                            Instagram
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
+                <div class="col-md-6 col-lg-3 item">
+                  <div class="item_group">
+                    <div class="img_group">
+                        <img src="{{$penguruses->where('id', 2)->first()->ImagePath}}" />
                     </div>
-                </section>
-                <!-- End. team_overlay_style -->
+                    <div class="personal_info">
+                      <h3>{{$penguruses->where('id', 2)->first()->NamaLengkap}}</h3>
+                      <p>{{$penguruses->where('id', 2)->first()->Posisi}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 item text-center mx-auto my-auto">
+                  <div class="title_sections_inner">
+                    <h2>Bertemu dengan tim hebat kami.</h2>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 item">
+                    <div class="item_group">
+                        <div class="img_group">
+                            <img src="{{$penguruses->where('id', 3)->first()->ImagePath}}" />
+                        </div>
+                        <div class="personal_info">
+                          <h3>{{$penguruses->where('id', 3)->first()->NamaLengkap}}</h3>
+                          <p>{{$penguruses->where('id', 3)->first()->Posisi}}</p>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 item">
+                    <div class="item_group">
+                        <div class="img_group">
+                            <img src="{{$penguruses->where('id', 4)->first()->ImagePath}}" />
+                        </div>
+                        <div class="personal_info">
+                          <h3>{{$penguruses->where('id', 4)->first()->NamaLengkap}}</h3>
+                          <p>{{$penguruses->where('id', 4)->first()->Posisi}}</p>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 item mx-auto">
+                    <div class="item_group">
+                        <div class="img_group">
+                            <img src="{{$penguruses->where('id', 1)->first()->ImagePath}}" />
+                        </div>
+                        <div class="personal_info">
+                          <h3>{{$penguruses->where('id', 1)->first()->NamaLengkap}}</h3>
+                          <p>{{$penguruses->where('id', 1)->first()->Posisi}}</p>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 item">
+                    <div class="item_group">
+                        <div class="img_group">
+                            <img src="{{$penguruses->where('id', 5)->first()->ImagePath}}" />
+                        </div>
+                        <div class="personal_info">
+                          <h3>{{$penguruses->where('id', 5)->first()->NamaLengkap}}</h3>
+                          <p>{{$penguruses->where('id', 5)->first()->Posisi}}</p>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="w-100 d-none d-md-block"></div>
+                <div class="col-md-6 col-lg-3 item">
+                    <div class="item_group">
+                        <div class="img_group">
+                            <img src="{{$penguruses->where('id', 6)->first()->ImagePath}}" />
+                        </div>
+                        <div class="personal_info">
+                          <h3>{{$penguruses->where('id', 6)->first()->NamaLengkap}}</h3>
+                          <p>{{$penguruses->where('id', 6)->first()->Posisi}}</p>
+                        </div>
+                      </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+          <!-- End. team_static_style -->
+
 
 
                 <!-- Start Testimonial -->

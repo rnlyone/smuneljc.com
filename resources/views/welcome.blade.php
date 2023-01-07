@@ -174,7 +174,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <!-- Start About -->
                 <section class="abo_company">
                     <div class="container">
-                        <div class="row">
+                        <div class="row justify-content-center">
                             <div class="col-lg-4 emo mb-4 mb-lg-0">
                                 <div class="gq_item bg-blue">
                                     <span class="d-block c-white font-s-16">Ekstrakulikuler Kreatif</span>

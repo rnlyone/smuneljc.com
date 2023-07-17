@@ -149,7 +149,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pendaftars as $i => $p)
+                            @foreach (array_values($pendaftars->where('tahun_daftar', $settings->where('NamaSetting', 'Tahun')->first()->Value)->all()) as $i => $p)
                             <tr>
                                 <td>{{$i+1}}</td>
                                 <td>{{$p->NamaLengkap}}</td>
@@ -174,7 +174,7 @@
     </div>
 </div>
 
-@foreach ($pendaftars as $p)
+@foreach ($pendaftars->where('tahun_daftar', $settings->where('NamaSetting', 'Tahun')->first()->Value) as $p)
 <div class="modal modal-transparent fade" id="modalpin{{$p->NISN}}" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">

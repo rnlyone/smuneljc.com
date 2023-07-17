@@ -14,7 +14,7 @@
                   <div class="card-body">
                     <div class="row align-items-end">
                       <div class="col-6">
-                        <h1 class="display-6 text-primary mb-2 pt-3 pb-1">{{$total2022}}</h1>
+                        <h1 class="display-6 text-primary mb-2 pt-3 pb-1">{{isset($totaldaftarBiasa[$tahunsekarang]) ? $totaldaftarBiasa[$tahunsekarang] : 0}}</h1>
                         <small class="d-block mb-3">Orang Yang terdaftar,<br>Lihat Detailnya.</small>
                         <a href="/pendaftar" class="btn btn-sm btn-primary">Lihat Pendaftar</a>
                       </div>

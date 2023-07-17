@@ -17,6 +17,7 @@ class Pendaftar extends Model
         'JK',
         'NoWA',
         'Instagram',
-        'PIN'
+        'PIN',
+        'tahun_daftar'
     ];
 }

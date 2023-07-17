@@ -43,25 +43,55 @@ class UserController extends Controller
     {
         $pagetitle = 'dashboard';
 
+        $tahunsekarang = Setting::where('NamaSetting', 'Tahun')->first()->Value;
+
         #barchart
         $years = json_encode([2017, 2018, 2019, 2020, 2021, 2022]);
-        $total2022 = Pendaftar::all()->count();
-        $totaldaftar = json_encode([32, 19, 27, 20, 41, $total2022]);
+
+
+        $totaldaftar = [2017 => 32, 2018 => 19, 2019 => 27, 2020 => 20, 2021 =>  41];
+
+
+        // Ambil tahun-tahun unik dari database
+        $existingYears = json_decode($years);
+        $years = Pendaftar::distinct('tahun_daftar')->pluck('tahun_daftar')->toArray();
+
+        // Tambahkan tahun-tahun unik yang belum ada
+        foreach ($years as $year) {
+            if (!in_array($year, $existingYears)) {
+                $existingYears[] = $year;
+            }
+        }
+
+        // Hitung total pendaftar untuk setiap tahun
+        foreach ($years as $year) {
+            $count = Pendaftar::where('tahun_daftar', $year)->count();
+            $totaldaftar[$year] = $count;
+        }
+
+        // Mengubah data ke dalam format JSON
+        $yearsJson = json_encode($existingYears);
+        $totaldaftarnokey = array_values($totaldaftar);
+        $totaldaftarJson = json_encode($totaldaftarnokey);
+        // dd($totaldaftar);
+
 
         #doughnutchart
         try {
-            $pria = Pendaftar::where('JK', 'pria')->count() / $total2022 * 100;
+            $pria = Pendaftar::where('JK', 'pria')->
+                    where('tahun_daftar', $tahunsekarang)->count() / $totaldaftar[$tahunsekarang] * 100;
         } catch (\Throwable $th) {
             $pria = 0;
         }
 
         try {
-            $wanita = Pendaftar::where('JK', 'wanita')->count() / $total2022 * 100;
+            $wanita = Pendaftar::where('JK', 'wanita')->
+                    where('tahun_daftar', $tahunsekarang)->count() / $totaldaftar[$tahunsekarang] * 100;
         } catch (\Throwable $th) {
             $wanita = 0;
         }
-        $p = Pendaftar::where('JK', 'pria')->count();
-        $w = Pendaftar::where('JK', 'wanita')->count();
+        $p = Pendaftar::where('JK', 'pria')->where('tahun_daftar', $tahunsekarang)->count();
+        $w = Pendaftar::where('JK', 'wanita')->where('tahun_daftar', $tahunsekarang)->count();
         $datajk = json_encode([$pria, $wanita]);
 
         $latest5 = Pendaftar::orderBy('id', 'desc')->take(5)->get();
@@ -69,18 +99,19 @@ class UserController extends Controller
         $pesandefault = Setting::where('NamaSetting', 'PesanDefault')->first();
 
 
-
+        // dd($totaldaftarJson, $yearsJson);
 
 
         return view('auth.dashboard', [
             'pagetitle' => $pagetitle,
-            'years' => $years,
-            'totaldaftar' => $totaldaftar,
-            'total2022' => $total2022,
+            'years' => $yearsJson,
+            'totaldaftar' => $totaldaftarJson,
+            'totaldaftarBiasa' => $totaldaftar,
             'datajk' => $datajk,
             'totalp' => $p,
             'totalw' => $w,
             'latest5' => $latest5,
+            'tahunsekarang' => $tahunsekarang,
             'pesandefault' => $pesandefault]);
     }
 

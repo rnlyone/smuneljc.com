@@ -60,6 +60,7 @@ class PendaftarController extends Controller
         // dd($request);
 
         $KodeDaftar = Setting::where('NamaSetting', 'KodeDaftar')->first()->Value;
+        $TahunDaftar = Setting::where('NamaSetting', 'Tahun')->first()->Value;
         $rules = [
             'PIN' => [
                 'min:6'
@@ -89,6 +90,7 @@ class PendaftarController extends Controller
                 'NoWA' => $request->NoWA,
                 'Instagram' => $request->Instagram,
                 'PIN' => $request->PIN,
+                'tahun_daftar' => $TahunDaftar
             ]);
             return back()->with('success', 'Yay, Formulir Kamu Terkirim.');
         } catch (\Throwable $th) {

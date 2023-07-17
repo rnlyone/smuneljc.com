@@ -191,15 +191,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             </div>
                             <div class="col-lg-4 emo mb-4 mb-lg-0">
                                 <div class="gq_item ill_item">
-                                    <span class="d-block c-dark font-s-16">Prestasifolio</span>
-                                    <img class="img-fluid ill_sec" src="assetshome/img/agency/benkyochibi.png" />
-                                    <div class="title_sections">
-                                        <h2 class="c-dark">Ekstrakulikuler Berprestasi</h2>
-                                        <p class="c-gray">
-                                            <span class="font-weight-bold">16</span> gelar juara telah kami
-                                            dapatkan dalam kurun waktu 4 tahun terakhir.
-                                        </p>
-                                    </div>
+                                    <a href="https://www.instagram.com/stories/highlights/17989596841769338/" target="_blank">
+                                        <span class="d-block c-dark font-s-16">Prestasifolio</span>
+                                        <img class="img-fluid ill_sec" src="assetshome/img/agency/benkyochibi.png" />
+                                        <div class="title_sections">
+                                            <h2 class="c-dark">Ekstrakulikuler Berprestasi</h2>
+                                            <p class="c-gray">
+                                                <span class="font-weight-bold">35</span> gelar juara telah kami
+                                                dapatkan dalam kurun waktu 5 tahun terakhir.
+                                            </p>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-lg-4 emo mb-4 mb-lg-0">
@@ -284,17 +286,17 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                     </div>
                                     <div class="col-md-5 ml-auto">
                                         <div class="item_logo" data-aos="fade-up" data-aos-delay="100">
-                                            <img src="assetshome/img/logos/gakuensai.png" />
+                                            <img src="assetshome/img/logos/gakuensai.svg" />
                                             <p class="c-gray">
-                                                Festival Sekolah Gakuensai 2019.
+                                                Festival Sekolah Gakuensai 2023.
                                             </p>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="item_logo" data-aos="fade-up" data-aos-delay="200">
-                                            <img src="assetshome/img/logos/kinenbilogo.png" />
+                                            <img src="assetshome/img/logos/5thkinenbi.svg" />
                                             <p class="c-gray">
-                                                Ulang Tahun SmunelJC yang ke 4 Tahun.
+                                                Ulang Tahun SmunelJC yang ke 5 Tahun.
                                             </p>
                                         </div>
                                     </div>
@@ -386,16 +388,16 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                         </div>
                         <div class="row">
                             <div class="col-lg-8">
-                                <a href="#" class="item_ig item_mywork">
+                                <a href="https://gakuensai.smuneljc.com" class="item_ig item_mywork">
                                     <div class="mg_img">
                                         <img class="item_pic" src="assetshome/img/agency/0321.png" />
                                     </div>
                                     <div class="info_work">
                                         <h4>
-                                            Tenji Kyanpu ditayangkan live di Youtube dengan konsep Podcasting.
+                                            Gakuensai ditayangkan live di Gakuensai App.
                                         </h4>
                                         <p>
-                                            Tenji Kyanpu 2022
+                                            Gakuensai 2023
                                         </p>
                                         <div class="link_view">Show Project</div>
                                     </div>
@@ -412,14 +414,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                             </div>
                                         </button>
                                     </div>
-                                    <a href="#" class="d-block">
+                                    <a href="https://gakuensai.smuneljc.com" class="d-block">
                                         <div class="mg_img">
                                             <img class="item_pic" src="assetshome/img/agency/097.png" />
                                         </div>
                                         <div class="info_work">
-                                            <h4>Aplikasi Web Tenji Kyanpu.</h4>
+                                            <h4>Aplikasi Web Gakuensai.</h4>
                                             <p>
-                                                Tenji Kyanpu 2022
+                                                Gakuensai 2023
                                             </p>
                                             <div class="link_view">Show Project</div>
                                         </div>

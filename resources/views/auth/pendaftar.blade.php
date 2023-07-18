@@ -30,7 +30,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                          @foreach ($pendaftars as $i => $p)
+                          @foreach (array_values($pendaftars->where('tahun_daftar', $settings->where('NamaSetting', 'Tahun')->first()->Value)->all()) as $i => $p)
                           <tr>
                               <td>{{$i+1}}</td>
                               <td>{{$p->NamaLengkap}}</td>

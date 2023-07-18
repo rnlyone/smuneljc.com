@@ -46,7 +46,7 @@ class UserController extends Controller
         $tahunsekarang = Setting::where('NamaSetting', 'Tahun')->first()->Value;
 
         #barchart
-        $years = json_encode([2017, 2018, 2019, 2020, 2021, 2022]);
+        $years = json_encode([2017, 2018, 2019, 2020, 2021]);
 
 
         $totaldaftar = [2017 => 32, 2018 => 19, 2019 => 27, 2020 => 20, 2021 =>  41];
@@ -59,7 +59,7 @@ class UserController extends Controller
         // Tambahkan tahun-tahun unik yang belum ada
         foreach ($years as $year) {
             if (!in_array($year, $existingYears)) {
-                $existingYears[] = $year;
+                $existingYears[] = (int) $year;
             }
         }
 

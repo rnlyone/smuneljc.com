@@ -20,10 +20,12 @@ class PendaftarController extends Controller
         $pagetitle = 'Detail Pendaftaran';
         $pendaftars = Pendaftar::all();
         $pesandefault = Setting::where('NamaSetting', 'PesanDefault')->first();
+        $settings = Setting::all();
         return view('auth.pendaftar', [
             'pagetitle' => $pagetitle,
             'pendaftars' => $pendaftars,
-            'pesandefault' => $pesandefault]);
+            'pesandefault' => $pesandefault,
+            'settings' => $settings]);
     }
 
     public function coming_soon()

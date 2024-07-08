@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departemen;
 use App\Models\Gallery;
 use App\Models\Pages;
 use App\Models\Pendaftar;
 use App\Models\Pengurus;
+use App\Models\Periode;
 use App\Models\Setting;
 use App\Models\Socials;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -92,43 +95,43 @@ class DatabaseSeeder extends Seeder
 
 
         #pengurus 22/23
-        Pengurus::factory()->count(6)->sequence(
-            ['id' => '1', 'Posisi' => 'Ketua Umum (部長)', 'NamaLengkap' => 'Raiqah Zulal Salimah',
-             'ImagePath' => 'assetshome/img/persons/raikalainlain.jpeg',
-             'LinkedIn' => 'https://www.linkedin.com/in/raiqah-zulal-salimah-186a59244',
-             'Discord' => 'http://discordapp.com/users/871008443153125428',
-             'Instagram' => 'https://instagram.com/ree929109'],
+        // Pengurus::factory()->count(6)->sequence(
+        //     ['id' => '1', 'Posisi' => 'Ketua Umum (部長)', 'NamaLengkap' => 'Raiqah Zulal Salimah',
+        //      'ImagePath' => 'assetshome/img/persons/raikalainlain.jpeg',
+        //      'LinkedIn' => 'https://www.linkedin.com/in/raiqah-zulal-salimah-186a59244',
+        //      'Discord' => 'http://discordapp.com/users/871008443153125428',
+        //      'Instagram' => 'https://instagram.com/ree929109'],
 
-             ['id' => '2', 'Posisi' => 'Sekertaris Umum', 'NamaLengkap' => 'Jessyca Natasya Kaunang',
-             'ImagePath' => 'assetshome/img/persons/jejelainlain.jpeg',
-             'LinkedIn' => ' https://www.linkedin.com/in/jessyca-natasya-kaunang-751848244',
-             'Discord' => 'http://discordapp.com/users949007545253646336',
-             'Instagram' => 'https://instagram.com/jscanatsha_'],
+        //      ['id' => '2', 'Posisi' => 'Sekertaris Umum', 'NamaLengkap' => 'Jessyca Natasya Kaunang',
+        //      'ImagePath' => 'assetshome/img/persons/jejelainlain.jpeg',
+        //      'LinkedIn' => ' https://www.linkedin.com/in/jessyca-natasya-kaunang-751848244',
+        //      'Discord' => 'http://discordapp.com/users949007545253646336',
+        //      'Instagram' => 'https://instagram.com/jscanatsha_'],
 
-             ['id' => '3', 'Posisi' => 'Bendahara Umum', 'NamaLengkap' => 'Aziziah Megga H.',
-             'ImagePath' => 'assetshome/img/persons/egalainlain.jpeg',
-             'LinkedIn' => 'https://www.linkedin.com/in/aziziah-megga-a3784b244',
-             'Discord' => 'http://discordapp.com/users/875779712574713886',
-             'Instagram' => 'https://www.instagram.com/egha.png/'],
+        //      ['id' => '3', 'Posisi' => 'Bendahara Umum', 'NamaLengkap' => 'Aziziah Megga H.',
+        //      'ImagePath' => 'assetshome/img/persons/egalainlain.jpeg',
+        //      'LinkedIn' => 'https://www.linkedin.com/in/aziziah-megga-a3784b244',
+        //      'Discord' => 'http://discordapp.com/users/875779712574713886',
+        //      'Instagram' => 'https://www.instagram.com/egha.png/'],
 
-             ['id' => '4', 'Posisi' => 'Koordinator Divisi Hi (火)', 'NamaLengkap' => 'Ahmad Naufal Patobboi',
-             'ImagePath' => 'gallery/manwithcat.jpg',
-             'LinkedIn' => 'https://www.instagram.com/nooopaall',
-             'Discord' => 'https://www.linkedin.com/in/ahmad-naufal-179a45259',
-             'Instagram' => 'https://www.instagram.com/nooopaall'],
+        //      ['id' => '4', 'Posisi' => 'Koordinator Divisi Hi (火)', 'NamaLengkap' => 'Ahmad Naufal Patobboi',
+        //      'ImagePath' => 'gallery/manwithcat.jpg',
+        //      'LinkedIn' => 'https://www.instagram.com/nooopaall',
+        //      'Discord' => 'https://www.linkedin.com/in/ahmad-naufal-179a45259',
+        //      'Instagram' => 'https://www.instagram.com/nooopaall'],
 
-             ['id' => '5', 'Posisi' => 'Koordinator Divisi Kaze (風)', 'NamaLengkap' => 'Rainam Nabil Chalid',
-             'ImagePath' => 'gallery/legosi.jpg',
-             'LinkedIn' => 'https://www.linkedin.com/in/rainam-chalid-981719259',
-             'Discord' => 'http://Discordapp.com/HoHo/8882',
-             'Instagram' => 'https://www.instagram.com/rainam_nabil/'],
+        //      ['id' => '5', 'Posisi' => 'Koordinator Divisi Kaze (風)', 'NamaLengkap' => 'Rainam Nabil Chalid',
+        //      'ImagePath' => 'gallery/legosi.jpg',
+        //      'LinkedIn' => 'https://www.linkedin.com/in/rainam-chalid-981719259',
+        //      'Discord' => 'http://Discordapp.com/HoHo/8882',
+        //      'Instagram' => 'https://www.instagram.com/rainam_nabil/'],
 
-             ['id' => '6', 'Posisi' => 'Koordinator Divisi Mizu (水)', 'NamaLengkap' => 'Reinheart Silalong Alinan',
-             'ImagePath' => 'assetshome/img/persons/renhar.jpeg',
-             'LinkedIn' => 'https://www.linkedin.com/in/reinheart-silalong-alinan-b86717259',
-             'Discord' => 'https://discord.com/users/740163615184912404',
-             'Instagram' => 'https://instagram.com/reinalinan55?igshid=YmMyMTA2M2Y='],
-        )->create();
+        //      ['id' => '6', 'Posisi' => 'Koordinator Divisi Mizu (水)', 'NamaLengkap' => 'Reinheart Silalong Alinan',
+        //      'ImagePath' => 'assetshome/img/persons/renhar.jpeg',
+        //      'LinkedIn' => 'https://www.linkedin.com/in/reinheart-silalong-alinan-b86717259',
+        //      'Discord' => 'https://discord.com/users/740163615184912404',
+        //      'Instagram' => 'https://instagram.com/reinalinan55?igshid=YmMyMTA2M2Y='],
+        // )->create();
 
 
         // Gallery::factory()->count(6)->sequence(
@@ -161,6 +164,33 @@ class DatabaseSeeder extends Seeder
         //      'NoWA' => '081354000500', 'Instagram' => 'muh.nabill_t', 'PIN' => '123456'],
         //     ['NamaLengkap' => 'Rangga Afrianza', 'NISN' => '3234567890', 'Kelas' => 'X Bahasa', 'JK' => 'pria',
         //      'NoWA' => '081354000500', 'Instagram' => 'muh.nabill_t', 'PIN' => '123456'],
+        // )->create();
+
+        // Departemen::factory()->count(6)->sequence(
+        //     ['nama' => 'Seinen (青年)', 'level' => 1],
+        //     ['nama' => 'Hi (火)', 'level' => 2],
+        //     ['nama' => 'Kaze (風)', 'level' => 2],
+        //     ['nama' => 'Mizu (水)', 'level' => 2],
+        //     ['nama' => 'Honbu (本部)', 'level' => 3],
+        //     ['nama' => 'Daihyō-kai (代表会)', 'level' => 1],
+        // )->create();
+
+        // Status::factory()->count(11)->sequence(
+        //     ['status' => 'Taikai', 'level' => 0],
+        //     ['status' => 'Hikōshiki', 'level' => 1],
+        //     ['status' => 'Hikatsudō', 'level' => 1],
+        //     ['status' => 'Kai-in', 'level' => 2],
+        //     ['status' => 'Yaku-in', 'level' => 3],
+        //     ['status' => 'Kyoku-chō', 'level' => 4],
+        //     ['status' => 'Kaikei', 'level' => 4],
+        //     ['status' => 'Hisho', 'level' => 4],
+        //     ['status' => 'Kaichō', 'level' => 5],
+        //     ['status' => 'Shūryō-sei', 'level' => 6],
+        //     ['status' => 'Sotsugyō-sei', 'level' => 2],
+        // )->create();
+
+        // Periode::factory()->count(1)->sequence(
+        //     ['angkatan' => 'Mirai', 'tahun_mulai' => 2023],
         // )->create();
     }
 }

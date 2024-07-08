@@ -18,9 +18,11 @@ class PengurusController extends Controller
     {
         $pagetitle = 'Detail Pengurus';
         $pengurus = Pengurus::all();
+        $settings = Setting::all();
         return view('auth.pengurus', [
             'pagetitle' => $pagetitle,
-            'pengurus' => $pengurus,]);
+            'pengurus' => $pengurus,
+            'settings' => $settings]);
     }
 
     /**

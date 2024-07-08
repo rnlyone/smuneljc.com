@@ -84,6 +84,20 @@
           <div data-i18n="Settings">Settings</div>
         </a>
       </li>
+
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">Katsudo</span></li>
+      <li class="menu-item {{$status ?? ''}}">
+        <a href="{{route('status.fadmin', ['tahun' => $settings->where('NamaSetting', 'Tahun')->first()->Value])}}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-receipt"></i>
+          <div data-i18n="Status Anggota">Status Anggota</div>
+        </a>
+      </li>
+      <li class="menu-item {{$departemen ?? ''}}">
+        <a href="{{route('departemen.fadmin', ['tahun' => $settings->where('NamaSetting', 'Tahun')->first()->Value])}}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-receipt"></i>
+          <div data-i18n="Departemen Anggota">Departemen</div>
+        </a>
+      </li>
     </ul>
 
 

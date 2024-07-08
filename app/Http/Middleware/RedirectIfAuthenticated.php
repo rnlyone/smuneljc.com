@@ -23,6 +23,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if ($guard == 'pendaftar'){
+                    return redirect(RouteServiceProvider::KTDHOME);
+                }
                 return redirect(RouteServiceProvider::HOME);
             }
         }

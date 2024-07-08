@@ -18,9 +18,11 @@ class GalleryController extends Controller
     {
         $pagetitle = 'Gallery';
         $galeri = Gallery::all();
+        $settings = Setting::all();
         return view('auth.galeri', [
             'pagetitle' => $pagetitle,
-            'galeri' => $galeri]);
+            'galeri' => $galeri,
+            'settings' => $settings]);
     }
 
     /**

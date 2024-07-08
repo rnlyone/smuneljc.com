@@ -26,7 +26,7 @@ class UserController extends Controller
 
         if (Auth::attempt($attr)){
             Auth::login($user);
-        return redirect()->intended('/dash')->with('sukses', "Login Sukses");
+            return redirect()->intended('/dash')->with('sukses', "Login Sukses");
         } else {
             return back()->with('gagal', 'Username / Password Salah!');
         }
@@ -101,6 +101,8 @@ class UserController extends Controller
 
         // dd($totaldaftarJson, $yearsJson);
 
+        $settings = Setting::all();
+
 
         return view('auth.dashboard', [
             'pagetitle' => $pagetitle,
@@ -112,7 +114,8 @@ class UserController extends Controller
             'totalw' => $w,
             'latest5' => $latest5,
             'tahunsekarang' => $tahunsekarang,
-            'pesandefault' => $pesandefault]);
+            'pesandefault' => $pesandefault,
+            'settings' => $settings]);
     }
 
 

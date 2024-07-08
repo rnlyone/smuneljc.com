@@ -117,7 +117,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             </ul>
                             @guest
                                 <div class="nav_account btn_demo2">
-                                    <a href="daftar" class="btn btn_sm_primary effect-letter rounded-8">
+                                    <a href="{{route("daftar.form")}}" class="btn btn_sm_primary effect-letter rounded-8">
                                         Daftar
                                     </a>
                                 </div>

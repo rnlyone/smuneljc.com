@@ -14,7 +14,9 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        if (! $request->expectsJson() && str_contains($request->getPathInfo(), "/ktd")) {
+            return route('flogin');
+        } else{
             return route('login');
         }
     }

@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'pendaftar' => [ // Guard khusus untuk model Pendaftar
+            'driver' => 'session',
+            'provider' => 'pendaftars',
+        ],
     ],
 
     /*
@@ -69,6 +74,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'pendaftars' => [ // Provider khusus untuk model Pendaftar
+            'driver' => 'eloquent',
+            'model' => App\Models\Pendaftar::class,
+        ],
     ],
 
     /*

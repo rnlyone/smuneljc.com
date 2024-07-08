@@ -20,10 +20,10 @@ return new class extends Migration
             $table->text('foto_anggota')->default('default.jpg');
 
             // Definisi foreign key ke tabel Departemen
-            $table->foreign('departemen')->references('id')->on('departemens')->onDelete('cascade');
+            $table->foreign('departemen')->references('id')->on('departemens')->onDelete('cascade')->default(5);
 
             // Definisi foreign key ke tabel Status
-            $table->foreign('status')->references('id')->on('statuses')->onDelete('cascade');
+            $table->foreign('status')->references('id')->on('statuses')->onDelete('cascade')->default(1);
         });
     }
 

@@ -166,28 +166,28 @@ class DatabaseSeeder extends Seeder
         //      'NoWA' => '081354000500', 'Instagram' => 'muh.nabill_t', 'PIN' => '123456'],
         // )->create();
 
-        // Departemen::factory()->count(6)->sequence(
-        //     ['nama' => 'Seinen (青年)', 'level' => 1],
-        //     ['nama' => 'Hi (火)', 'level' => 2],
-        //     ['nama' => 'Kaze (風)', 'level' => 2],
-        //     ['nama' => 'Mizu (水)', 'level' => 2],
-        //     ['nama' => 'Honbu (本部)', 'level' => 3],
-        //     ['nama' => 'Daihyō-kai (代表会)', 'level' => 1],
-        // )->create();
+        Departemen::factory()->count(6)->sequence(
+            ['nama' => 'Seinen (青年)', 'level' => 1],
+            ['nama' => 'Hi (火)', 'level' => 2],
+            ['nama' => 'Kaze (風)', 'level' => 2],
+            ['nama' => 'Mizu (水)', 'level' => 2],
+            ['nama' => 'Honbu (本部)', 'level' => 3],
+            ['nama' => 'Daihyō-kai (代表会)', 'level' => 1],
+        )->create();
 
-        // Status::factory()->count(11)->sequence(
-        //     ['status' => 'Taikai', 'level' => 0],
-        //     ['status' => 'Hikōshiki', 'level' => 1],
-        //     ['status' => 'Hikatsudō', 'level' => 1],
-        //     ['status' => 'Kai-in', 'level' => 2],
-        //     ['status' => 'Yaku-in', 'level' => 3],
-        //     ['status' => 'Kyoku-chō', 'level' => 4],
-        //     ['status' => 'Kaikei', 'level' => 4],
-        //     ['status' => 'Hisho', 'level' => 4],
-        //     ['status' => 'Kaichō', 'level' => 5],
-        //     ['status' => 'Shūryō-sei', 'level' => 6],
-        //     ['status' => 'Sotsugyō-sei', 'level' => 2],
-        // )->create();
+        Status::factory()->count(11)->sequence(
+            ['status' => 'Taikai', 'level' => 0],
+            ['status' => 'Hikōshiki', 'level' => 1],
+            ['status' => 'Hikatsudō', 'level' => 1],
+            ['status' => 'Kai-in', 'level' => 2],
+            ['status' => 'Yaku-in', 'level' => 3],
+            ['status' => 'Kyoku-chō', 'level' => 4],
+            ['status' => 'Kaikei', 'level' => 4],
+            ['status' => 'Hisho', 'level' => 4],
+            ['status' => 'Kaichō', 'level' => 5],
+            ['status' => 'Shūryō-sei', 'level' => 6],
+            ['status' => 'Sotsugyō-sei', 'level' => 2],
+        )->create();
 
         // Periode::factory()->count(1)->sequence(
         //     ['angkatan' => 'Mirai', 'tahun_mulai' => 2023],

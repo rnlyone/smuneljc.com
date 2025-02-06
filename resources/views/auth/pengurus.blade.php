@@ -34,7 +34,7 @@
                               <td>{{$p->NamaLengkap}}</td>
                               <td>{{$p->Posisi}}</td>
                               <td><img src="{{$p->ImagePath}}" width="50" alt="{{$p->ImagePath}}"></td>
-                              <td><a href="/daftar/{{$p->NISN}}/edit" class="btn btn-xs btn-outline-secondary">
+                              <td><a href="{{route('pengurus.edit', ['penguru' => $p->id])}}" class="btn btn-xs btn-outline-secondary">
                                   <i class="tf-icons bx bx-edit-alt"></i><span class="ms-2">Edit</span>
                                 </a></td>
                           </tr>

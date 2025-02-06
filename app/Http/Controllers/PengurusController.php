@@ -63,9 +63,16 @@ class PengurusController extends Controller
      * @param  \App\Models\Pengurus  $pengurus
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pengurus $pengurus)
+    public function edit($pengurus)
     {
-        //
+        $orang = Pengurus::find($pengurus);
+        $pagetitle = 'Detail Pengurus';
+        $settings = Setting::all();
+        return view('auth.detail.pengurus', [
+            'pagetitle' => $pagetitle,
+            'orang' => $orang,
+            'settings' => $settings
+        ]);
     }
 
     /**
@@ -75,9 +82,36 @@ class PengurusController extends Controller
      * @param  \App\Models\Pengurus  $pengurus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pengurus $pengurus)
+    public function update(Request $request, $pengurus)
     {
-        //
+        $p = Pengurus::find($pengurus);
+        $request->validate([
+            'NamaLengkap' => 'required|string|max:255',
+            'ImagePath' => 'nullable|mimes:jpeg,png,jpg,gif,svg|dimensions:max_width=1100,max_height=1100',
+            'LinkedIn' => 'nullable|string|max:255',
+            'Discord' => 'nullable|string|max:255',
+            'Instagram' => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('ImagePath')) {
+            $file = $request->file('ImagePath');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('images');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $p->ImagePath = 'images/' . $filename;
+        }
+
+        $p->NamaLengkap = $request->NamaLengkap;
+        $p->LinkedIn = $request->LinkedIn;
+        $p->Discord = $request->Discord;
+        $p->Instagram = $request->Instagram;
+
+        $p->save();
+
+        return redirect()->route('pengurus.index')->with('success', 'Pengurus updated successfully');
     }
 
     /**

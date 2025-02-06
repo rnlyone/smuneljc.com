@@ -37,10 +37,10 @@
                               <td>{{$p->NISN}}</td>
                               <td>{{$p->Kelas}}</td>
                               <td><a href="https://api.whatsapp.com/send?phone=62{{$p->NoWA}}&text=Hai%20{{$p->NamaLengkap}}%2C%0A{{$pesandefault->Value}}" target="_blank" class="btn btn-xs btn-outline-success">
-                                <i class="tf-icons bx bx-phone-call"></i><span class="ms-2">WA</span>
+                                <i class="tf-icons bx bx-phone-call"></i><span class="ms-2">{{$p->NoWA}}</span>
                               </a></td>
                               <td><a href="https://instagram.com/{{$p->Instagram}}" target="_blank" class="btn btn-xs btn-outline-primary">
-                                <i class="tf-icons bx bx-camera-home"></i><span class="ms-2">IG</span>
+                                <i class="tf-icons bx bx-camera-home"></i><span class="ms-2">{{$p->Instagram}}</span>
                               </a></td>
                               <td><a href="/daftar/{{$p->NISN}}/edit" class="btn btn-xs btn-outline-secondary">
                                   <i class="tf-icons bx bx-edit-alt"></i><span class="ms-2">Edit</span>

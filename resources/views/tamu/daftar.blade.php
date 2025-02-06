@@ -152,7 +152,17 @@
                             @foreach (array_values($pendaftars->where('tahun_daftar', $settings->where('NamaSetting', 'Tahun')->first()->Value)->all()) as $i => $p)
                             <tr>
                                 <td>{{$i+1}}</td>
-                                <td>{{$p->NamaLengkap}}</td>
+                                <td>
+                                    @php
+                                        $nameLength = strlen($p->NamaLengkap);
+                                        if ($nameLength > 6) {
+                                            $outputName = substr($p->NamaLengkap, 0, 3) . str_repeat('*', $nameLength - 6) . substr($p->NamaLengkap, -3);
+                                        } else {
+                                            $outputName = $p->NamaLengkap;
+                                        }
+                                    @endphp
+                                    {{$outputName}}
+                                </td>
                                 <td>
                                     @php
                                         $count = strlen($p->NISN) - 6;

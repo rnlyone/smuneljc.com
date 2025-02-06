@@ -9,6 +9,8 @@ class Pengurus extends Model
 {
     use HasFactory;
 
+    protected $table = 'penguruses';
+
     protected $fillable = [
         'id',
         'Posisi',

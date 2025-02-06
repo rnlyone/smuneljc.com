@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('logout', [UserController::class, 'logout']);
     Route::get('/pendaftar', [PendaftarController::class, 'index'])->name('daftar.index');
     Route::get('/galeri', [GalleryController::class, 'index'])->name('galeri.index');
-    Route::get('/pengurus', [PengurusController::class, 'index'])->name('pengurus.index');
+    Route::resource('/pengurus', PengurusController::class)->except('show');
     Route::get('/daftar/{nisn}/edit', [PendaftarController::class, 'edit'])->name('daftar.edit');
     Route::resource('setting', SettingController::class)->except('update');
     Route::post('setting/update', [SettingController::class, 'update'])->name('setting.update');

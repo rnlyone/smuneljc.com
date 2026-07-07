@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use App\Models\Pages;
 use App\Models\Pengurus;
+use App\Models\Periode;
 use App\Models\Setting;
 use App\Models\Socials;
 use Illuminate\Http\Request;
@@ -20,12 +21,14 @@ class FrontController extends Controller
         $gallerys = Gallery::all();
         $pages = Pages::all();
         $socials = Socials::all();
+        $currentPeriode = Periode::latest('id')->first();
         return view('welcome', [
             'penguruses' => $penguruses,
             'settings' => $settings,
             'gallerys' => $gallerys,
             'pages' => $pages,
-            'socials' => $socials
+            'socials' => $socials,
+            'currentPeriode' => $currentPeriode
         ]);
     }
 

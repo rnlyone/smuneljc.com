@@ -108,7 +108,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                     <a class="nav-link" href="#Program">Program Kerja</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#Divisi">Divisi</a>
+                                    <a class="nav-link" href="#Departemen">Departemen</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Tim">Tim Kami</a>
@@ -309,18 +309,18 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
                 <!-- Start Services -->
                 <section class="products_section product_demo2 features_hosting service_demo3 margin-t-8 padding-t-10"
-                    id="Divisi">
+                    id="Departemen">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-4 margin-b-3">
                                 <div class="title_sections mb-0">
                                     <div class="before_title">
-                                        <span>Tiga Divisi</span>
+                                        <span>Tiga Departemen</span>
                                         <span class="c-blue">Peminatan</span>
                                     </div>
                                     <h2>Fokuskan minatmu, kembangkan bakatmu.</h2>
                                     <p>
-                                        3 Divisi yang siap membuat kamu menjadi lebih fokus
+                                        3 Departemen yang siap membuat kamu menjadi lebih fokus
                                         mengembangkan minatmu dalam budaya jepang.
                                     </p>
                                 </div>
@@ -332,9 +332,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                             <div class="icon_t">
                                                 <span class="font-weight-bold text-white">火</span>
                                             </div>
-                                            <h3>Divisi Hi</h3>
+                                            <h3>Departemen Hi</h3>
                                             <p>
-                                                Divisi ini fokus dalam pengembangan diri anggota dalam hal seni, visual,
+                                                Departemen ini fokus dalam pengembangan diri anggota dalam hal seni, visual,
                                                 musik, dsb.
                                             </p>
                                         </div>
@@ -344,9 +344,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                             <div class="icon_t">
                                                 <span class="font-weight-bold text-white">風</span>
                                             </div>
-                                            <h3>Divisi Kaze</h3>
+                                            <h3>Departemen Kaze</h3>
                                             <p>
-                                                Divisi ini berfokus dalam pengembangan soft-skill anggota dalam
+                                                Departemen ini berfokus dalam pengembangan soft-skill anggota dalam
                                                 memanajemen organisasi
                                                 layaknya di Jepang.
                                             </p>
@@ -357,9 +357,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                             <div class="icon_t">
                                                 <span class="font-weight-bold text-white">水</span>
                                             </div>
-                                            <h3>Divisi Mizu</h3>
+                                            <h3>Departemen Mizu</h3>
                                             <p>
-                                                Divisi ini memiliki fokus mengembangkan akademik anggota untuk
+                                                Departemen ini memiliki fokus mengembangkan akademik anggota untuk
                                                 meningkatkan prestasi khususnya dalam hal budaya Jepang.
                                             </p>
                                         </div>
@@ -548,7 +548,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                 <div class="title_sections">
                                     <div class="before_title">
                                         <span>Kepengurusan</span>
-                                        <span class="c-blue">2022-2023</span>
+                                        <span class="c-blue">{{ $currentPeriode->tahun_mulai }}-{{ $currentPeriode->tahun_mulai + 1 }}</span>
                                     </div>
                                     <h2>Bertemu dengan tim hebat kami.</h2>
                                 </div>
@@ -635,7 +635,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <div class="title_sections_inner">
                     <div class="before_title">
                         <span>Kepengurusan</span>
-                        <span class="c-blue">2022/2023</span>
+                        <span class="c-blue">{{ $currentPeriode->tahun_mulai }}/{{ $currentPeriode->tahun_mulai + 1 }}</span>
                     </div>
                     <h2>Bertemu dengan tim hebat kami.</h2>
                   </div>

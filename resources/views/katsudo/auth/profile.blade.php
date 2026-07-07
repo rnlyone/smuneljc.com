@@ -36,21 +36,33 @@
     </div>
     <!-- body -->
     <div class="body">
-        <div class="img-coin-eth">
+        <div class="img-coin-eth" style="position:relative;display:inline-block;">
+            <!-- Department icon (main) -->
             <picture>
-                @if (auth('pendaftar')->user()->sts->level == 1)
-                    @if (auth('pendaftar')->user()->sts->status == 'Hikōshiki')
-                        <source srcset="/images/hikoshiki.svg" type="image/webp">
-                        <img src="/images/hikoshiki.svg" alt="">
+                @if(auth('pendaftar')->user()->sts->level == 1)
+                    @if(auth('pendaftar')->user()->sts->status == 'Hikōshiki')
+                    <source srcset="/images/hikoshiki.svg" type="image/webp">
+                    <img src="/images/hikoshiki.svg" type="image/webp">
                     @else
-                        <source srcset="/images/hikatsudo.svg" type="image/webp">
-                        <img src="/images/hikatsudo.svg" alt="">
+                    <source srcset="/images/hikatsudo.svg" type="image/webp">
+                    <img src="/images/hikatsudo.svg" type="image/webp">
                     @endif
                 @else
-                    <source srcset="/images/{{auth('pendaftar')->user()->sts->img}}" type="image/webp">
-                    <img src="/images/kaiin.svg" alt="">
+                <source srcset="/images/{{auth('pendaftar')->user()->sts->img}}" type="image/webp">
+                <img src="/images/{{auth('pendaftar')->user()->sts->img}}" type="image/webp">
                 @endif
             </picture>
+            <!-- Status badge (small, floating bottom-right) -->
+            <div style="position:absolute;bottom:-6px;right:-6px;width:36px;height:36px;
+                        background:var(--color-white,#fff);border-radius:50%;padding:3px;
+                        box-shadow:0 2px 6px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;">
+                @if(auth('pendaftar')->user()->dpt->img)
+                    <img src="/images/{{auth('pendaftar')->user()->dpt->img}}" alt="Departemen" style="width:100%;height:100%;object-fit:contain;">
+                @else
+                    <img src="/images/kaiin.svg" alt="Departemen" style="width:100%;height:100%;object-fit:contain;">
+                @endif
+
+            </div>
         </div>
         <div class="my-balance-text">
             <h2>{{auth('pendaftar')->user()->dpt->nama}}</h2>

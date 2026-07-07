@@ -99,12 +99,22 @@ class StatusController extends Controller
     {
         $request->validate([
             'status' => 'required|string|max:100|unique:statuses,status',
-            'level' => 'required|integer|min:0',
+            'level'  => 'required|integer|min:0',
+            'img'    => 'nullable|file|mimes:svg,png,gif,webp,jpeg,jpg|max:2048',
         ]);
+
+        $imgPath = null;
+        if ($request->hasFile('img')) {
+            $file     = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $imgPath  = $filename;
+        }
 
         Status::create([
             'status' => $request->status,
-            'level' => $request->level,
+            'level'  => $request->level,
+            'img'    => $imgPath,
         ]);
 
         return back()->with('status_success', 'Status "' . $request->status . '" berhasil ditambahkan.');
@@ -150,12 +160,30 @@ class StatusController extends Controller
 
         $request->validate([
             'status' => 'required|string|max:100|unique:statuses,status,' . $id,
-            'level' => 'required|integer|min:0',
+            'level'  => 'required|integer|min:0',
+            'img'    => 'nullable|file|mimes:svg,png,gif,webp,jpeg,jpg|max:2048',
         ]);
+
+        $imgPath = $status->img;
+        if ($request->hasFile('img')) {
+            // Delete old file only if it was uploaded (not a static default)
+            $staticDefaults = ['kaiin.svg','yakuin.svg','hikatsudo.svg','hikoshiki.svg','shuryosei.svg','sotsugyosei.svg'];
+            if ($status->img && !in_array($status->img, $staticDefaults)) {
+                $oldPath = public_path('images/' . $status->img);
+                if (file_exists($oldPath)) {
+                    @unlink($oldPath);
+                }
+            }
+            $file     = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('images'), $filename);
+            $imgPath  = $filename;
+        }
 
         $status->update([
             'status' => $request->status,
-            'level' => $request->level,
+            'level'  => $request->level,
+            'img'    => $imgPath,
         ]);
 
         return back()->with('status_success', 'Status berhasil diperbarui.');

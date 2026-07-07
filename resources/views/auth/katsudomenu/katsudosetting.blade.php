@@ -117,7 +117,7 @@
                         <h5 class="mb-0">Tambah Status Baru</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('status.list.store') }}" method="POST">
+                        <form action="{{ route('status.list.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label">Nama Status</label>
@@ -132,6 +132,14 @@
                                 <input type="number" name="level" class="form-control @error('level') is-invalid @enderror"
                                     placeholder="cth: 1" min="0" value="{{ old('level', 1) }}" />
                                 @error('level')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Icon <small class="text-muted">(SVG/PNG, maks 2MB)</small></label>
+                                <input type="file" name="img" class="form-control @error('img') is-invalid @enderror"
+                                    accept=".svg,.png,.gif,.webp,.jpg,.jpeg" />
+                                @error('img')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -155,6 +163,7 @@
                                     <th>#</th>
                                     <th>Status</th>
                                     <th>Level</th>
+                                    <th>Icon</th>
                                     <th>Jml Anggota</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -163,13 +172,20 @@
                                 @forelse ($statuses as $i => $status)
                                     <tr>
                                         <td>{{ $i + 1 }}</td>
-                                        <td colspan="2">
-                                            <form action="{{ route('status.list.update', $status->id) }}" method="POST" class="d-flex gap-2">
+                                        <td colspan="3">
+                                            <form action="{{ route('status.list.update', $status->id) }}" method="POST"
+                                                class="d-flex flex-wrap gap-2 align-items-center" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="text" name="status" value="{{ $status->status }}"
                                                     class="form-control form-control-sm" style="min-width:120px;" required />
                                                 <input type="number" name="level" value="{{ $status->level }}"
                                                     class="form-control form-control-sm" style="width:70px;" min="0" required />
+                                                @if($status->img)
+                                                    <img src="/images/{{ $status->img }}" width="28" height="28"
+                                                        style="object-fit:contain;border-radius:4px;" title="Icon saat ini">
+                                                @endif
+                                                <input type="file" name="img" class="form-control form-control-sm"
+                                                    accept=".svg,.png,.gif,.webp,.jpg,.jpeg" style="width:140px;" />
                                                 <button class="btn btn-sm btn-outline-primary text-nowrap" type="submit">
                                                     <i class="bx bx-save"></i>
                                                 </button>
@@ -196,7 +212,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center text-muted py-3">Belum ada status.</td>
+                                        <td colspan="6" class="text-center text-muted py-3">Belum ada status.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -224,7 +240,7 @@
                         <h5 class="mb-0">Tambah Departemen Baru</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('departemen.list.store') }}" method="POST">
+                        <form action="{{ route('departemen.list.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label">Nama Departemen</label>
@@ -243,9 +259,17 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Icon <small class="text-muted">(opsional, class Boxicons)</small></label>
+                                <label class="form-label">Icon Boxicons <small class="text-muted">(opsional)</small></label>
                                 <input type="text" name="icon" class="form-control"
                                     placeholder="cth: bx-music" value="{{ old('icon') }}" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Gambar Icon <small class="text-muted">(SVG/PNG, maks 2MB)</small></label>
+                                <input type="file" name="img" class="form-control @error('img') is-invalid @enderror"
+                                    accept=".svg,.png,.gif,.webp,.jpg,.jpeg" />
+                                @error('img')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="bx bx-plus me-1"></i> Tambah Departemen
@@ -268,6 +292,7 @@
                                     <th>Nama</th>
                                     <th>Level</th>
                                     <th>Icon</th>
+                                    <th>Img</th>
                                     <th>Jml Anggota</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -276,16 +301,23 @@
                                 @forelse ($departemens as $i => $dept)
                                     <tr>
                                         <td>{{ $i + 1 }}</td>
-                                        <td colspan="3">
-                                            <form action="{{ route('departemen.list.update', $dept->id) }}" method="POST" class="d-flex gap-2 align-items-center">
+                                        <td colspan="4">
+                                            <form action="{{ route('departemen.list.update', $dept->id) }}" method="POST"
+                                                class="d-flex flex-wrap gap-2 align-items-center" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="text" name="nama" value="{{ $dept->nama }}"
-                                                    class="form-control form-control-sm" style="min-width:150px;" required />
+                                                    class="form-control form-control-sm" style="min-width:140px;" required />
                                                 <input type="number" name="level" value="{{ $dept->level }}"
                                                     class="form-control form-control-sm" style="width:70px;" min="0" required />
                                                 <input type="text" name="icon" value="{{ $dept->icon }}"
-                                                    class="form-control form-control-sm" style="min-width:100px;"
+                                                    class="form-control form-control-sm" style="min-width:90px;"
                                                     placeholder="bx-..." />
+                                                @if($dept->img)
+                                                    <img src="/images/{{ $dept->img }}" width="28" height="28"
+                                                        style="object-fit:contain;border-radius:4px;" title="Icon saat ini">
+                                                @endif
+                                                <input type="file" name="img" class="form-control form-control-sm"
+                                                    accept=".svg,.png,.gif,.webp,.jpg,.jpeg" style="width:140px;" />
                                                 <button class="btn btn-sm btn-outline-primary text-nowrap" type="submit">
                                                     <i class="bx bx-save"></i>
                                                 </button>
@@ -312,7 +344,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center text-muted py-3">Belum ada departemen.</td>
+                                        <td colspan="7" class="text-center text-muted py-3">Belum ada departemen.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

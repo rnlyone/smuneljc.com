@@ -172,15 +172,28 @@ class DepartemenController extends Controller
     public function storeAdmin(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:100',
+            'nama'  => 'required|string|max:100',
             'level' => 'required|integer|min:0',
-            'icon' => 'nullable|string|max:100',
+            'icon'  => 'nullable|string|max:100',
+            'img'   => 'nullable|file|mimes:svg,png,gif,webp,jpeg,jpg|max:2048',
         ]);
 
+        $imgPath = null;
+        if ($request->hasFile('img')) {
+            $file    = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            if (!file_exists(public_path('images/dept'))) {
+                mkdir(public_path('images/dept'), 0755, true);
+            }
+            $file->move(public_path('images/dept'), $filename);
+            $imgPath = 'dept/' . $filename;
+        }
+
         Departemen::create([
-            'nama' => $request->nama,
+            'nama'  => $request->nama,
             'level' => $request->level,
-            'icon' => $request->icon,
+            'icon'  => $request->icon,
+            'img'   => $imgPath,
         ]);
 
         return back()->with('departemen_success', 'Departemen "' . $request->nama . '" berhasil ditambahkan.');
@@ -191,15 +204,35 @@ class DepartemenController extends Controller
         $dept = Departemen::findOrFail($id);
 
         $request->validate([
-            'nama' => 'required|string|max:100',
+            'nama'  => 'required|string|max:100',
             'level' => 'required|integer|min:0',
-            'icon' => 'nullable|string|max:100',
+            'icon'  => 'nullable|string|max:100',
+            'img'   => 'nullable|file|mimes:svg,png,gif,webp,jpeg,jpg|max:2048',
         ]);
 
+        $imgPath = $dept->img;
+        if ($request->hasFile('img')) {
+            // Delete old file only if it was uploaded to our folder
+            if ($dept->img && str_starts_with($dept->img, 'dept/')) {
+                $oldPath = public_path('images/' . $dept->img);
+                if (file_exists($oldPath)) {
+                    @unlink($oldPath);
+                }
+            }
+            $file     = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            if (!file_exists(public_path('images/dept'))) {
+                mkdir(public_path('images/dept'), 0755, true);
+            }
+            $file->move(public_path('images/dept'), $filename);
+            $imgPath = 'dept/' . $filename;
+        }
+
         $dept->update([
-            'nama' => $request->nama,
+            'nama'  => $request->nama,
             'level' => $request->level,
-            'icon' => $request->icon ?? $dept->icon,
+            'icon'  => $request->icon ?? $dept->icon,
+            'img'   => $imgPath,
         ]);
 
         return back()->with('departemen_success', 'Departemen berhasil diperbarui.');

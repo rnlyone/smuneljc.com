@@ -217,10 +217,6 @@ class PendaftarController extends Controller
 
     public function flogin()
     {
-        if (auth('pendaftar')->check()) {
-            return redirect()->route('katsudo.home');
-        }
-
         #page_setup
         $customcss = '';
         $jmlsetting = Setting::all();

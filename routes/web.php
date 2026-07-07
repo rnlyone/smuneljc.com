@@ -28,13 +28,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware'=>['guest']], function(){
+// Admin login — hanya cek guard 'web'
+Route::group(['middleware' => ['guest:web']], function () {
     Route::get('login', [UserController::class, 'indexLogin'])->name('login');
     Route::post('login', [UserController::class, 'login']);
+});
 
+// Katsudo (pendaftar) login — hanya cek guard 'pendaftar'
+Route::group(['middleware' => ['guest:pendaftar']], function () {
     Route::get('/ktd/login', [PendaftarController::class, 'flogin'])->name('flogin');
     Route::post('/ktd/login', [PendaftarController::class, 'login'])->name('klogin');
-
 });
 
 Route::get('/daftar', [PendaftarController::class, 'indexForm'])->name('daftar.form');

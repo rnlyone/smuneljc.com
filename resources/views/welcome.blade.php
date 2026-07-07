@@ -429,6 +429,44 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             </div>
                             @endforeach
                         </div>
+                        @else
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <a href="https://gakuensai.smuneljc.com" class="item_ig item_mywork">
+                                    <div class="mg_img">
+                                        <img class="item_pic" src="assetshome/img/agency/0321.png" />
+                                    </div>
+                                    <div class="info_work">
+                                        <h4>Gakuensai ditayangkan live di Gakuensai App.</h4>
+                                        <p>Gakuensai 2023</p>
+                                        <div class="link_view">Show Project</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="item_ig item_mywork">
+                                    <div class="icon_played">
+                                        <button type="button" class="btn" data-toggle="modal"
+                                            data-src="https://www.youtube.com/watch?v=sfNtlzyya4g&t=46s"
+                                            data-target="#mdllVideo">
+                                            <div class="scale rounded-circle play_video">
+                                                <i class="tio play_outlined"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <a href="https://gakuensai.smuneljc.com" class="d-block">
+                                        <div class="mg_img">
+                                            <img class="item_pic" src="assetshome/img/agency/097.png" />
+                                        </div>
+                                        <div class="info_work">
+                                            <h4>Aplikasi Web Gakuensai.</h4>
+                                            <p>Gakuensai 2023</p>
+                                            <div class="link_view">Show Project</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         @endif
                     </div>
                 </section>

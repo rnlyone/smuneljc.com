@@ -98,6 +98,12 @@
           <div data-i18n="Departemen Anggota">Departemen</div>
         </a>
       </li>
+      <li class="menu-item {{$katsudo_setting ?? ''}}">
+        <a href="{{route('katsudo.setting')}}" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div data-i18n="Katsudo Setting">Katsudo Setting</div>
+        </a>
+      </li>
     </ul>
 
 

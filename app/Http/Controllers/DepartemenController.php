@@ -169,6 +169,50 @@ class DepartemenController extends Controller
         //
     }
 
+    public function storeAdmin(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:100',
+            'level' => 'required|integer|min:0',
+            'icon' => 'nullable|string|max:100',
+        ]);
+
+        Departemen::create([
+            'nama' => $request->nama,
+            'level' => $request->level,
+            'icon' => $request->icon,
+        ]);
+
+        return back()->with('departemen_success', 'Departemen "' . $request->nama . '" berhasil ditambahkan.');
+    }
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $dept = Departemen::findOrFail($id);
+
+        $request->validate([
+            'nama' => 'required|string|max:100',
+            'level' => 'required|integer|min:0',
+            'icon' => 'nullable|string|max:100',
+        ]);
+
+        $dept->update([
+            'nama' => $request->nama,
+            'level' => $request->level,
+            'icon' => $request->icon ?? $dept->icon,
+        ]);
+
+        return back()->with('departemen_success', 'Departemen berhasil diperbarui.');
+    }
+
+    public function destroyAdmin($id)
+    {
+        $dept = Departemen::findOrFail($id);
+        $nama = $dept->nama;
+        $dept->delete();
+        return back()->with('departemen_success', 'Departemen "' . $nama . '" berhasil dihapus.');
+    }
+
     /**
      * Display the specified resource.
      *

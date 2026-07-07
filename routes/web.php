@@ -9,6 +9,7 @@ use App\Http\Controllers\KeaktifanController;
 use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\PendaftarController;
 use App\Http\Controllers\PengurusController;
+use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
@@ -63,6 +64,16 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/departemen/{tahun?}', [DepartemenController::class, 'fadmin'])->name('departemen.fadmin')->defaults('tahun', Setting::where('NamaSetting', 'Tahun')->first()->Value);
     Route::get('/departemen/ubah/{pendaftarId}/{departemenId}',[DepartemenController::class, 'ubahdepartemen'])->name('departemen.ubahdepartemen');
     Route::get('/departemen/koor/{pendaftarId}/{departemenId}',[DepartemenController::class, 'ubahkoor'])->name('departemen.ubahkoor');
+
+    // Katsudo Setting
+    Route::get('/katsudo-setting', [PeriodeController::class, 'index'])->name('katsudo.setting');
+    Route::post('/katsudo-setting/periode', [PeriodeController::class, 'store'])->name('periode.store');
+    Route::post('/katsudo-setting/status', [StatusController::class, 'store'])->name('status.list.store');
+    Route::post('/katsudo-setting/status/{id}/update', [StatusController::class, 'updateAdmin'])->name('status.list.update');
+    Route::get('/katsudo-setting/status/{id}/destroy', [StatusController::class, 'destroyAdmin'])->name('status.list.destroy');
+    Route::post('/katsudo-setting/departemen', [DepartemenController::class, 'storeAdmin'])->name('departemen.list.store');
+    Route::post('/katsudo-setting/departemen/{id}/update', [DepartemenController::class, 'updateAdmin'])->name('departemen.list.update');
+    Route::get('/katsudo-setting/departemen/{id}/destroy', [DepartemenController::class, 'destroyAdmin'])->name('departemen.list.destroy');
 });
 
 Route::group(['middleware' => ['auth:pendaftar']], function(){

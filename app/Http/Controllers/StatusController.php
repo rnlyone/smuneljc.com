@@ -88,7 +88,17 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'status' => 'required|string|max:100|unique:statuses,status',
+            'level' => 'required|integer|min:0',
+        ]);
+
+        Status::create([
+            'status' => $request->status,
+            'level' => $request->level,
+        ]);
+
+        return back()->with('status_success', 'Status "' . $request->status . '" berhasil ditambahkan.');
     }
 
     /**
@@ -125,6 +135,23 @@ class StatusController extends Controller
         //
     }
 
+    public function updateAdmin(Request $request, $id)
+    {
+        $status = Status::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|string|max:100|unique:statuses,status,' . $id,
+            'level' => 'required|integer|min:0',
+        ]);
+
+        $status->update([
+            'status' => $request->status,
+            'level' => $request->level,
+        ]);
+
+        return back()->with('status_success', 'Status berhasil diperbarui.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -134,5 +161,13 @@ class StatusController extends Controller
     public function destroy(Status $status)
     {
         //
+    }
+
+    public function destroyAdmin($id)
+    {
+        $status = Status::findOrFail($id);
+        $namaStatus = $status->status;
+        $status->delete();
+        return back()->with('status_success', 'Status "' . $namaStatus . '" berhasil dihapus.');
     }
 }

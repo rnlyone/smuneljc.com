@@ -54,7 +54,6 @@
             </picture>
             <!-- Status badge (small, floating bottom-right) -->
             <div style="position:absolute;bottom:-6px;right:-6px;width:36px;height:36px;
-                        background:var(--color-white,#fff);border-radius:50%;padding:3px;
                         box-shadow:0 2px 6px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;">
                 @if(auth('pendaftar')->user()->dpt->img)
                     <img src="/images/{{auth('pendaftar')->user()->dpt->img}}" alt="Departemen" style="width:100%;height:100%;object-fit:contain;">

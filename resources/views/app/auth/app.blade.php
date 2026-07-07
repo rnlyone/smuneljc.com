@@ -76,6 +76,11 @@
               <div data-i18n="Pengurus">Pengurus</div>
             </a>
           </li>
+          <li class="menu-item {{$welcome_setting ?? ''}}">
+            <a href="{{ route('welcome.setting') }}" class="menu-link">
+              <div data-i18n="Welcome Setting">Welcome Setting</div>
+            </a>
+          </li>
         </ul>
       </li>
       <li class="menu-item {{$setting ?? ''}}">

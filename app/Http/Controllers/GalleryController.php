@@ -3,91 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
-use App\Models\Pendaftar;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $pagetitle = 'Gallery';
-        $galeri = Gallery::all();
+        $pagetitle = 'Galeri';
+        $galeri = Gallery::latest()->get();
         $settings = Setting::all();
-        return view('auth.galeri', [
-            'pagetitle' => $pagetitle,
-            'galeri' => $galeri,
-            'settings' => $settings]);
+        return view('auth.galeri', compact('pagetitle', 'galeri', 'settings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'Author'   => 'required|string|max:255',
+            'Title'    => 'required|string|max:255',
+            'Category' => 'required|string|max:100',
+            'ImagePath' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+        ]);
+
+        $file     = $request->file('ImagePath');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('gallery'), $filename);
+
+        Gallery::create([
+            'Author'    => $request->Author,
+            'Title'     => $request->Title,
+            'Category'  => $request->Category,
+            'ImagePath' => 'gallery/' . $filename,
+        ]);
+
+        return back()->with('success', 'Karya "' . $request->Title . '" berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Gallery  $gallery
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Gallery $gallery)
+    public function update(Request $request, $id)
     {
-        //
+        $gallery = Gallery::findOrFail($id);
+
+        $request->validate([
+            'Author'    => 'required|string|max:255',
+            'Title'     => 'required|string|max:255',
+            'Category'  => 'required|string|max:100',
+            'ImagePath' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+        ]);
+
+        if ($request->hasFile('ImagePath')) {
+            $file     = $request->file('ImagePath');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('gallery'), $filename);
+            $gallery->ImagePath = 'gallery/' . $filename;
+        }
+
+        $gallery->Author   = $request->Author;
+        $gallery->Title    = $request->Title;
+        $gallery->Category = $request->Category;
+        $gallery->save();
+
+        return back()->with('success', 'Karya berhasil diperbarui.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Gallery  $gallery
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Gallery $gallery)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Gallery  $gallery
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Gallery  $gallery
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Gallery $gallery)
-    {
-        //
+        $gallery = Gallery::findOrFail($id);
+        $judul   = $gallery->Title;
+        $gallery->delete();
+        return back()->with('success', 'Karya "' . $judul . '" berhasil dihapus.');
     }
 }

@@ -386,50 +386,50 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                                 </div>
                             </div>
                         </div>
+                        @if($inovasis->isNotEmpty())
                         <div class="row">
+                            @php $first = $inovasis->first(); $rest = $inovasis->skip(1); @endphp
                             <div class="col-lg-8">
-                                <a href="https://gakuensai.smuneljc.com" class="item_ig item_mywork">
+                                <a href="{{ $first->link ?: '#' }}" class="item_ig item_mywork" target="{{ $first->link ? '_blank' : '_self' }}">
                                     <div class="mg_img">
-                                        <img class="item_pic" src="assetshome/img/agency/0321.png" />
+                                        <img class="item_pic" src="{{ asset($first->image_path) }}" />
                                     </div>
                                     <div class="info_work">
-                                        <h4>
-                                            Gakuensai ditayangkan live di Gakuensai App.
-                                        </h4>
-                                        <p>
-                                            Gakuensai 2023
-                                        </p>
+                                        <h4>{{ $first->judul }}</h4>
+                                        <p>{{ $first->subjudul }}</p>
                                         <div class="link_view">Show Project</div>
                                     </div>
                                 </a>
                             </div>
+                            @foreach($rest as $inv)
                             <div class="col-lg-4">
                                 <div class="item_ig item_mywork">
+                                    @if($inv->video_link)
                                     <div class="icon_played">
                                         <button type="button" class="btn" data-toggle="modal"
-                                            data-src="https://www.youtube.com/watch?v=sfNtlzyya4g&t=46s"
+                                            data-src="{{ $inv->video_link }}"
                                             data-target="#mdllVideo">
                                             <div class="scale rounded-circle play_video">
                                                 <i class="tio play_outlined"></i>
                                             </div>
                                         </button>
                                     </div>
-                                    <a href="https://gakuensai.smuneljc.com" class="d-block">
+                                    @endif
+                                    <a href="{{ $inv->link ?: '#' }}" class="d-block" target="{{ $inv->link ? '_blank' : '_self' }}">
                                         <div class="mg_img">
-                                            <img class="item_pic" src="assetshome/img/agency/097.png" />
+                                            <img class="item_pic" src="{{ asset($inv->image_path) }}" />
                                         </div>
                                         <div class="info_work">
-                                            <h4>Aplikasi Web Gakuensai.</h4>
-                                            <p>
-                                                Gakuensai 2023
-                                            </p>
+                                            <h4>{{ $inv->judul }}</h4>
+                                            <p>{{ $inv->subjudul }}</p>
                                             <div class="link_view">Show Project</div>
                                         </div>
                                     </a>
-
                                 </div>
                             </div>
+                            @endforeach
                         </div>
+                        @endif
                     </div>
                 </section>
                 <section class="section__stories margin-b-6" id="Stories">
@@ -775,44 +775,27 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                             </div>
                         </div>
                         <div class="row justify-content-between">
+                            @foreach($testimonials as $t)
                             <div class="col-lg-5 mb-4 mb-lg-0">
                                 <div class="item_mmon">
                                     <div class="profile_user">
-                                        <img src="assetshome/img/persons/rossensei.png" />
+                                        @if($t->image_path)
+                                            <img src="{{ asset($t->image_path) }}" />
+                                        @else
+                                            <img src="assetshome/img/persons/rossensei.png" />
+                                        @endif
                                         <div class="categ">
-                                            <span>Pembina SJC</span>
+                                            <span>{{ $t->peran }}</span>
                                         </div>
                                     </div>
                                     <div class="info_persons">
-                                        <p>
-                                            "Smunel Japanese Community adalah ekstrakulikuler tepat
-                                            untuk mengembangkan diri dalam hal budaya Jepang
-                                            karena memiliki lingkungan sosial yang baik serta progresif."
-                                        </p>
-                                        <h5>Rosneneng Juanda</h5>
-                                        <span>Guru Bahasa Jepang SMAN 5 Makassar</span>
+                                        <p>"{{ $t->kutipan }}"</p>
+                                        <h5>{{ $t->nama }}</h5>
+                                        <span>{{ $t->peran }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-5">
-                                <div class="item_mmon">
-                                    <div class="profile_user">
-                                        <img src="assetshome/img/persons/nabil.png" />
-                                        <div class="categ">
-                                            <span>Ketua Umum 2020/2021</span>
-                                        </div>
-                                    </div>
-                                    <div class="info_persons">
-                                        <p>
-                                            "Jujur, SJC telah menjadi tempat terbaik ku mengembangkan diri.
-                                            Terima kasih telah memberikan saya tempat dan kesempatan
-                                            untuk berkembang."
-                                        </p>
-                                        <h5>Muhammad Nabil Taufik</h5>
-                                        <span>Mahasiswa Sastra Jepang UNHAS</span>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </section>

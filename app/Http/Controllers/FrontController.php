@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
+use App\Models\Inovasi;
 use App\Models\Pages;
 use App\Models\Pengurus;
 use App\Models\Periode;
 use App\Models\Setting;
 use App\Models\Socials;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -16,20 +18,38 @@ class FrontController extends Controller
 {
     public function welcome()
     {
-        $penguruses = Pengurus::all();
-        $settings = Setting::all();
-        $gallerys = Gallery::all();
-        $pages = Pages::all();
-        $socials = Socials::all();
+        $penguruses    = Pengurus::all();
+        $settings      = Setting::all();
+        $gallerys      = Gallery::all();
+        $pages         = Pages::all();
+        $socials       = Socials::all();
         $currentPeriode = Periode::latest('id')->first();
+        $inovasis      = Inovasi::orderBy('urutan')->get();
+        $testimonials  = Testimonial::latest()->get();
+
         return view('welcome', [
-            'penguruses' => $penguruses,
-            'settings' => $settings,
-            'gallerys' => $gallerys,
-            'pages' => $pages,
-            'socials' => $socials,
-            'currentPeriode' => $currentPeriode
+            'penguruses'     => $penguruses,
+            'settings'       => $settings,
+            'gallerys'       => $gallerys,
+            'pages'          => $pages,
+            'socials'        => $socials,
+            'currentPeriode' => $currentPeriode,
+            'inovasis'       => $inovasis,
+            'testimonials'   => $testimonials,
         ]);
+    }
+
+    public function welcomeSetting()
+    {
+        $pagetitle    = 'Welcome Page Setting';
+        $settings     = Setting::all();
+        $galeri       = Gallery::latest()->get();
+        $inovasis     = Inovasi::orderBy('urutan')->get();
+        $testimonials = Testimonial::latest()->get();
+
+        return view('auth.welcome-setting', compact(
+            'pagetitle', 'settings', 'galeri', 'inovasis', 'testimonials'
+        ));
     }
 
     public function kirimpesan(Request $request)

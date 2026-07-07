@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\InovasiController;
 use App\Http\Controllers\KatsudoController;
 use App\Http\Controllers\KeaktifanController;
 use App\Http\Controllers\KehadiranController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserController;
 use App\Models\Pendaftar;
 use App\Models\Setting;
@@ -53,6 +55,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('logout', [UserController::class, 'logout']);
     Route::get('/pendaftar', [PendaftarController::class, 'index'])->name('daftar.index');
     Route::get('/galeri', [GalleryController::class, 'index'])->name('galeri.index');
+    Route::post('/galeri', [GalleryController::class, 'store'])->name('galeri.store');
+    Route::post('/galeri/{id}/update', [GalleryController::class, 'update'])->name('galeri.update');
+    Route::get('/galeri/{id}/destroy', [GalleryController::class, 'destroy'])->name('galeri.destroy');
     Route::resource('/pengurus', PengurusController::class)->except('show');
     Route::get('/daftar/{nisn}/edit', [PendaftarController::class, 'edit'])->name('daftar.edit');
     Route::resource('setting', SettingController::class)->except('update');
@@ -66,6 +71,15 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/departemen/ubah/{pendaftarId}/{departemenId}',[DepartemenController::class, 'ubahdepartemen'])->name('departemen.ubahdepartemen');
     Route::get('/departemen/koor/{pendaftarId}/{departemenId}',[DepartemenController::class, 'ubahkoor'])->name('departemen.ubahkoor');
     Route::post('/departemen/bulk', [DepartemenController::class, 'bulkUbahdepartemenBulk'])->name('departemen.bulk');
+
+    // Welcome Setting
+    Route::get('/welcome-setting', [FrontController::class, 'welcomeSetting'])->name('welcome.setting');
+    Route::post('/welcome-setting/inovasi', [InovasiController::class, 'store'])->name('inovasi.store');
+    Route::post('/welcome-setting/inovasi/{id}/update', [InovasiController::class, 'update'])->name('inovasi.update');
+    Route::get('/welcome-setting/inovasi/{id}/destroy', [InovasiController::class, 'destroy'])->name('inovasi.destroy');
+    Route::post('/welcome-setting/testimonial', [TestimonialController::class, 'store'])->name('testimonial.store');
+    Route::post('/welcome-setting/testimonial/{id}/update', [TestimonialController::class, 'update'])->name('testimonial.update');
+    Route::get('/welcome-setting/testimonial/{id}/destroy', [TestimonialController::class, 'destroy'])->name('testimonial.destroy');
 
     // Katsudo Setting
     Route::get('/katsudo-setting', [PeriodeController::class, 'index'])->name('katsudo.setting');

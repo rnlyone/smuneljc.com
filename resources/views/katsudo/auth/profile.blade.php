@@ -53,7 +53,7 @@
                 @endif
             </picture>
             <!-- Status badge (small, floating bottom-right) -->
-            <div style="position:absolute;bottom:-6px;right:-6px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
+            <div style="position:absolute;bottom:-10px;right:-10px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;">
                 @if(auth('pendaftar')->user()->dpt->img)
                     <img src="/images/{{auth('pendaftar')->user()->dpt->img}}" alt="Departemen" style="width:100%;height:100%;object-fit:contain;">
                 @else

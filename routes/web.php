@@ -60,10 +60,12 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::get('/status/{tahun?}', [StatusController::class, 'fadmin'])->name('status.fadmin')->defaults('tahun', Setting::where('NamaSetting', 'Tahun')->first()->Value);
     Route::get('/status/ubah/{pendaftarId}/{statusId}',[StatusController::class, 'ubahstatus'])->name('status.ubahstatus');
+    Route::post('/status/bulk', [StatusController::class, 'bulkUbahStatus'])->name('status.bulk');
 
     Route::get('/departemen/{tahun?}', [DepartemenController::class, 'fadmin'])->name('departemen.fadmin')->defaults('tahun', Setting::where('NamaSetting', 'Tahun')->first()->Value);
     Route::get('/departemen/ubah/{pendaftarId}/{departemenId}',[DepartemenController::class, 'ubahdepartemen'])->name('departemen.ubahdepartemen');
     Route::get('/departemen/koor/{pendaftarId}/{departemenId}',[DepartemenController::class, 'ubahkoor'])->name('departemen.ubahkoor');
+    Route::post('/departemen/bulk', [DepartemenController::class, 'bulkUbahdepartemenBulk'])->name('departemen.bulk');
 
     // Katsudo Setting
     Route::get('/katsudo-setting', [PeriodeController::class, 'index'])->name('katsudo.setting');

@@ -263,34 +263,43 @@ class DepartemenController extends Controller
 
     public function fadmin($tahun)
     {
-        $pagetitle = 'Detail Pendaftaran';
-        $pendaftar = Pendaftar::all();
-        $pendaftars = $pendaftar->groupBy('dpt.nama');
-        $departemens = Departemen::all();
-        $pesandefault = Setting::where('NamaSetting', 'PesanDefault')->first();
+        $pagetitle = 'Departemen Anggota';
+        $pendaftars = Pendaftar::where('tahun_daftar', $tahun)->get();
+        $departemens = Departemen::orderBy('level')->get();
         $settings = Setting::all();
 
-        #barchart
-        $years = json_encode([2017, 2018, 2019, 2020, 2021]);
-        $existingYears = json_decode($years);
-        $years = Pendaftar::distinct('tahun_daftar')->pluck('tahun_daftar')->toArray();
+        $existingYears = Pendaftar::distinct('tahun_daftar')
+            ->pluck('tahun_daftar')
+            ->sort()
+            ->values()
+            ->toArray();
 
-        // Tambahkan tahun-tahun unik yang belum ada
-        foreach ($years as $year) {
-            if (!in_array($year, $existingYears)) {
-                $existingYears[] = (int) $year;
-            }
-        }
-
-        // dd($pendaftars);
         return view('auth.katsudomenu.departemen', [
-            'pagetitle' => $pagetitle,
-            'pendaftars' => $pendaftars,
-            'pesandefault' => $pesandefault,
-            'departemens' => $departemens,
-            'tahundaftar' => $tahun,
+            'pagetitle'     => $pagetitle,
+            'pendaftars'    => $pendaftars,
+            'departemens'   => $departemens,
+            'tahundaftar'   => $tahun,
             'existingYears' => $existingYears,
-            'settings' => $settings]);
+            'settings'      => $settings,
+        ]);
+    }
+
+    public function bulkUbahdepartemenBulk(Request $request)
+    {
+        $request->validate([
+            'pendaftar_ids'   => 'required|array|min:1',
+            'pendaftar_ids.*' => 'integer|exists:pendaftars,id',
+            'departemen_id'   => 'required|integer|exists:departemens,id',
+            'tahun'           => 'required',
+        ]);
+
+        $count = Pendaftar::whereIn('id', $request->pendaftar_ids)
+            ->update(['departemen' => $request->departemen_id]);
+
+        $deptNama = Departemen::find($request->departemen_id)->nama;
+
+        return redirect()->route('departemen.fadmin', ['tahun' => $request->tahun])
+            ->with('success', $count . ' anggota berhasil dipindahkan ke departemen "' . $deptNama . '".');
     }
 
     public function ubahdepartemen($pendaftarId, $departemenId)

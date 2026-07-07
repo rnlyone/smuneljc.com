@@ -23,34 +23,43 @@ class StatusController extends Controller
 
     public function fadmin($tahun)
     {
-        $pagetitle = 'Detail Pendaftaran';
-        $pendaftar = Pendaftar::all();
-        $pendaftars = $pendaftar->groupBy('sts.status');
-        $statuses = Status::all();
-        $pesandefault = Setting::where('NamaSetting', 'PesanDefault')->first();
+        $pagetitle = 'Status Anggota';
+        $pendaftars = Pendaftar::where('tahun_daftar', $tahun)->get();
+        $statuses = Status::orderBy('level')->get();
         $settings = Setting::all();
 
-        #barchart
-        $years = json_encode([2017, 2018, 2019, 2020, 2021]);
-        $existingYears = json_decode($years);
-        $years = Pendaftar::distinct('tahun_daftar')->pluck('tahun_daftar')->toArray();
+        $existingYears = Pendaftar::distinct('tahun_daftar')
+            ->pluck('tahun_daftar')
+            ->sort()
+            ->values()
+            ->toArray();
 
-        // Tambahkan tahun-tahun unik yang belum ada
-        foreach ($years as $year) {
-            if (!in_array($year, $existingYears)) {
-                $existingYears[] = (int) $year;
-            }
-        }
-
-        // dd($pendaftars);
         return view('auth.katsudomenu.status', [
-            'pagetitle' => $pagetitle,
-            'pendaftars' => $pendaftars,
-            'pesandefault' => $pesandefault,
-            'statuses' => $statuses,
-            'tahundaftar' => $tahun,
+            'pagetitle'     => $pagetitle,
+            'pendaftars'    => $pendaftars,
+            'statuses'      => $statuses,
+            'tahundaftar'   => $tahun,
             'existingYears' => $existingYears,
-            'settings' => $settings]);
+            'settings'      => $settings,
+        ]);
+    }
+
+    public function bulkUbahStatus(Request $request)
+    {
+        $request->validate([
+            'pendaftar_ids'   => 'required|array|min:1',
+            'pendaftar_ids.*' => 'integer|exists:pendaftars,id',
+            'status_id'       => 'required|integer|exists:statuses,id',
+            'tahun'           => 'required',
+        ]);
+
+        $count = Pendaftar::whereIn('id', $request->pendaftar_ids)
+            ->update(['status' => $request->status_id]);
+
+        $statusNama = Status::find($request->status_id)->status;
+
+        return redirect()->route('status.fadmin', ['tahun' => $request->tahun])
+            ->with('success', $count . ' anggota berhasil diubah statusnya menjadi "' . $statusNama . '".');
     }
 
     public function ubahstatus($pendaftarId, $statusId)

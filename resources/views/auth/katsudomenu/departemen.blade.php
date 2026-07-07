@@ -3,133 +3,253 @@
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 breadcrumb-wrapper mb-4">
-            <span class="text-muted fw-light">SmunelJC /</span> Katsudo / Departemen / {{$tahundaftar}}
+            <span class="text-muted fw-light">SmunelJC / Katsudo /</span> Departemen Anggota
         </h4>
 
-        @if (session()->get('success'))
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <h6 class="alert-heading mb-1"></i>Yatta!, Sukses</h6>
-                <span> {{session('success')}}</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        {{-- Sticky Bulk Action Bar --}}
+        <div id="bulk-bar" class="card border-primary shadow mb-3 d-none"
+             style="position:sticky; top:10px; z-index:999;">
+            <div class="card-body d-flex align-items-center flex-wrap gap-3 py-2 px-3">
+                <span class="fw-semibold text-primary">
+                    <i class="bx bx-check-square me-1"></i>
+                    <span id="selected-count">0</span> anggota dipilih
+                </span>
+                <div class="vr d-none d-sm-block"></div>
+                <div class="d-flex align-items-center gap-2">
+                    <label class="mb-0 text-nowrap small fw-semibold">Pindah ke Departemen:</label>
+                    <select id="bulk-dept-select" form="bulk-form" name="departemen_id"
+                            class="form-select form-select-sm" style="width:200px;">
+                        @foreach($departemens as $d)
+                            <option value="{{ $d->id }}">{{ $d->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" form="bulk-form" class="btn btn-primary btn-sm">
+                    <i class="bx bx-check me-1"></i>Terapkan
                 </button>
+                <button type="button" id="clear-btn" class="btn btn-outline-secondary btn-sm ms-auto">
+                    <i class="bx bx-x me-1"></i>Batalkan Pilihan
+                </button>
+            </div>
+        </div>
+
+        {{-- Alerts --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible mb-3" role="alert">
+                <h6 class="alert-heading mb-1"><i class="bx bx-check-circle me-1"></i>Yatta! Sukses</h6>
+                <span>{{ session('success') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        @if (session()->get('danger'))
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <h6 class="alert-heading mb-1"></i>Gomen!, Gagal</h6>
-                <span> {{session('danger')}}</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
+        @if (session('danger'))
+            <div class="alert alert-danger alert-dismissible mb-3" role="alert">
+                <h6 class="alert-heading mb-1"><i class="bx bx-error me-1"></i>Gomen! Gagal</h6>
+                <span>{{ session('danger') }}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
+        @endif
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger alert-dismissible mb-2" role="alert">
+                    <span>{{ $error }}</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endforeach
         @endif
 
-        <div class="row mb-4">
-            <!-- Basic Layout & Basic with Icons -->
-            <!-- Basic Layout -->
-            <div class="col-lg-12 mb-2">
-                <div class="card mb-2">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="card-title mb-0">Tahun</h5>
-                        <div class="dropdown">
-                            <button class="btn btn btn-outline-primary dropdown-toggle" type="button"
-                                id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                {{$tahundaftar}}
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                                @foreach ($existingYears as $year)
-                                <a class="dropdown-item"
-                                    href="{{route('departemen.fadmin', ['tahun' => $year])}}">{{$year}}</a>
-                                @endforeach
-                            </div>
-                        </div>
+        {{-- Year Filter --}}
+        <div class="card mb-3">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="card-title mb-0">Tahun Daftar</h5>
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ $tahundaftar }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        @foreach ($existingYears as $year)
+                            <a class="dropdown-item {{ $year == $tahundaftar ? 'active' : '' }}"
+                               href="{{ route('departemen.fadmin', ['tahun' => $year]) }}">{{ $year }}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-        @foreach ($departemens as $departemen)
-        <div class="row mb-4">
+
+        {{-- Departemen Filter Pills --}}
+        <div class="mb-3 d-flex gap-2 flex-wrap align-items-center">
+            <span class="text-muted small me-1">Filter:</span>
+            <button class="btn btn-sm btn-primary filter-pill active" data-filter="">
+                Semua
+                <span class="badge bg-white text-primary ms-1">{{ $pendaftars->count() }}</span>
+            </button>
+            @foreach($departemens as $d)
+                <button class="btn btn-sm btn-outline-primary filter-pill" data-filter="{{ $d->nama }}">
+                    {{ $d->nama }}
+                    <span class="badge bg-primary ms-1">{{ $pendaftars->where('departemen', $d->id)->count() }}</span>
+                </button>
+            @endforeach
+        </div>
+
+        {{-- Bulk Form + Table --}}
+        <form id="bulk-form" action="{{ route('departemen.bulk') }}" method="POST">
+            @csrf
+            <input type="hidden" name="tahun" value="{{ $tahundaftar }}" />
+
             <div class="card">
-                <div class="card-header d-flex align-items-center justify-content-between px-2">
-                    <h5 class="card-title mb-0">List Anggota {{$departemen->nama}}</h5>
-                    <span class="badge bg-primary">{{$departemen->koor->NamaLengkap ?? 'Belum Ditetapkan'}}</span>
-                </div>
-                <div class="card-datatable table-responsive">
-                    <table class="dt-multilingual table table-bordered daftarpendaftar">
-                        <thead>
+                <div class="table-responsive">
+                    <table id="dept-table" class="table table-bordered table-hover mb-0">
+                        <thead class="table-light">
                             <tr>
-                                <th>No.</th>
+                                <th style="width:40px;">
+                                    <input type="checkbox" id="select-all" class="form-check-input" />
+                                </th>
+                                <th style="width:50px;">No.</th>
                                 <th>Nama</th>
                                 <th>NISN</th>
                                 <th>Kelas</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
-                                <th>Koor</th>
+                                <th>Departemen</th>
+                                <th style="width:160px;">Ubah Dept</th>
+                                <th style="width:100px;">Koor</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if(isset($pendaftars[$departemen->nama]) && count($pendaftars[$departemen->nama]) > 0)
-                            @foreach (array_values($pendaftars[$departemen->nama]->where('tahun_daftar',
-                            $tahundaftar)->all()) as $i => $p)
-                            <tr>
-                                <td>{{$i+1}}</td>
-                                <td>{{$p->NamaLengkap}}</td>
-                                <td>{{$p->NISN}}</td>
-                                <td>{{$p->Kelas}}</td>
-                                <td>{{$p->sts->status}}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
-                                            id="dropdown{{$p->NISN}}" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            {{$p->dpt->nama}}
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown{{$p->NISN}}">
-                                            @foreach ($departemens as $dpt)
-                                            <a class="dropdown-item"
-                                                href="{{route('departemen.ubahdepartemen', ['pendaftarId' => $p->id, 'departemenId' => $dpt->id])}}">{{$dpt->nama}}</a>
-                                            @endforeach
+                            @forelse($pendaftars as $i => $p)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="pendaftar_ids[]"
+                                               value="{{ $p->id }}" class="form-check-input row-check" />
+                                    </td>
+                                    <td>{{ $i + 1 }}</td>
+                                    <td>{{ $p->NamaLengkap }}</td>
+                                    <td>{{ $p->NISN }}</td>
+                                    <td>{{ $p->Kelas }}</td>
+                                    <td>
+                                        <span class="badge bg-label-secondary">
+                                            {{ $p->sts?->status ?? '-' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-label-primary">
+                                            {{ $p->dpt?->nama ?? '-' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle w-100"
+                                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ $p->dpt?->nama ?? '-' }}
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                @foreach ($departemens as $d)
+                                                    <a class="dropdown-item {{ $p->departemen == $d->id ? 'active' : '' }}"
+                                                       href="{{ route('departemen.ubahdepartemen', ['pendaftarId' => $p->id, 'departemenId' => $d->id]) }}">
+                                                        {{ $d->nama }}
+                                                    </a>
+                                                @endforeach
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    @if ($p->id == $departemen->kyokucho)
-                                        <span class="badge bg-primary">Kyokuchō</span>
-                                    @else
-                                        <a href="{{route('departemen.ubahkoor', ['departemenId' => $departemen->id, 'pendaftarId' => $p->id])}}" class="btn rounded-pill btn-icon btn-primary">
-                                            <span class="tf-icons bx bxs-hand-up"></span>
-                                        </a>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                            @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($p->departemen && $p->id == $p->dpt?->kyokucho)
+                                            <span class="badge bg-primary">Kyokuchō</span>
+                                        @elseif($p->dpt)
+                                            <a href="{{ route('departemen.ubahkoor', ['departemenId' => $p->dpt->id, 'pendaftarId' => $p->id]) }}"
+                                               class="btn btn-sm rounded-pill btn-icon btn-outline-primary"
+                                               title="Jadikan Kyokuchō">
+                                                <span class="tf-icons bx bxs-hand-up"></span>
+                                            </a>
+                                        @else
+                                            <span class="text-muted">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="9" class="text-center text-muted py-4">
+                                        Tidak ada anggota untuk tahun {{ $tahundaftar }}.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-        @endforeach
+        </form>
+
     </div>
 </div>
 
 @include('app.auth.footer')
 
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="/assetsdash/vendor/libs/datatables/jquery.dataTables.js"></script>
 <script src="/assetsdash/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-<script src="/assetsdash/vendor/libs/datatables-responsive/datatables.responsive.js"></script>
-<script src="/assetsdash/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.js"></script>
-<script src="/assetsdash/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.js"></script>
-<script src="/assetsdash/vendor/libs/datatables-buttons/datatables-buttons.js"></script>
-<script src="/assetsdash/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.js"></script>
-<script src="/assetsdash/vendor/libs/jszip/jszip.js"></script>
-<script src="/assetsdash/vendor/libs/pdfmake/pdfmake.js"></script>
-<script src="/assetsdash/js/form-layouts.js"></script>
-<script src="/assetsdash/js/tables-datatables-basic.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.daftarpendaftar').DataTable();
+$(document).ready(function () {
+
+    // -- DataTable (paging off so all rows stay in DOM) --
+    const table = $('#dept-table').DataTable({
+        paging: false,
+        info: false,
+        order: [],
+        columnDefs: [
+            { orderable: false, targets: [0, 7, 8] },
+            { searchable: false, targets: [0, 1] }
+        ],
+        language: { search: 'Cari:', zeroRecords: 'Tidak ada anggota ditemukan.' }
     });
 
+    // -- Departemen filter pills --
+    $('.filter-pill').on('click', function () {
+        $('.filter-pill').removeClass('active btn-primary').addClass('btn-outline-primary');
+        $(this).addClass('active btn-primary').removeClass('btn-outline-primary');
+        const filter = $(this).data('filter');
+        // Exact match on departemen column (index 6)
+        table.column(6).search(filter ? ('^' + filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$') : '', true, false).draw();
+    });
+
+    // -- Checkbox logic --
+    function updateBulkBar() {
+        const total   = $('.row-check').length;
+        const checked = $('.row-check:checked').length;
+        $('#selected-count').text(checked);
+        if (checked > 0) {
+            $('#bulk-bar').removeClass('d-none');
+        } else {
+            $('#bulk-bar').addClass('d-none');
+        }
+        if (checked === 0) {
+            $('#select-all').prop({ checked: false, indeterminate: false });
+        } else if (checked === total) {
+            $('#select-all').prop({ checked: true, indeterminate: false });
+        } else {
+            $('#select-all').prop({ checked: false, indeterminate: true });
+        }
+    }
+
+    // Select all visible rows
+    $('#select-all').on('change', function () {
+        table.rows({ search: 'applied' }).nodes().to$().find('.row-check').prop('checked', this.checked);
+        updateBulkBar();
+    });
+
+    $(document).on('change', '.row-check', function () {
+        updateBulkBar();
+    });
+
+    $('#clear-btn').on('click', function () {
+        $('.row-check').prop('checked', false);
+        updateBulkBar();
+    });
+
+    // Guard: prevent submit with no selection
+    $('#bulk-form').on('submit', function (e) {
+        if ($('.row-check:checked').length === 0) {
+            e.preventDefault();
+            alert('Pilih minimal 1 anggota terlebih dahulu.');
+        }
+    });
+});
 </script>
+

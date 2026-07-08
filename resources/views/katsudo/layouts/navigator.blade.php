@@ -28,7 +28,11 @@
             </a>
         </div>
         <div class="item_link {{$lombanav ?? ''}}">
-            <a href="" class="btn btn_navLink" aria-label="btnNavigation">
+            @if(auth('pendaftar')->check() && (auth('pendaftar')->user()->sts->level >= 5 || (auth('pendaftar')->user()->dpt && auth('pendaftar')->user()->dpt->kyokucho == auth('pendaftar')->id())))
+            <a href="{{ route('ktd.rekomendasi') }}" class="btn btn_navLink" aria-label="btnNavigation">
+            @else
+            <a href="#" class="btn btn_navLink" aria-label="btnNavigation">
+            @endif
                 <div class="icon_current">
                     <i class="ri-award-line"></i>
                 </div>

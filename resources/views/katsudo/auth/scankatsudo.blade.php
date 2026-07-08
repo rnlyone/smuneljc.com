@@ -143,33 +143,38 @@
                     scanner.addListener('scan', function (content) {
                         document.getElementById('scanned-result').innerHTML = content;
 
-                        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        // Hanya proses QR dengan format KATSUDO
+                        if (!content.startsWith('KATSUDO:')) {
+                            showToast('error', 'QR tidak dikenal: ' + content);
+                            return;
+                        }
 
-                        var formData = new FormData();
-                        formData.append("id_event", content);
-                        formData.append("_token", token);
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                        var form = document.createElement("form");
-                        form.setAttribute("method", "post");
-                        form.setAttribute("action", "{{route('scan')}}");
-                        form.setAttribute("id", "scan-tiket-form");
-
-                        var hiddenField = document.createElement("input");
-                        hiddenField.setAttribute("type", "hidden");
-                        hiddenField.setAttribute("name", "tokentiket");
-                        hiddenField.setAttribute("id", "tokentiket");
-                        hiddenField.setAttribute("value", content);
-
-                        var tokenField = document.createElement("input");
-                        tokenField.setAttribute("type", "hidden");
-                        tokenField.setAttribute("name", "_token");
-                        tokenField.setAttribute("value", token);
-
-                        form.appendChild(hiddenField);
-                        form.appendChild(tokenField);
-
-                        document.body.appendChild(form);
-                        ajaxscan(form);
+                        fetch("{{ route('scan') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            body: JSON.stringify({ payload: content }),
+                        })
+                        .then(r => r.json())
+                        .then(function (response) {
+                            if (response.status === 'success') {
+                                document.getElementById('namapengguna').textContent = response.nama || '—';
+                                document.getElementById('usernamepengguna').textContent = 'Absensi ' + (response.fase === 'masuk' ? 'Masuk' : 'Keluar') + ' ✓';
+                                showToast('success', response.message);
+                            } else {
+                                document.getElementById('namapengguna').textContent = '—';
+                                document.getElementById('usernamepengguna').textContent = response.status === 'info' ? '(sudah scan)' : '';
+                                showToast(response.status === 'info' ? 'success' : 'error', response.message);
+                            }
+                        })
+                        .catch(function () {
+                            showToast('error', 'Gagal menghubungi server.');
+                        });
                     });
 
                     Instascan.Camera.getCameras().then(function (cameras) {
@@ -217,58 +222,12 @@
 
 
 <script>
-    function ajaxscan(form) {
-
-    // Buat instance dari FormData dan tambahkan nilai dari form
-    var formData = new FormData(form);
-
-    // Kirim request ke server dengan AJAX
-    $.ajax({
-        url: $(form).attr('action'),
-        method: $(form).attr('method'),
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            // Ubah nilai elemen pada halaman sesuai dengan response dari server
-            console.log(response);
-            if (response.response === "sukses") {
-                $('#nama_tiket').val(response.nama_ticket);
-                $('#id_tiket').val(response.paidtix.id);
-                $('#namapengguna').text(response.nama_user);
-                $('#usernamepengguna').text(response.username);
-
-                var toastElList = [].slice.call(document.querySelectorAll('#Toasterscansukses'))
-                var toastList = toastElList.map(function (toastEl) {
-                    return new bootstrap.Toast(toastEl)
-                });
-                document.getElementById("Toasterscansuksestext").innerHTML = response.message;
-                toastList.forEach(toast => toast.show());
-            } else {
-                if (response.message === "Tiket Sudah Pernah digunakan!") {
-                    $('#nama_tiket').val(response.nama_ticket);
-                    $('#id_tiket').val(response.paidtix.id);
-                    $('#namapengguna').text(response.nama_user);
-                    $('#usernamepengguna').text(response.username);
-                } else {
-                    $('#nama_tiket').val("Tidak ditemukan");
-                    $('#id_tiket').val("Tidak ditemukan");
-                    $('#namapengguna').text("Tidak ditemukan");
-                    $('#usernamepengguna').text("Tidak ditemukan");
-                }
-                var toastElList = [].slice.call(document.querySelectorAll('#Toasterscangagal'))
-                var toastList = toastElList.map(function (toastEl) {
-                    return new bootstrap.Toast(toastEl)
-                });
-                document.getElementById("Toasterscangagaltext").innerHTML = response.message;
-                toastList.forEach(toast => toast.show());
-            }
-            // Tampilkan pesan sukses atau gagal
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-    });
-}
+    function showToast(type, message) {
+        const toastId = type === 'error' ? 'Toasterscangagal' : 'Toasterscansukses';
+        const textId  = type === 'error' ? 'Toasterscangagaltext' : 'Toasterscansuksestext';
+        document.getElementById(textId).innerHTML = message;
+        const toastEl = document.getElementById(toastId);
+        bootstrap.Toast.getOrCreateInstance(toastEl, { autohide: true, delay: 3500 }).show();
+    }
 </script>
 

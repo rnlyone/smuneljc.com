@@ -16,6 +16,13 @@ class Kehadiran extends Model
         'id_katsudo',
         'id_anggota',
         'status_absen',
+        'masuk_at',
+        'keluar_at',
+    ];
+
+    protected $casts = [
+        'masuk_at'  => 'datetime',
+        'keluar_at' => 'datetime',
     ];
 
     public function anggota(){

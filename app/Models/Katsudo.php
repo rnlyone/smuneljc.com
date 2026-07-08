@@ -17,10 +17,21 @@ class Katsudo extends Model
         'ranah',
         'pj',
         'periode',
+        'id_rekomendasi',
+        'divisi_undangan',
         'tgl_laksana',
         'deskripsi',
         'token',
+        'token_at',
         'absensi',
+        'absensi_fase',
+    ];
+
+    protected $casts = [
+        'divisi_undangan' => 'array',
+        'tgl_laksana'     => 'datetime',
+        'token_at'        => 'datetime',
+        'absensi'         => 'boolean',
     ];
 
     public function dpt(){
@@ -33,5 +44,23 @@ class Katsudo extends Model
 
     public function kehadirans(){
         return $this->hasMany(Kehadiran::class, 'id_katsudo');
+    }
+
+    public function rekomendasi(){
+        return $this->belongsTo(Rekomendasi::class, 'id_rekomendasi');
+    }
+
+    public function periodeRel(){
+        return $this->belongsTo(Periode::class, 'periode');
+    }
+
+    /** Cek apakah divisi member diundang dalam katsudo ini */
+    public function isDivisiBerlaku(int $departemenId): bool
+    {
+        // null = semua diundang
+        if ($this->divisi_undangan === null) {
+            return true;
+        }
+        return in_array($departemenId, $this->divisi_undangan);
     }
 }

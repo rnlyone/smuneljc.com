@@ -11,6 +11,7 @@ use App\Http\Controllers\KehadiranController;
 use App\Http\Controllers\PendaftarController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TestimonialController;
@@ -98,6 +99,18 @@ Route::group(['middleware' => ['auth:pendaftar']], function(){
     Route::resource('/ktd/activity', ActivityController::class);
     Route::resource('/ktd/keaktifan', KeaktifanController::class);
     Route::resource('/ktd/kehadiran', KehadiranController::class);
+
+    // Rekomendasi
+    Route::get('/ktd/rekomendasi', [RekomendasiController::class, 'index'])->name('ktd.rekomendasi');
+    Route::post('/ktd/rekomendasi', [RekomendasiController::class, 'store'])->name('ktd.rekomendasi.store');
+    Route::get('/ktd/rekomendasi/{id}/cabut', [RekomendasiController::class, 'cabut'])->name('ktd.rekomendasi.cabut');
+
+    // Katsudo divisi list + attendance management
+    Route::get('/ktd/katsudo-divisi', [KatsudoController::class, 'listDivisi'])->name('katsudo.divisi');
+    Route::get('/ktd/katsudo/{katsudo}/mulai', [KatsudoController::class, 'mulaiAbsensi'])->name('katsudo.mulai');
+    Route::get('/ktd/katsudo/{katsudo}/switch-fase', [KatsudoController::class, 'switchFase'])->name('katsudo.switch');
+    Route::post('/ktd/katsudo/{katsudo}/token', [KatsudoController::class, 'refreshToken'])->name('katsudo.token');
+    Route::get('/ktd/katsudo/{katsudo}/selesai', [KatsudoController::class, 'selesaiAbsensi'])->name('katsudo.selesai');
 
     Route::get('/ktd', [FrontController::class, 'katsudohome'])->name('katsudo.home');
 

@@ -25,6 +25,8 @@ class Katsudo extends Model
         'token_at',
         'absensi',
         'absensi_fase',
+        'khusus',
+        'approve',
     ];
 
     protected $casts = [

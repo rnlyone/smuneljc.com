@@ -1,13 +1,7 @@
 @include('katsudo.layouts.header')
-{{-- @include('layouts.pagetitle') --}}
 
-<picture>
-    <video id="scanner" allow="camera" style="width: 100%; height:auto; margin:auto"></video>
-    <p id="scanned-result" style="    font-size: 8px;
-    color: var(--secondary);
-    font-weight: 400;
-    margin: 0;" class="mx-auto"></p>
-</picture>
+<div id="reader" style="width:100%;max-width:500px;margin:0 auto;"></div>
+<p id="scanned-result" style="font-size:8px;color:var(--secondary);font-weight:400;margin:0;text-align:center;"></p>
 
 <section class="un-page-components un-my-account">
         <div class="bg-white  pt-0 padding-20">
@@ -91,137 +85,64 @@
 
 @include('katsudo.layouts.footer')
 
-
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let lastPayload  = '';
+    let lastScanTime = 0;
+    const DEBOUNCE_MS = 3000;
 
-            let scanner;
+    const html5QrCode = new Html5Qrcode('reader');
 
-            // Meminta izin pengguna untuk menggunakan kamera
-            if (navigator.mediaDevices === undefined) {
-                navigator.mediaDevices = {};
+    html5QrCode.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        function onScanSuccess(content) {
+            const now = Date.now();
+            if (content === lastPayload && now - lastScanTime < DEBOUNCE_MS) return;
+            lastPayload  = content;
+            lastScanTime = now;
+
+            document.getElementById('scanned-result').textContent = content;
+
+            if (!content.startsWith('KATSUDO:')) {
+                showToast('error', 'QR tidak dikenal.');
+                return;
             }
 
-            if (navigator.mediaDevices.getUserMedia === undefined) {
-                navigator.mediaDevices.getUserMedia = function (constraints) {
-                    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-                    if (!getUserMedia) {
-                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                    }
-
-                    return new Promise(function (resolve, reject) {
-                        getUserMedia.call(navigator, constraints, resolve, reject);
-                    });
+            fetch("{{ route('scan') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+                body: JSON.stringify({ payload: content }),
+            })
+            .then(r => r.json())
+            .then(function (response) {
+                if (response.status === 'success') {
+                    document.getElementById('namapengguna').textContent = response.nama || '—';
+                    document.getElementById('usernamepengguna').textContent =
+                        'Absensi ' + (response.fase === 'masuk' ? 'Masuk' : 'Keluar') + ' ✓';
+                    showToast('success', response.message);
+                } else {
+                    document.getElementById('namapengguna').textContent = '—';
+                    document.getElementById('usernamepengguna').textContent =
+                        response.status === 'info' ? '(sudah scan)' : '';
+                    showToast(response.status === 'info' ? 'success' : 'error', response.message);
                 }
-            }
+            })
+            .catch(function () {
+                showToast('error', 'Gagal menghubungi server.');
+            });
+        },
+        function onScanFailure() { /* abaikan frame tanpa QR */ }
+    ).catch(function (err) {
+        document.getElementById('reader').innerHTML =
+            '<p class="text-danger text-center p-3">Kamera tidak dapat diakses: ' + err + '</p>';
+    });
 
-
-
-            function changeCamera(index) {
-                        Instascan.Camera.getCameras().then(function (cameras) {
-                            scanner.start(cameras[index]);
-                            localStorage.setItem("selectedCamera", index);
-                        });
-                        // document.getElementById("cam"+index).setAttribute("nav-link active");
-
-            }
-
-            navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: { exact: "environment" } },
-                })
-                .then(function (stream) {
-                    scanner = new Instascan.Scanner({
-                        video: document.getElementById('scanner'),
-                        mirror: false,
-                        scanPeriod: 5
-                    });
-
-
-                    scanner.addListener('scan', function (content) {
-                        document.getElementById('scanned-result').innerHTML = content;
-
-                        // Hanya proses QR dengan format KATSUDO
-                        if (!content.startsWith('KATSUDO:')) {
-                            showToast('error', 'QR tidak dikenal: ' + content);
-                            return;
-                        }
-
-                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-                        fetch("{{ route('scan') }}", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,
-                            },
-                            body: JSON.stringify({ payload: content }),
-                        })
-                        .then(r => r.json())
-                        .then(function (response) {
-                            if (response.status === 'success') {
-                                document.getElementById('namapengguna').textContent = response.nama || '—';
-                                document.getElementById('usernamepengguna').textContent = 'Absensi ' + (response.fase === 'masuk' ? 'Masuk' : 'Keluar') + ' ✓';
-                                showToast('success', response.message);
-                            } else {
-                                document.getElementById('namapengguna').textContent = '—';
-                                document.getElementById('usernamepengguna').textContent = response.status === 'info' ? '(sudah scan)' : '';
-                                showToast(response.status === 'info' ? 'success' : 'error', response.message);
-                            }
-                        })
-                        .catch(function () {
-                            showToast('error', 'Gagal menghubungi server.');
-                        });
-                    });
-
-                    Instascan.Camera.getCameras().then(function (cameras) {
-                        if (cameras.length > 0) {
-                            for (var i = 0; i < cameras.length; i++) {
-                                var camera = cameras[i];
-                                var radio = document.createElement("input");
-                                radio.setAttribute("style", "margin-top:0;")
-                                radio.setAttribute("name", "camera");
-                                radio.setAttribute("id", "cam"+i)
-                                radio.setAttribute("value", "Kamera " + i);
-                                radio.setAttribute("readonly", "readonly")
-                                radio.setAttribute("onclick", "changeCamera("+i+")");
-                                radio.setAttribute("data-bs-toggle", "pill")
-                                if (i === 0) {
-                                    radio.setAttribute("class", "nav-link active");
-                                } else {
-                                    radio.setAttribute("class", "nav-link");
-                                }
-
-                                var label = document.createElement("li");
-                                label.appendChild(radio);
-                                label.setAttribute("class", "nav-item")
-
-                                document.getElementById("selector").appendChild(label);
-                            }
-
-                            // cek localStorage untuk melihat apakah ada indeks kamera yang disimpan
-                            var selectedCamera = localStorage.getItem("selectedCamera");
-                                if (selectedCamera !== null) {
-                                    // pilih kamera yang tersimpan di localStorage
-                                    var radioButtons = document.getElementsByName("camera");
-                                    radioButtons[selectedCamera].click();
-                                }
-                        } else {
-                            console.error("No cameras found.");
-                        }
-                    });
-                })
-                .catch(function (err) {
-                    console.log(err);
-                });
-
-</script>
-
-
-<script>
     function showToast(type, message) {
         const toastId = type === 'error' ? 'Toasterscangagal' : 'Toasterscansukses';
         const textId  = type === 'error' ? 'Toasterscangagaltext' : 'Toasterscansuksestext';

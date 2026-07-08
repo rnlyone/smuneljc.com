@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Katsudo;
+use App\Models\Keaktifan;
+use App\Models\Periode;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,9 +33,20 @@ class KatsudoController extends Controller
 
                     // dd(Auth::guard('pendaftar')->check());
 
+        $latestPeriode = Periode::latest()->first();
+        $keaktifan = null;
+        if ($latestPeriode) {
+            $keaktifan = Keaktifan::where('id_anggota', auth('pendaftar')->id())
+                ->where('id_periode', $latestPeriode->id)
+                ->first();
+        }
+
         return view('katsudo.auth.profile', [
             $settings['navactive'] => '-active-links',
-            'stgs' => $settings]);
+            'stgs'          => $settings,
+            'keaktifan'     => $keaktifan,
+            'latestPeriode' => $latestPeriode,
+        ]);
     }
 
     /**

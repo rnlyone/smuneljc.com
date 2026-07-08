@@ -80,29 +80,40 @@
             <h2 class="accordion-header" id="headingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     Statistik
+                    @if($latestPeriode)
+                        <small class="ms-2 opacity-50" style="font-size:.75em;">
+                            {{ $latestPeriode->angkatan }} {{ $latestPeriode->tahun_mulai }}/{{ $latestPeriode->tahun_mulai + 1 }}
+                        </small>
+                    @endif
                 </button>
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
                 <div class="accordion-body px-0">
                     <div class="body mx-auto">
+                        @if($keaktifan)
                         <div class="statisticses">
                             <div class="text-grid">
-                                <h4>35</h4>
+                                <h4>{{ $keaktifan->jumlah_th ?? 0 }}</h4>
                                 <p>Hadir</p>
                             </div>
                             <div class="text-grid">
-                                <h4>2</h4>
+                                <h4>{{ $keaktifan->jumlah_absen ?? 0 }}</h4>
                                 <p>Absen</p>
                             </div>
                             <div class="text-grid">
-                                <h4>8</h4>
+                                <h4>{{ $keaktifan->jumlah_izin ?? 0 }}</h4>
                                 <p>Izin</p>
                             </div>
                             <div class="text-grid">
-                                <h4>48</h4>
+                                <h4>{{ $keaktifan->jumlah_th_berturut ?? 0 }}</h4>
                                 <p>THB</p>
                             </div>
                         </div>
+                        @else
+                        <p class="text-center opacity-50 py-3" style="font-size:.85em;">
+                            Belum ada kartu keaktifan untuk periode ini.
+                        </p>
+                        @endif
                     </div>
                 </div>
             </div>

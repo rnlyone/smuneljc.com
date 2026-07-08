@@ -5,17 +5,39 @@
 
 <section class="un-page-components">
     <div class="padding-20 pt-3">
-        <div class="card rounded-15 p-3">
-            <div class="d-flex align-items-center gap-3">
-                <div class="icon bg-green-1 color-green rounded-circle p-2">
-                    <i class="ri-user-check-line fs-5"></i>
+
+        {{-- ── Info Katsudo (muncul setelah scan pertama) ──────────── --}}
+        <div id="katsudo-info-card" class="item-card-nft rounded-15 p-3 mb-3 d-none">
+            <div class="d-flex align-items-start gap-3">
+                <div class="icon bg-blue-1 color-blue rounded-circle p-2 flex-shrink-0">
+                    <i class="ri-calendar-event-line fs-5"></i>
                 </div>
-                <div>
-                    <h6 id="namapengguna" class="mb-0">—</h6>
-                    <p id="usernamepengguna" class="size-12 color-text mb-0">Belum ada scan</p>
+                <div class="flex-grow-1 min-w-0">
+                    <h6 id="info-katsudo-nama" class="mb-1 text-truncate">—</h6>
+                    <p id="info-katsudo-tgl" class="size-12 color-text mb-1">—</p>
+                    <div class="d-flex gap-2 flex-wrap align-items-center">
+                        <span id="info-katsudo-dept" class="badge bg-label-primary size-11">—</span>
+                        <span id="info-katsudo-fase-badge" class="badge size-11">—</span>
+                    </div>
+                    <p id="info-katsudo-deskripsi" class="size-12 color-text mt-2 mb-0 text-truncate" style="max-width:100%;">—</p>
                 </div>
             </div>
         </div>
+
+        {{-- ── Hasil scan terakhir ─────────────────────────────────── --}}
+        <div id="last-scan-card" class="item-card-nft rounded-15 p-3">
+            <div class="d-flex align-items-center gap-3">
+                <div id="scan-icon" class="icon bg-snow rounded-circle p-2 flex-shrink-0" style="transition:background .3s">
+                    <i class="ri-qr-scan-2-line fs-5" style="color:var(--secondary)"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h6 id="namapengguna" class="mb-0">Arahkan kamera ke QR</h6>
+                    <p id="usernamepengguna" class="size-12 color-text mb-0">Belum ada scan</p>
+                </div>
+                <span id="scan-status-badge" class="badge d-none"></span>
+            </div>
+        </div>
+
     </div>
     <div class="space-sticky-footer"></div>
 </section>
@@ -101,16 +123,47 @@
             })
             .then(r => r.json())
             .then(function (response) {
+                // ── Update katsudo info card (jika ada data) ──────────
+                if (response.katsudo_nama) {
+                    document.getElementById('info-katsudo-nama').textContent      = response.katsudo_nama;
+                    document.getElementById('info-katsudo-tgl').textContent       = response.katsudo_tgl || '—';
+                    document.getElementById('info-katsudo-dept').textContent      = response.katsudo_dept || '—';
+                    document.getElementById('info-katsudo-deskripsi').textContent = response.katsudo_deskripsi || '';
+                    const faseBadge = document.getElementById('info-katsudo-fase-badge');
+                    const fase      = response.katsudo_fase || '';
+                    faseBadge.textContent  = fase === 'masuk' ? 'Fase Masuk' : fase === 'keluar' ? 'Fase Keluar' : fase;
+                    faseBadge.className    = 'badge size-11 ' + (fase === 'masuk' ? 'bg-primary' : fase === 'keluar' ? 'bg-warning' : 'bg-secondary');
+                    document.getElementById('katsudo-info-card').classList.remove('d-none');
+                }
+
+                // ── Update last-scan card ─────────────────────────────
+                const iconEl  = document.getElementById('scan-icon');
+                const badgeEl = document.getElementById('scan-status-badge');
+
                 if (response.status === 'success') {
-                    document.getElementById('namapengguna').textContent = response.nama || '—';
+                    document.getElementById('namapengguna').textContent    = response.nama || '—';
                     document.getElementById('usernamepengguna').textContent =
-                        'Absensi ' + (response.fase === 'masuk' ? 'Masuk' : 'Keluar') + ' ✓';
+                        response.fase === 'masuk' ? 'Absensi Masuk ✓' : 'Absensi Keluar ✓';
+                    iconEl.className  = 'icon bg-green-1 color-green rounded-circle p-2 flex-shrink-0';
+                    iconEl.innerHTML  = '<i class="ri-user-check-line fs-5"></i>';
+                    badgeEl.textContent = 'Hadir';
+                    badgeEl.className   = 'badge bg-success';
+                    badgeEl.classList.remove('d-none');
                     showToast('success', response.message);
                 } else {
-                    document.getElementById('namapengguna').textContent = '—';
-                    document.getElementById('usernamepengguna').textContent =
-                        response.status === 'info' ? '(sudah scan)' : '';
-                    showToast(response.status === 'info' ? 'success' : 'error', response.message);
+                    document.getElementById('namapengguna').textContent    = response.nama || '—';
+                    document.getElementById('usernamepengguna').textContent = response.message;
+                    const isInfo = response.status === 'info';
+                    iconEl.className  = isInfo
+                        ? 'icon bg-orange-1 color-orange rounded-circle p-2 flex-shrink-0'
+                        : 'icon bg-red-1 color-red rounded-circle p-2 flex-shrink-0';
+                    iconEl.innerHTML  = isInfo
+                        ? '<i class="ri-checkbox-circle-line fs-5"></i>'
+                        : '<i class="ri-close-circle-line fs-5"></i>';
+                    badgeEl.textContent = isInfo ? 'Sudah Scan' : 'Gagal';
+                    badgeEl.className   = isInfo ? 'badge bg-warning' : 'badge bg-danger';
+                    badgeEl.classList.remove('d-none');
+                    showToast(isInfo ? 'success' : 'error', response.message);
                 }
             })
             .catch(function () {

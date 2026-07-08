@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kehadiran;
 use App\Models\Katsudo;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class KehadiranController extends Controller
@@ -64,9 +65,18 @@ class KehadiranController extends Controller
 
         $user = auth('pendaftar')->user();
 
+        // Helper: katsudo info snippet for every response
+        $katsudoInfo = [
+            'katsudo_nama' => $katsudo->nama,
+            'katsudo_tgl'  => Carbon::parse($katsudo->tgl_laksana)->isoFormat('D MMM YYYY, HH:mm'),
+            'katsudo_dept' => optional($katsudo->dpt)->nama ?? '—',
+            'katsudo_fase' => $katsudo->absensi_fase,
+            'katsudo_deskripsi' => $katsudo->deskripsi,
+        ];
+
         // Cek apakah member diundang (berdasarkan divisi)
         if (!$katsudo->isDivisiBerlaku($user->departemen)) {
-            return response()->json(['status' => 'error', 'message' => 'Divisi kamu tidak diundang dalam katsudo ini.'], 403);
+            return response()->json(array_merge($katsudoInfo, ['status' => 'error', 'message' => 'Divisi kamu tidak diundang dalam katsudo ini.']), 403);
         }
 
         $kehadiran = Kehadiran::where('id_katsudo', $katsudo->id)
@@ -75,25 +85,25 @@ class KehadiranController extends Controller
 
         if ($fase === 'masuk') {
             if ($kehadiran && $kehadiran->masuk_at) {
-                return response()->json(['status' => 'info', 'message' => 'Kamu sudah scan masuk sebelumnya.', 'nama' => $user->NamaLengkap]);
+                return response()->json(array_merge($katsudoInfo, ['status' => 'info', 'message' => 'Kamu sudah scan masuk sebelumnya.', 'nama' => $user->NamaLengkap]));
             }
             // Buat atau update
             Kehadiran::updateOrCreate(
                 ['id_katsudo' => $katsudo->id, 'id_anggota' => $user->id],
                 ['status_absen' => 'hadir', 'masuk_at' => now()]
             );
-            return response()->json(['status' => 'success', 'message' => 'Absensi masuk berhasil!', 'nama' => $user->NamaLengkap, 'fase' => 'masuk']);
+            return response()->json(array_merge($katsudoInfo, ['status' => 'success', 'message' => 'Absensi masuk berhasil!', 'nama' => $user->NamaLengkap, 'fase' => 'masuk']));
         }
 
         if ($fase === 'keluar') {
             if (!$kehadiran || !$kehadiran->masuk_at) {
-                return response()->json(['status' => 'error', 'message' => 'Kamu belum scan masuk. Scan masuk terlebih dahulu.'], 400);
+                return response()->json(array_merge($katsudoInfo, ['status' => 'error', 'message' => 'Kamu belum scan masuk. Scan masuk terlebih dahulu.']), 400);
             }
             if ($kehadiran->keluar_at) {
-                return response()->json(['status' => 'info', 'message' => 'Kamu sudah scan keluar sebelumnya.', 'nama' => $user->NamaLengkap]);
+                return response()->json(array_merge($katsudoInfo, ['status' => 'info', 'message' => 'Kamu sudah scan keluar sebelumnya.', 'nama' => $user->NamaLengkap]));
             }
             $kehadiran->update(['keluar_at' => now()]);
-            return response()->json(['status' => 'success', 'message' => 'Absensi keluar berhasil!', 'nama' => $user->NamaLengkap, 'fase' => 'keluar']);
+            return response()->json(array_merge($katsudoInfo, ['status' => 'success', 'message' => 'Absensi keluar berhasil!', 'nama' => $user->NamaLengkap, 'fase' => 'keluar']));
         }
 
         return response()->json(['status' => 'error', 'message' => 'Fase tidak dikenal.'], 400);

@@ -99,6 +99,8 @@ class PendaftarController extends Controller
                 'tahun_daftar' => $TahunDaftar
             ]);
 
+
+
             Keaktifan::create([
                 'id_anggota' => $pendaftar->id,
                 'id_periode' => $latestPengurus->id

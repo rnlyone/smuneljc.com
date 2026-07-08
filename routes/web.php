@@ -122,6 +122,10 @@ Route::group(['middleware' => ['auth:pendaftar']], function(){
 
     Route::get('/ktd/scan', [KehadiranController::class, 'fscan'])->name('fscan');
     Route::post('/ktd/scan', [KehadiranController::class, 'scan'])->name('scan');
+
+    // Edit profil anggota
+    Route::get('/ktd/profil/edit', [PendaftarController::class, 'editProfile'])->name('ktd.profil.edit');
+    Route::post('/ktd/profil/update', [PendaftarController::class, 'updateProfile'])->name('ktd.profil.update');
 });
 
 Route::get('/offline', function () {return view('laravelpwa::offline');})->name('menufooter');

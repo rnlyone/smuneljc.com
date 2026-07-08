@@ -266,4 +266,61 @@ class PendaftarController extends Controller
         Auth::guard('pendaftar')->logout();
         return redirect()->route('klogin')->with('sukses', 'logout berhasil');
     }
+
+    public function editProfile()
+    {
+        return view('katsudo.auth.edit-profile', [
+            'user' => auth('pendaftar')->user(),
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth('pendaftar')->user();
+
+        $request->validate([
+            'NamaLengkap'      => 'required|string|max:255',
+            'Kelas'            => 'nullable|string|max:20',
+            'NoWA'             => 'nullable|string|max:20',
+            'Instagram'        => 'nullable|string|max:60',
+            'foto_anggota'     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:3072',
+            'PIN_baru'         => 'nullable|min:6|confirmed',
+            'PIN_lama'         => 'nullable|required_with:PIN_baru',
+        ]);
+
+        // Verify old PIN before changing
+        if ($request->filled('PIN_baru')) {
+            if ($request->PIN_lama !== $user->PIN) {
+                return back()->withErrors(['PIN_lama' => 'PIN lama tidak cocok.'])->withInput();
+            }
+            $user->PIN = $request->PIN_baru;
+        }
+
+        $user->NamaLengkap = $request->NamaLengkap;
+        $user->Kelas       = $request->Kelas;
+        $user->NoWA        = $request->NoWA;
+        $user->Instagram   = $request->Instagram;
+
+        if ($request->hasFile('foto_anggota')) {
+            // Delete old photo if it's not the default
+            if ($user->foto_anggota && $user->foto_anggota !== 'default.jpg') {
+                $oldPath = public_path('images/' . $user->foto_anggota);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $file = $request->file('foto_anggota');
+            $dir  = public_path('images/anggota');
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $filename = 'anggota_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $filename);
+            $user->foto_anggota = 'anggota/' . $filename;
+        }
+
+        $user->save();
+
+        return back()->with('profil_success', 'Profil berhasil diperbarui!');
+    }
 }

@@ -3,41 +3,21 @@
 <div id="reader" style="width:100%;max-width:500px;margin:0 auto;"></div>
 <p id="scanned-result" style="font-size:8px;color:var(--secondary);font-weight:400;margin:0;text-align:center;"></p>
 
-<section class="un-page-components un-my-account">
-        <div class="bg-white  pt-0 padding-20">
-            <div class="item-card-nft rounded-15">
-            </div>
-        </div>
-    <!-- End.content-comp -->
-    <div class="space-sticky-footer mb-5 zindex-sticky"></div>
-        <div class="footer footer-pages-forms mb-5" style="z-index: 90;">
-            <div class="head">
-                <div class="my-personal-account">
-                    <div class="user">
-                        <picture>
-                            <source srcset="/storage/profile_pict/itsupp.png" type="image/webp">
-                            <img src="images/avatar/11.jpg" alt="">
-                        </picture>
-                        <div class="txt-user">
-                            <h1 id="namapengguna">Nama Pengguna</h1>
-                            <p id="usernamepengguna">username</p>
-                        </div>
-                    </div>
+<section class="un-page-components">
+    <div class="padding-20 pt-3">
+        <div class="card rounded-15 p-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icon bg-green-1 color-green rounded-circle p-2">
+                    <i class="ri-user-check-line fs-5"></i>
                 </div>
-            </div>
-            <div class="un-create-collectibles bg-white">
-                <div class="form-group">
-                    <label>Nama Tiket</label>
-                    <input id="nama_tiket" name="nama_tiket" type="text" class="form-control" disabled>
-                </div>
-            </div>
-            <div class="divider"></div>
-            <div class="bg-white py-3 un-creator-ptofile">
-                <div class="tab-creatore-profile">
-                    <ul class="nav nav-pills nav-pilled-tab w-100 mb-0" id="selector" role="tablist"></ul>
+                <div>
+                    <h6 id="namapengguna" class="mb-0">—</h6>
+                    <p id="usernamepengguna" class="size-12 color-text mb-0">Belum ada scan</p>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="space-sticky-footer"></div>
 </section>
 
 

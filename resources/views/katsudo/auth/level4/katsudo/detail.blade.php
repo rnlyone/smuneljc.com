@@ -55,10 +55,10 @@
                     {{-- QR Code --}}
                     <p class="size-12 opacity-50 mb-1">
                         Fase: <strong>{{ strtoupper($katsudo->absensi_fase) }}</strong>
-                        &nbsp;·&nbsp; QR refresh tiap 30 detik
+                        &nbsp;·&nbsp; QR refresh tiap 5 detik
                     </p>
                     <div id="qrcode" class="mx-auto mb-3" style="width:220px;height:220px;"></div>
-                    <p id="countdown" class="size-12 opacity-50 mb-3">Refresh dalam <span id="timer">30</span>s</p>
+                    <p id="countdown" class="size-12 opacity-50 mb-3">Refresh dalam <span id="timer">5</span>s</p>
 
                     <div class="d-flex gap-2 justify-content-center flex-wrap">
                         @if($katsudo->absensi_fase === 'masuk')
@@ -134,7 +134,7 @@ function renderQR(payload) {
 
 renderQR(currentPayload);
 
-let seconds = 30;
+let seconds = 5;
 const timerEl = document.getElementById('timer');
 
 setInterval(function () {
@@ -142,7 +142,7 @@ setInterval(function () {
     if (timerEl) timerEl.textContent = seconds;
 
     if (seconds <= 0) {
-        seconds = 30;
+        seconds = 5;
         fetch("{{ route('katsudo.token', $katsudo->id) }}", {
             method: 'POST',
             headers: {

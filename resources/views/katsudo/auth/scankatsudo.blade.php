@@ -130,10 +130,14 @@ let lastPayload  = '';
 let lastScanTime = 0;
 const DEBOUNCE_MS = 3000;
 
-new Html5Qrcode('reader').start(
-    { facingMode: 'environment' },
-    { fps: 10, qrbox: { width: 220, height: 220 } },
-    function onScanSuccess(content) {
+function showCamError(msg) {
+    document.getElementById('reader').innerHTML =
+        '<div style="color:#fff;text-align:center;padding:38vh 28px 0;line-height:1.5;">' +
+        '<i class="ri-camera-off-line" style="font-size:32px;display:block;margin-bottom:10px;"></i>' +
+        msg + '</div>';
+}
+
+function onScanSuccess(content) {
         const now = Date.now();
         if (content === lastPayload && now - lastScanTime < DEBOUNCE_MS) return;
         lastPayload  = content;
@@ -201,12 +205,39 @@ new Html5Qrcode('reader').start(
         .catch(function () {
             showToast('error', 'Gagal menghubungi server.');
         });
-    },
-    function onScanFailure() { /* abaikan frame tanpa QR */ }
-).catch(function (err) {
-    document.getElementById('reader').innerHTML =
-        '<p style="color:#fff;text-align:center;padding-top:40vh;">Kamera tidak dapat diakses.<br><small>' + err + '</small></p>';
-});
+}
+
+function onScanFailure() { /* abaikan frame tanpa QR */ }
+
+const scanConfig = { fps: 10, qrbox: { width: 220, height: 220 } };
+
+// Kamera hanya bisa diakses di secure context (HTTPS / localhost).
+if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    showCamError('Kamera hanya bisa diakses lewat koneksi aman.<br>' +
+        'Buka aplikasi melalui <b>https://</b> (bukan http) atau di <b>localhost</b>.');
+} else {
+    const html5 = new Html5Qrcode('reader');
+
+    // Coba kamera belakang dulu, kalau gagal fallback ke daftar kamera.
+    html5.start({ facingMode: 'environment' }, scanConfig, onScanSuccess, onScanFailure)
+        .catch(function () {
+            Html5Qrcode.getCameras()
+                .then(function (cameras) {
+                    if (cameras && cameras.length) {
+                        const camId = cameras[cameras.length - 1].id; // umumnya kamera belakang
+                        html5.start(camId, scanConfig, onScanSuccess, onScanFailure)
+                            .catch(function (err) {
+                                showCamError('Kamera tidak dapat diakses.<br><small>' + err + '</small>');
+                            });
+                    } else {
+                        showCamError('Tidak ada kamera yang terdeteksi di perangkat ini.');
+                    }
+                })
+                .catch(function (err) {
+                    showCamError('Izin kamera ditolak atau tidak tersedia.<br><small>' + err + '</small>');
+                });
+        });
+}
 
 function showToast(type, message) {
     const toastId = type === 'error' ? 'Toasterscangagal' : 'Toasterscansukses';

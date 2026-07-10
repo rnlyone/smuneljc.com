@@ -81,27 +81,43 @@ body { overflow: hidden; }
 #reader {
     position: fixed;
     inset: 0;
-    z-index: 1;
+    z-index: 5;
+    width: 100vw;
+    height: 100vh;
     background: #000;
+    overflow: hidden;
 }
-#reader video,
-#reader canvas {
-    width: 100% !important;
-    height: 100% !important;
+#reader video {
+    width: 100vw !important;
+    height: 100vh !important;
     object-fit: cover !important;
     position: absolute !important;
-    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: block !important;
+}
+#reader canvas {
+    object-fit: cover !important;
 }
 #reader__scan_region {
     position: absolute !important;
     inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
     overflow: hidden;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
+/* Sembunyikan placeholder image & overlay bawaan yang bisa menutupi video */
+#reader__scan_region img,
+#reader__scan_region > img { display: none !important; }
+#qr-shaded-region           { display: none !important; }
 /* Hide html5-qrcode default controls */
 #reader__dashboard          { display: none !important; }
 #reader__header_message     { display: none !important; }
+#reader__status_span        { display: none !important; }
 
 /* ── Panel Info Statis ────────────────────────────────────────── */
 /* Ditempatkan tepat di atas bottom-navmenu (tinggi ±56px) dengan
@@ -211,6 +227,16 @@ function onScanFailure() { /* abaikan frame tanpa QR */ }
 
 const scanConfig = { fps: 10, qrbox: { width: 220, height: 220 } };
 
+// Paksa elemen <video> yang di-inject library mengisi layar penuh.
+function forceVideoFill() {
+    const v = document.querySelector('#reader video');
+    if (v) {
+        v.setAttribute('playsinline', 'true');
+        v.style.cssText =
+            'width:100vw;height:100vh;object-fit:cover;position:absolute;top:0;left:0;display:block;';
+    }
+}
+
 // Kamera hanya bisa diakses di secure context (HTTPS / localhost).
 if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     showCamError('Kamera hanya bisa diakses lewat koneksi aman.<br>' +
@@ -218,24 +244,40 @@ if (!window.isSecureContext || !navigator.mediaDevices || !navigator.mediaDevice
 } else {
     const html5 = new Html5Qrcode('reader');
 
-    // Coba kamera belakang dulu, kalau gagal fallback ke daftar kamera.
-    html5.start({ facingMode: 'environment' }, scanConfig, onScanSuccess, onScanFailure)
-        .catch(function () {
-            Html5Qrcode.getCameras()
-                .then(function (cameras) {
-                    if (cameras && cameras.length) {
-                        const camId = cameras[cameras.length - 1].id; // umumnya kamera belakang
-                        html5.start(camId, scanConfig, onScanSuccess, onScanFailure)
-                            .catch(function (err) {
-                                showCamError('Kamera tidak dapat diakses.<br><small>' + err + '</small>');
-                            });
-                    } else {
-                        showCamError('Tidak ada kamera yang terdeteksi di perangkat ini.');
-                    }
-                })
-                .catch(function (err) {
-                    showCamError('Izin kamera ditolak atau tidak tersedia.<br><small>' + err + '</small>');
+    function startWith(cameraSource) {
+        return html5.start(cameraSource, scanConfig, onScanSuccess, onScanFailure)
+            .then(function () {
+                // Beri jeda agar <video> ter-inject lalu paksa ukurannya.
+                setTimeout(forceVideoFill, 200);
+                setTimeout(forceVideoFill, 800);
+            });
+    }
+
+    // Pilih kamera belakang secara eksplisit (render lebih andal di HP),
+    // fallback ke facingMode environment bila daftar kamera tak tersedia.
+    Html5Qrcode.getCameras()
+        .then(function (cameras) {
+            if (cameras && cameras.length) {
+                const back = cameras.find(function (c) {
+                    return /back|rear|environment|belakang/i.test(c.label);
+                }) || cameras[cameras.length - 1];
+
+                startWith(back.id).catch(function () {
+                    startWith({ facingMode: 'environment' }).catch(function (err) {
+                        showCamError('Kamera tidak dapat diakses.<br><small>' + err + '</small>');
+                    });
                 });
+            } else {
+                startWith({ facingMode: 'environment' }).catch(function (err) {
+                    showCamError('Tidak ada kamera terdeteksi.<br><small>' + err + '</small>');
+                });
+            }
+        })
+        .catch(function () {
+            // getCameras butuh izin; coba langsung facingMode.
+            startWith({ facingMode: 'environment' }).catch(function (err) {
+                showCamError('Izin kamera ditolak atau tidak tersedia.<br><small>' + err + '</small>');
+            });
         });
 }
 

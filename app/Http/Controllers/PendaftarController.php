@@ -271,8 +271,22 @@ class PendaftarController extends Controller
 
     public function editProfile()
     {
+        #page_setup
+        $customcss = '';
+        $jmlsetting = Setting::all();
+        $settings = ['title' => ': Edit Profil',
+                     'customcss' => $customcss,
+                     'pagetitle' => 'Edit Profil',
+                     'navactive' => 'usernav',
+                     'previous' => 'katsudo.index'];
+                    foreach ($jmlsetting as $i => $set) {
+                        $settings[$set->NamaSetting] = $set->Value;
+                     }
+
         return view('katsudo.auth.edit-profile', [
+            $settings['navactive'] => '-active-links',
             'user' => auth('pendaftar')->user(),
+            'stgs' => $settings,
         ]);
     }
 

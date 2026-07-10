@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departemen;
+use App\Models\Keaktifan;
 use App\Models\Pendaftar;
 use App\Models\Periode;
+use App\Models\Rekomendasi;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -152,25 +154,74 @@ class DepartemenController extends Controller
         #page_setup
         $customcss = '';
         $jmlsetting = Setting::all();
-        $settings = ['title' => ': Departemen',
+        $settings = ['title' => ': Dashboard Departemen',
                      'customcss' => $customcss,
-                     'pagetitle' => 'Departemen',
+                     'pagetitle' => 'Dashboard Departemen',
                      'navactive' => 'deptnav',
                      'previous' => 'fdpt'];
                     foreach ($jmlsetting as $i => $set) {
                         $settings[$set->NamaSetting] = $set->Value;
                      }
 
-        if(auth('pendaftar')->user()->sts->level == 4){
+        // Resolve lewat departemen milik user sendiri (bukan loop-scan semua
+        // departemen by slug) — beberapa baris Departemen berbagi nama/slug
+        // yang sama, jadi pencocokan by slug saja bisa salah ambil baris.
+        $user     = auth('pendaftar')->user();
+        $thisdept = $user->dpt;
 
-            return view('katsudo.auth.level4.departemen.index', [
+        abort_if($thisdept === null, 404);
 
-                $settings['navactive'] => '-active-links',
-                'stgs' => $settings
-            ]);
-        } else {
-            return back()->with('error', 'kamu dilarang mengakses halaman ini');
+        $isKyokucho = $thisdept->getSlugAttribute() === $dpt && $thisdept->kyokucho == $user->id;
+
+        if (!$isKyokucho) {
+            return back()->with('error', 'Kamu dilarang mengakses halaman ini.');
         }
+
+        $latestPeriode = Periode::latest()->first();
+
+        $katsudos = $thisdept->katsudos()->orderBy('tgl_laksana', 'desc')->get();
+        $now = now();
+
+        $totalKatsudo    = $katsudos->count();
+        $katsudoAkanDatang = $katsudos->filter(fn ($k) => $k->tgl_laksana && $k->tgl_laksana->gte($now))->count();
+        $katsudoSelesai    = $katsudos->where('absensi_fase', 'selesai')->count();
+
+        $anggotas = $thisdept->anggotas()->orderBy('NamaLengkap')->get();
+
+        $keaktifans = collect();
+        if ($latestPeriode) {
+            $keaktifans = Keaktifan::whereIn('id_anggota', $anggotas->pluck('id'))
+                ->where('id_periode', $latestPeriode->id)
+                ->get()
+                ->keyBy('id_anggota');
+        }
+
+        $anggotaStats = $anggotas->map(function ($a) use ($keaktifans) {
+            $k = $keaktifans->get($a->id);
+            return [
+                'anggota'      => $a,
+                'hadir'        => $k->jumlah_th ?? 0,
+                'absen'        => $k->jumlah_absen ?? 0,
+                'absen_berturut' => $k->jumlah_absen_berturut ?? 0,
+            ];
+        })->sortByDesc('hadir')->values();
+
+        $hasRekomendasi = $latestPeriode ? Rekomendasi::where('id_departemen', $thisdept->id)
+            ->where('id_periode', $latestPeriode->id)
+            ->where('status', 'aktif')
+            ->exists() : false;
+
+        return view('katsudo.auth.level4.departemen.index', [
+            $settings['navactive'] => '-active-links',
+            'stgs'            => $settings,
+            'thisdept'        => $thisdept,
+            'totalKatsudo'    => $totalKatsudo,
+            'katsudoAkanDatang' => $katsudoAkanDatang,
+            'katsudoSelesai'  => $katsudoSelesai,
+            'anggotaStats'    => $anggotaStats,
+            'latestPeriode'   => $latestPeriode,
+            'hasRekomendasi'  => $hasRekomendasi,
+        ]);
     }
 
 

@@ -127,15 +127,15 @@ body { overflow: hidden; }
     left: 0; right: 0;
     bottom: calc(56px + env(safe-area-inset-bottom));
     z-index: 90;
-    background: var(--bs-body-bg, #fff);
+    /* var(--white) flips to #222032 under [data-theme=dark] on <html>,
+       same surface color used by the rest of the unic theme. */
+    background: var(--white);
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -6px 32px rgba(0, 0, 0, .22);
     max-height: 60vh;
     overflow-y: auto;
     overscroll-behavior: contain;
 }
-body[data-theme="dark"] #scan-panel,
-.dark-mode #scan-panel { background: var(--bs-dark, #1a1a1a); }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>

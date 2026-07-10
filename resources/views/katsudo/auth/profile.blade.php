@@ -135,7 +135,7 @@
             <h2>Portal Departemen</h2>
         </div>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('dpt.dash', $me->dpt->id) }}">
+            <a class="nav-link" href="{{ route('dpt.dash', $me->dpt->getSlugAttribute()) }}">
                 <div class="item-content-link">
                     <div class="icon bg-green-1 color-green">
                         <i class="ri-home-gear-line"></i>

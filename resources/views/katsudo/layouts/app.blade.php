@@ -72,6 +72,15 @@
     @laravelPWA
 
     <style>
+        /* Bootstrap's .card ships with a hardcoded white background that
+           never follows the unic dark theme (every other surface here
+           uses --white, which flips to #222032 under [data-theme=dark]).
+           Anchor .card to the same variable so it stays dark in dark mode. */
+        .card {
+            background-color: var(--white);
+            border-color: var(--gray-200);
+        }
+
         {{$stgs['customcss']}}
     </style>
 

@@ -106,17 +106,44 @@ class DepartemenController extends Controller
             $kyokuchopp = Auth::guard('pendaftar')->user()->dpt->koor->foto_anggota;
         }
 
+        $thisdept = null;
         foreach($alldept as $dept){
             if($dept->getSlugAttribute() == $dpt){
                 $thisdept = $dept;
             }
         }
+        abort_if($thisdept === null, 404);
+
+        // Katsudo departemen ini — dipisah akan datang & sebelumnya
+        $now = now();
+        $katsudos = $thisdept->katsudos()
+            ->with(['pj'])
+            ->where('approve', true)
+            ->orderBy('tgl_laksana')
+            ->get();
+
+        $deptUpcoming = $katsudos
+            ->filter(fn ($k) => $k->tgl_laksana && $k->tgl_laksana->gte($now))
+            ->sortBy('tgl_laksana')
+            ->values();
+
+        $deptSebelumnya = $katsudos
+            ->filter(fn ($k) => $k->tgl_laksana && $k->tgl_laksana->lt($now))
+            ->sortByDesc('tgl_laksana')
+            ->take(5)
+            ->values();
+
+        $deptTerdekat = $deptUpcoming->first();
+        $deptAkanDatang = $deptUpcoming->slice(1)->values();
 
         return view('katsudo.auth.detail_departemen', [
-            'thisdept' => $thisdept,
-            'kyokucho' => $kyokucho,
-            'kyokuchopp' => $kyokuchopp,
-            'latestperiode' => $latestperiode,
+            'thisdept'       => $thisdept,
+            'kyokucho'       => $kyokucho,
+            'kyokuchopp'     => $kyokuchopp,
+            'latestperiode'  => $latestperiode,
+            'deptTerdekat'   => $deptTerdekat,
+            'deptAkanDatang' => $deptAkanDatang,
+            'deptSebelumnya' => $deptSebelumnya,
             $settings['navactive'] => '-active-links',
             'stgs' => $settings]);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gallery;
 use App\Models\Inovasi;
+use App\Models\Katsudo;
 use App\Models\Pages;
 use App\Models\Pengurus;
 use App\Models\Periode;
@@ -95,10 +96,40 @@ class FrontController extends Controller
 
         // Sekarang $kataPertama berisi kata yang sesuai
 
+        // ─── Data Katsudo untuk homepage ─────────────────────────────────────
+        $user       = Auth::guard('pendaftar')->user();
+        $userDeptId = (int) $user->departemen;
+        $now        = now();
+
+        // Semua katsudo yang sudah di-approve & relevan (divisi diundang) untuk anggota ini
+        $relevan = Katsudo::with(['dpt', 'pj'])
+            ->where('approve', true)
+            ->orderBy('tgl_laksana')
+            ->get()
+            ->filter(fn ($k) => $k->isDivisiBerlaku($userDeptId));
+
+        // Akan datang (termasuk hari ini yang belum lewat) diurutkan dari yang terdekat
+        $upcoming = $relevan
+            ->filter(fn ($k) => $k->tgl_laksana && $k->tgl_laksana->gte($now))
+            ->sortBy('tgl_laksana')
+            ->values();
+
+        // Sudah lewat, terbaru dulu
+        $sebelumnya = $relevan
+            ->filter(fn ($k) => $k->tgl_laksana && $k->tgl_laksana->lt($now))
+            ->sortByDesc('tgl_laksana')
+            ->take(5)
+            ->values();
+
+        $terdekat   = $upcoming->first();          // katsudo paling dekat
+        $akanDatang = $upcoming->slice(1)->values(); // sisanya untuk swiper
 
         return view('katsudo.auth.home', [
             $settings['navactive'] => '-active-links',
-            'nickname' => $nickname,
-            'stgs' => $settings]);
+            'nickname'   => $nickname,
+            'terdekat'   => $terdekat,
+            'akanDatang' => $akanDatang,
+            'sebelumnya' => $sebelumnya,
+            'stgs'       => $settings]);
     }
 }

@@ -2,7 +2,20 @@
 
 @php
     $myDept = Auth::guard('pendaftar')->user()->dpt;
-    $deptCover = fn ($d) => $d && $d->img ? $d->img : '/images/katsudo_merah.svg';
+    $defaultCover = '/images/katsudo_merah.svg';
+
+    // Cari file .png di public/images berdasarkan nama departemen, fallback SVG default
+    $deptCover = function ($d) use ($defaultCover) {
+        $nama = optional($d)->nama;
+        if ($nama) {
+            foreach (['images/dept/' . $nama . '.png', 'images/' . $nama . '.png'] as $rel) {
+                if (is_file(public_path($rel))) {
+                    return '/' . $rel;
+                }
+            }
+        }
+        return $defaultCover;
+    };
 @endphp
 
 <section class="un-page-components">
@@ -27,7 +40,8 @@
             <div class="content-NFTs-body">
                 <div class="item-card-nft">
                     <picture>
-                        <img class="big-image" src="{{ $deptCover($myDept) }}" alt="{{ $myDept->nama }}">
+                        <img class="big-image" src="{{ $deptCover($myDept) }}" alt="{{ $myDept->nama }}"
+                             onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                     </picture>
                     <div class="btn-like-click">
                         <div class="btnLike">
@@ -72,7 +86,8 @@
                         <div class="cover-image">
                             <div class="default"></div>
                             <picture>
-                                <img class="big-image" src="{{ $deptCover($dept) }}" alt="{{ $dept->nama }}">
+                                <img class="big-image" src="{{ $deptCover($dept) }}" alt="{{ $dept->nama }}"
+                                     onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                             </picture>
                             <div class="content-text">
                                 <div class="btn-like-click">

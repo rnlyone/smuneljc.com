@@ -1,12 +1,23 @@
 @include('katsudo.layouts.header')
 
 @php
+    // SVG default saat gambar katsudo tidak tersedia
+    $defaultCover = '/images/katsudo_merah.svg';
+
     /**
-     * Helper cover katsudo: pakai gambar departemen ranah, fallback ke logo.
+     * Helper cover katsudo: cari file .png berdasarkan nama departemen ranah
+     * di public/images, fallback ke SVG default.
      */
-    $cover = function ($k) {
-        $img = optional($k->dpt)->img;
-        return $img ?: '/images/katsudo_merah.svg';
+    $cover = function ($k) use ($defaultCover) {
+        $nama = optional($k->dpt)->nama;
+        if ($nama) {
+            foreach (['images/dept/' . $nama . '.png', 'images/' . $nama . '.png'] as $rel) {
+                if (is_file(public_path($rel))) {
+                    return '/' . $rel;
+                }
+            }
+        }
+        return $defaultCover;
     };
 
     /**
@@ -57,7 +68,8 @@
                     <a href="{{ route('katsudo.show', $terdekat->id) }}" class="body-card">
                         <div class="cover-nft">
                             <picture>
-                                <img class="img-cover" src="{{ $cover($terdekat) }}" alt="{{ $terdekat->nama }}">
+                                <img class="img-cover" src="{{ $cover($terdekat) }}" alt="{{ $terdekat->nama }}"
+                                     onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                             </picture>
                             <div class="icon-type">
                                 <i class="ri-calendar-event-line"></i>
@@ -127,7 +139,8 @@
                                         <a href="{{ route('katsudo.show', $k->id) }}" class="body-card">
                                             <div class="cover-nft">
                                                 <picture>
-                                                    <img class="img-cover" src="{{ $cover($k) }}" alt="{{ $k->nama }}">
+                                                    <img class="img-cover" src="{{ $cover($k) }}" alt="{{ $k->nama }}"
+                                                         onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                                                 </picture>
                                                 <div class="countdown-time">
                                                     <span>{{ $k->tgl_laksana->isoFormat('D MMM') }}</span>
@@ -186,7 +199,8 @@
                             <a class="nav-link" href="{{ route('katsudo.show', $k->id) }}">
                                 <div class="image-blog">
                                     <picture>
-                                        <img src="{{ $cover($k) }}" alt="{{ $k->nama }}">
+                                        <img src="{{ $cover($k) }}" alt="{{ $k->nama }}"
+                                             onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                                     </picture>
                                     <div class="text-blog">
                                         <h2>{{ $k->nama }}</h2>

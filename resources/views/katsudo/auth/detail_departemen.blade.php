@@ -1,7 +1,21 @@
 @include('katsudo.layouts.headersub')
 
 @php
-    $cover = fn ($k) => optional($k->dpt)->img ?: (optional($thisdept)->img ?: '/images/katsudo_merah.svg');
+    $defaultCover = '/images/katsudo_merah.svg';
+
+    // Cari file .png di public/images berdasarkan nama departemen, fallback SVG default
+    $imgByName = function ($nama) use ($defaultCover) {
+        if ($nama) {
+            foreach (['images/dept/' . $nama . '.png', 'images/' . $nama . '.png'] as $rel) {
+                if (is_file(public_path($rel))) {
+                    return '/' . $rel;
+                }
+            }
+        }
+        return $defaultCover;
+    };
+    $cover     = fn ($k) => $imgByName(optional($k->dpt)->nama ?: optional($thisdept)->nama);
+    $deptCover = $imgByName(optional($thisdept)->nama);
     $pjFoto = function ($k) {
         $pj = $k->pj;
         if (!$pj) return '/images/itsupp.png';
@@ -10,7 +24,6 @@
         }
         return $pj->JK == 'wanita' ? '/images/itsukipp.png' : '/images/itsupp.png';
     };
-    $deptCover = optional($thisdept)->img ?: '/images/katsudo_merah.svg';
 @endphp
 
 <section class="un-page-components">
@@ -29,7 +42,8 @@
             <div class="content-NFTs-body">
                 <div class="item-card-nft">
                     <picture>
-                        <img class="big-image" src="{{ $deptCover }}" alt="{{ $thisdept->nama }}">
+                        <img class="big-image" src="{{ $deptCover }}" alt="{{ $thisdept->nama }}"
+                             onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                     </picture>
                     <div class="btn-like-click">
                         <div class="btnLike">
@@ -71,7 +85,8 @@
                     <a href="{{ route('katsudo.show', $deptTerdekat->id) }}" class="body-card">
                         <div class="cover-nft">
                             <picture>
-                                <img class="img-cover" src="{{ $cover($deptTerdekat) }}" alt="{{ $deptTerdekat->nama }}">
+                                <img class="img-cover" src="{{ $cover($deptTerdekat) }}" alt="{{ $deptTerdekat->nama }}"
+                                     onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                             </picture>
                             <div class="icon-type">
                                 <i class="ri-calendar-event-line"></i>
@@ -139,7 +154,8 @@
                                         <a href="{{ route('katsudo.show', $k->id) }}" class="body-card">
                                             <div class="cover-nft">
                                                 <picture>
-                                                    <img class="img-cover" src="{{ $cover($k) }}" alt="{{ $k->nama }}">
+                                                    <img class="img-cover" src="{{ $cover($k) }}" alt="{{ $k->nama }}"
+                                                         onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                                                 </picture>
                                                 <div class="countdown-time">
                                                     <span>{{ $k->tgl_laksana->isoFormat('D MMM') }}</span>
@@ -198,7 +214,8 @@
                             <a class="nav-link" href="{{ route('katsudo.show', $k->id) }}">
                                 <div class="image-blog">
                                     <picture>
-                                        <img src="{{ $cover($k) }}" alt="{{ $k->nama }}">
+                                        <img src="{{ $cover($k) }}" alt="{{ $k->nama }}"
+                                             onerror="this.onerror=null;this.src='{{ $defaultCover }}';">
                                     </picture>
                                     <div class="text-blog">
                                         <h2>{{ $k->nama }}</h2>

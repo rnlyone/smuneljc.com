@@ -3,35 +3,29 @@
 {{-- ── Full-screen camera ────────────────────────────────────────────── --}}
 <div id="reader"></div>
 
-{{-- ── Bottom Sheet ─────────────────────────────────────────────────── --}}
-<div id="bottom-sheet">
-    {{-- Drag handle --}}
-    <div id="sheet-handle">
-        <span class="sheet-handle-bar"></span>
-    </div>
+{{-- ── Panel Info Statis (di bawah stack bottom-navmenu) ─────────────── --}}
+<div id="scan-panel">
+    <div class="padding-20 pt-3 pb-2">
 
-    {{-- Content --}}
-    <div class="padding-20 pt-0 pb-4">
-
-        {{-- Katsudo info (hidden until first scan) --}}
-        <div id="katsudo-info-card" class="item-card-nft rounded-15 p-3 mb-3 d-none">
+        {{-- Katsudo info — statis, selalu tampil --}}
+        <div id="katsudo-info-card" class="item-card-nft rounded-15 p-3 mb-3">
             <div class="d-flex align-items-start gap-3">
                 <div class="icon bg-blue-1 color-blue rounded-circle p-2 flex-shrink-0">
                     <i class="ri-calendar-event-line fs-5"></i>
                 </div>
                 <div class="flex-grow-1 min-w-0">
-                    <h6 id="info-katsudo-nama" class="mb-1 text-truncate">—</h6>
-                    <p id="info-katsudo-tgl" class="size-12 color-text mb-1">—</p>
+                    <h6 id="info-katsudo-nama" class="mb-1 text-truncate">Belum ada kegiatan</h6>
+                    <p id="info-katsudo-tgl" class="size-12 color-text mb-1">Scan QR untuk memuat info kegiatan</p>
                     <div class="d-flex gap-2 flex-wrap align-items-center">
                         <span id="info-katsudo-dept" class="badge bg-label-primary size-11">—</span>
-                        <span id="info-katsudo-fase-badge" class="badge size-11">—</span>
+                        <span id="info-katsudo-fase-badge" class="badge size-11 bg-secondary">—</span>
                     </div>
                     <p id="info-katsudo-deskripsi" class="size-12 color-text mt-2 mb-0" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></p>
                 </div>
             </div>
         </div>
 
-        {{-- Last scan result --}}
+        {{-- Status absensi — statis, selalu tampil --}}
         <div class="item-card-nft rounded-15 p-3">
             <div class="d-flex align-items-center gap-3">
                 <div id="scan-icon" class="icon bg-snow rounded-circle p-2 flex-shrink-0">
@@ -109,92 +103,27 @@ body { overflow: hidden; }
 #reader__dashboard          { display: none !important; }
 #reader__header_message     { display: none !important; }
 
-/* ── Bottom Sheet ─────────────────────────────────────────────── */
-#bottom-sheet {
-    --peek: 148px;          /* handle(28) + card(96) + padding(24) */
+/* ── Panel Info Statis ────────────────────────────────────────── */
+/* Ditempatkan tepat di atas bottom-navmenu (tinggi ±56px) dengan
+   z-index di bawah navmenu (99) supaya navmenu tetap di paling atas. */
+#scan-panel {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    z-index: 500;
+    left: 0; right: 0;
+    bottom: calc(56px + env(safe-area-inset-bottom));
+    z-index: 90;
     background: var(--bs-body-bg, #fff);
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -6px 32px rgba(0, 0, 0, .22);
-    transform: translateY(calc(100% - var(--peek)));
-    transition: transform .38s cubic-bezier(.32, .72, 0, 1);
-    max-height: 82vh;
+    max-height: 60vh;
     overflow-y: auto;
     overscroll-behavior: contain;
 }
-body[data-theme="dark"] #bottom-sheet,
-.dark-mode #bottom-sheet { background: var(--bs-dark, #1a1a1a); }
-
-#bottom-sheet.is-open { transform: translateY(0); }
-
-/* Handle */
-#sheet-handle {
-    display: flex;
-    justify-content: center;
-    padding: 12px 20px 8px;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-}
-.sheet-handle-bar {
-    display: block;
-    width: 36px; height: 4px;
-    background: rgba(127, 127, 127, .35);
-    border-radius: 2px;
-}
+body[data-theme="dark"] #scan-panel,
+.dark-mode #scan-panel { background: var(--bs-dark, #1a1a1a); }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
-/* ── Bottom Sheet drag ─────────────────────────────────────────── */
-(function () {
-    const sheet    = document.getElementById('bottom-sheet');
-    const handle   = document.getElementById('sheet-handle');
-    let startY, startTY, dragging = false;
-
-    function currentTY() {
-        return new DOMMatrix(getComputedStyle(sheet).transform).m42;
-    }
-
-    handle.addEventListener('touchstart', e => {
-        startY  = e.touches[0].clientY;
-        startTY = currentTY();
-        dragging = true;
-        sheet.style.transition = 'none';
-    }, { passive: true });
-
-    window.addEventListener('touchmove', e => {
-        if (!dragging) return;
-        const dy  = e.touches[0].clientY - startY;
-        const newY = Math.max(0, startTY + dy);
-        sheet.style.transform = `translateY(${newY}px)`;
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => {
-        if (!dragging) return;
-        dragging = false;
-        sheet.style.transition = '';
-        const maxY = sheet.offsetHeight - parseInt(getComputedStyle(sheet).getPropertyValue('--peek'));
-        if (currentTY() > maxY * 0.45) {
-            sheet.classList.remove('is-open');
-            sheet.style.transform = '';
-        } else {
-            sheet.classList.add('is-open');
-            sheet.style.transform = '';
-        }
-    });
-
-    // Tap handle toggles
-    handle.addEventListener('click', () => {
-        sheet.style.transform = '';
-        sheet.classList.toggle('is-open');
-    });
-
-    window._openSheet = () => { sheet.style.transform = ''; sheet.classList.add('is-open'); };
-})();
-
 /* ── QR Scanner ────────────────────────────────────────────────── */
 const csrfToken  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 let lastPayload  = '';
@@ -268,9 +197,6 @@ new Html5Qrcode('reader').start(
                 badgeEl.classList.remove('d-none');
                 showToast(isInfo ? 'success' : 'error', response.message);
             }
-
-            /* Auto-expand sheet on every scan response */
-            window._openSheet();
         })
         .catch(function () {
             showToast('error', 'Gagal menghubungi server.');
